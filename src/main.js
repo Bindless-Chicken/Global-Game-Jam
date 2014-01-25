@@ -26,39 +26,19 @@ function mainPhaser(){
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
-        game.camera.follow(player);
     }
 
     function create() {
-        player = game.add.sprite(0,0,'h_red');
+        player = new Player('red');
+        player.setSprite(game.add.sprite(0,0,'h_red'));
+        game.camera.follow(player.sprite);
+        
         inputs = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
     }
 
     function update () {
-        move(player,inputs);
+        player.move(inputs);
         
     }
 }
-
-// ################ TO MOVE ! ##################
-// function to put in the player class
-function move(player,inputs){
-    var speed = 200; // to replace by the field in the player class
-
-    if (inputs.left.isDown)
-            player.body.velocity.x = -speed;
-        else if (inputs.right.isDown)
-            player.body.velocity.x = speed;
-        else
-            player.body.velocity.x = (player.body.velocity.x < 0)?0:player.body.velocity.x - 5;
-
-        if (inputs.up.isDown)
-            player.body.velocity.y = -speed;
-        else if (inputs.down.isDown)
-            player.body.velocity.y = speed;
-        else
-            player.body.velocity.y = (player.body.velocity.y < 0)?0:player.body.velocity.y - 5;
-}
-
-
 

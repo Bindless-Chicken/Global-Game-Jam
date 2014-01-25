@@ -4,5 +4,7 @@
 
 var files=[
     "class.js",
+    "Player.js",
+    "Type.js",
     "phaser.min.js"
 ]
