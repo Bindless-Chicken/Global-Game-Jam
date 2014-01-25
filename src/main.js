@@ -67,6 +67,7 @@ function mainPhaser(){
         // if(!game.focus) return;
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
+        player.farAway(game, player);
 
         // check for collision over the player's sonar
         game.physics.collide(player.sonarPts,map.obstacles,function(pt,ob){
@@ -105,7 +106,7 @@ function mainPhaser(){
         // // }   
 
         // console.log("X : "+player.sprite.x+" | Y : "+player.sprite.y);
-        var m = map.getObstacles();
+        //var m = map.getObstacles();
 
 // //         console.log("size = " + m.total);
 // //        console.debug(m);
