@@ -5,9 +5,12 @@
 
 function createMap(game){
     // Sectors
-    var sectorEasy = new Sector(50, function(){});
-    var sectorMedium = new Sector(150, function(){});
-    var sectorEnd = new Sector(300, function(){});
+    var sectorEasy = new Sector(500, function () {
+    });
+    var sectorMedium = new Sector(1500, function () {
+    });
+    var sectorEnd = new Sector(3000, function () {
+    });
 
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
@@ -20,6 +23,12 @@ function createMap(game){
     map.getObstacles().create(new Phaser.Rectangle(260,300,20,20), 5);
 
     console.log(map);
+
+
+    //Define the world size
+
+    game.world.setBounds(0, 0, 3000, 3000);
+
 
     return map;
 }

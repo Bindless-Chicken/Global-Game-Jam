@@ -23,6 +23,7 @@ function loadFiles(){
 function mainPhaser(){
     var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
     var map;
+    var camera;
     var player,inputsKeyboard, inputsMouse;
 
     var destPoints = [];
@@ -36,6 +37,8 @@ function mainPhaser(){
     function create() {
         player = new Player('red');
         player.setSprite(game.add.sprite(200,200,'h_red'));
+
+
         game.camera.follow(player.sprite);
 
         var stream = new Stream(45, 10, 100, 500, 10);
@@ -49,6 +52,8 @@ function mainPhaser(){
     function update () {
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
+
+
     }
 
     function render (){
