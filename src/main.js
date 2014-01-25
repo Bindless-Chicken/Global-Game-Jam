@@ -25,22 +25,28 @@ function mainPhaser(){
     var map;
     var player,inputsKeyboard, inputsMouse;
 
+    var destPoints = [];
+
     function preload() {
         game.load.image('h_red','img/h_red.png');
+        game.load.image('w_red','img/wave_red.png')
         map = createMap();
     }
 
     function create() {
         player = new Player('red');
-        player.setSprite(game.add.sprite(0,0,'h_red'));
+        player.setSprite(game.add.sprite(200,200,'h_red'));
         game.camera.follow(player.sprite);
 
-        var stream = new Stream(45, 10, 100, 500);
+        var stream = new Stream(45, 10, 100, 500, 10);
         stream.create(game);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
+        player.sonar(game);
     }
+
+
 
     function update () {
         player.moveK(inputsKeyboard);
@@ -50,7 +56,7 @@ function mainPhaser(){
     function render (){
         for(var obstacle in  map.getObstacles()){
             game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
-        }
+        }   
     }
 }
 

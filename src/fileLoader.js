@@ -12,4 +12,4 @@ var files=[
     "Player.js",
     "Type.js",
     "Stream.js"
-]
+];
