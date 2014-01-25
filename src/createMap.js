@@ -15,16 +15,38 @@ function createMap(game){
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
 
-    //create obstacles
-    map.getObstacles().add(new Obstacle(game, 500, 500, 'h_blue', COLORS.RED).sprite);
-    map.getObstacles().add(new Obstacle(game, 800, 800, 'h_blue', COLORS.RED).sprite);
-    map.getObstacles().add(new Obstacle(game, -500, -500, 'h_blue', COLORS.RED).sprite);
+    map.getObstacles().add((new Obstacle(game, 500, 500, 'obstacle', COLORS.RED)).sprite);
+    map.getObstacles().add((new Obstacle(game, 600, 600, 'obstacle', COLORS.RED)).sprite);
+    map.getObstacles().add((new Obstacle(game, 800, 800, 'obstacle', COLORS.RED)).sprite);
 
     //Create streams
     map.getStreams().push(new Stream(game, 45, 10, 100, 150, 10, 250));
 
+    //Define the world size
+
+    game.world.setBounds(0, 0, 3000, 3000);
+
+    return map;
+}
+
+function createMapProcedural(game){
+    // Sectors
+    var sectorEasy = new Sector(500+Math.random()*250, function () {
+    });
+    var sectorMedium = new Sector(1500+Math.random()*750, function () {
+    });
+    var sectorEnd = new Sector(3000+Math.random()*1500, function () {
+    });
+
+
+    var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
+
+    for(var i=0; i<30+Math.random()*10; i++)
+        map.getObstacles().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
+
 
     //Define the world size
+
     game.world.setBounds(-2000, -2000, 3000, 3000);
 
     return map;
