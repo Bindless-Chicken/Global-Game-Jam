@@ -11,7 +11,7 @@
         this.speed = 200;
         this.firstDown = false;
         // sonar options
-        this.nbPoints = 3;
+        this.nbPoints = 150;
         this.nbMaxoints = 500; // 200 + 100 to be sure tto have enough points
         this.sonarPts = game.add.group();
         this.sonarPts.createMultiple(this.nbMaxoints,'w_red');

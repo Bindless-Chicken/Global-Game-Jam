@@ -85,18 +85,17 @@ function mainPhaser(){
         // //     console.log(i);
         // // }   
 
-//         var m = map.getObstacles();
+        console.log("X : "+player.sprite.x+" | Y : "+player.sprite.y);
+        var m = map.getObstacles();
 
 // //         console.log("size = " + m.total);
 // //        console.debug(m);
 
-//         for (var i = 0; i < m.total; i++) {
 //             {
 // //                console.log("obs = " + i);
 // //                console.log(m.getAt(i));
 //                 game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
 //             }
-
 //         }
     }
 }
