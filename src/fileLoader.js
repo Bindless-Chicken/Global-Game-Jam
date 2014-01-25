@@ -11,4 +11,5 @@ var files=[
     "Sector.js",
     "Player.js",
     "Type.js",
+    "Stream.js"
 ]

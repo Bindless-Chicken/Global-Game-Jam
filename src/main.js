@@ -23,7 +23,7 @@ function loadFiles(){
 function mainPhaser(){
     var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
     var map;
-    var player,inputs;
+    var player,inputsKeyboard, inputsMouse;
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
@@ -35,11 +35,16 @@ function mainPhaser(){
         player.setSprite(game.add.sprite(0,0,'h_red'));
         game.camera.follow(player.sprite);
 
-        inputs = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
+        var stream = new Stream(45, 10, 100, 500);
+        stream.create(game);
+
+        inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
+        inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
     }
 
     function update () {
-        player.move(inputs);
+        player.moveK(inputsKeyboard);
+        player.moveM(inputsMouse);
     }
 
     function render (){
