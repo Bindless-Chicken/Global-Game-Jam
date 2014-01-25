@@ -2,7 +2,7 @@ var Spammer = new Class
 (Enemy,{
 	initialize: function(game, pos_x, pos_y, name, sprite, colorSpam) {
 		super(game, pos_x, pos_y, name, sprite);
-		this.color = colorSpam;
+		this.type = new Type(colorSpam);
 	},
 
 	Spam: function() {
