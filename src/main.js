@@ -47,6 +47,7 @@ function mainPhaser(){
     }
 
     function update () {
+        player.checkSector(map.getSectors());
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
     }

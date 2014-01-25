@@ -13,9 +13,11 @@ var Player = new Class({
         // sonar options
         this.nbPoints = 100;
     },
+
     setSprite: function (sprite){
         this.sprite = sprite;
     },
+
     moveK: function (inputs) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
@@ -37,6 +39,7 @@ var Player = new Class({
         else
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
     },
+
     moveM: function (inputs) {
         if(inputs.isDown){
             if(!this.firstDown){
@@ -58,6 +61,7 @@ var Player = new Class({
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
         }
     },
+
     sonar: function(game){
         for(var i = 0; i < this.nbPoints; i ++){
             var destPt = Phaser.Point.rotate(
@@ -74,6 +78,10 @@ var Player = new Class({
         }
         var _= this;
         setTimeout(function(){_.sonar(game);}, 900 + Math.random()*10);
+    },
+
+    getSectors : function( sectors ){
+
     }
 });
 
