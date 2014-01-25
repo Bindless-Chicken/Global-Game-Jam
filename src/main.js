@@ -48,11 +48,6 @@ function mainPhaser(){
     }
 
     function update () {
-<<<<<<< HEAD
-        //player.checkSector(map.getSectors());
-=======
-        // player.checkSector(map.getSectors());
->>>>>>> 97b41760aa169c3e39dfeeae9e45bc3f029e059e
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
