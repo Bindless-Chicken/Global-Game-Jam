@@ -67,11 +67,16 @@ function mainPhaser(){
 
     function render (){
 
-//         console.log("size = " + map.getObstacles().size);
-        for (var i = 0; i < map.getObstacles().total; i++) {
+        var m = map.getObstacles();
+
+//         console.log("size = " + m.total);
+//        console.debug(m);
+
+        for (var i = 0; i < m.total; i++) {
             {
-//                console.log("obs = " + map.getObstacles().total);
-//                game.debug.renderSpriteBody(map.getObstacles()[i].sprite,'#022ff22');
+//                console.log("obs = " + i);
+//                console.log(m.getAt(i));
+                game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
             }
 
         }
