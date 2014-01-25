@@ -39,6 +39,10 @@ function mainPhaser(){
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png');
         game.load.image('obstacle','img/obstacle.png');
+        game.load.image('greenline', 'img/greenline.png');
+        game.load.image('meteor', 'img/meteor.png');
+        /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
+        game.load.spritesheet('meteor', 'img/meteor.png', 50, 50, 30);*/
     }
 
     function create() {
