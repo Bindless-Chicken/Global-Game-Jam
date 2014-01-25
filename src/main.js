@@ -26,8 +26,6 @@ function mainPhaser(){
     var camera;
     var player,inputsKeyboard, inputsMouse;
 
-    var destPoints = [];
-
     function preload() {
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png')
@@ -35,9 +33,8 @@ function mainPhaser(){
     }
 
     function create() {
-        player = new Player('red');
+        player = new Player('red',game);
         player.setSprite(game.add.sprite(200,200,'h_red'));
-
 
         game.camera.follow(player.sprite);
 
@@ -47,19 +44,28 @@ function mainPhaser(){
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
-        player.sonar(game);
-
-
+        player.sonar(game,map.obstacles);
     }
 
     function update () {
+<<<<<<< HEAD
         //player.checkSector(map.getSectors());
+=======
+        // player.checkSector(map.getSectors());
+>>>>>>> 97b41760aa169c3e39dfeeae9e45bc3f029e059e
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
-        game.physics.collide(player, this.box, collideHandler, null, this);
+        // game.physics.collide(player, this.box, collideHandler, null, this);
 
 
+        // check for collision over the player's sonar
+        game.physics.collide(player.sonarPts,map.obstacles,function(pt,ob){
+            pt.body.velocity = new Phaser.Point(0,0); //  we stop the point
+            pt.lifespan = pt.lifespan + Math.random()*100; // add a little delay
+        });
+
+        game.physics.collide(player.sprite,map.obstacles,function(){});
     }
 
     function collideHandler() {
@@ -67,6 +73,14 @@ function mainPhaser(){
     }
 
     function render (){
+        // map.obstacles.forEachAlive(function(ob){
+        //     // console.log(ob);
+        //    game.debug.renderRectangle(ob,'#022ff22');
+        // },this)
+        // // console.log(map.obstacles);
+        // // for(var i = 0; i < map.obstacles.lenght; ++i){
+        // //     console.log(i);
+        // // }   
 
         var m = map.getObstacles();
 
