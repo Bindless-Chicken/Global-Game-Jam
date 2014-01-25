@@ -4,6 +4,12 @@ var Map = new Class
     {
         this.sectors = sectors;
         this.obstacles = game.add.group();
+        this.streams = new Array(Stream);
+    },
+
+
+    getStreams: function () {
+        return this.streams;
     },
 
     setSectors: function(sectors)

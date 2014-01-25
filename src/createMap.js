@@ -15,17 +15,17 @@ function createMap(game){
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
 
-    map.getObstacles().add(new Obstacle(game, 500, 500, 'w_red', COLORS.RED).sprite);
-    map.getObstacles().add(new Obstacle(game, 800, 800, 'w_red', COLORS.RED).sprite);
-    map.getObstacles().add(new Obstacle(game, -500, -500, 'w_red', COLORS.RED).sprite);
+    //create obstacles
+    map.getObstacles().add(new Obstacle(game, 500, 500, 'h_blue', COLORS.RED).sprite);
+    map.getObstacles().add(new Obstacle(game, 800, 800, 'h_blue', COLORS.RED).sprite);
+    map.getObstacles().add(new Obstacle(game, -500, -500, 'h_blue', COLORS.RED).sprite);
 
-    console.log(map);
+    //Create streams
+    map.getStreams().push(new Stream(game, 45, 10, 100, 150, 10, 250));
 
 
     //Define the world size
-
-    game.world.setBounds(0, 0, 3000, 3000);
-
+    game.world.setBounds(-2000, -2000, 3000, 3000);
 
     return map;
 }

@@ -30,6 +30,7 @@ function mainPhaser(){
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
+        game.load.image('h_blue', 'img/h_blue.png');
         game.load.image('w_red','img/wave_red.png')
         map = createMap(game);
     }
@@ -41,9 +42,8 @@ function mainPhaser(){
 
         game.camera.follow(player.sprite);
 
-//        var stream = new Stream(45, 10, 100, 500, 10);
-//        stream.create(game);
-        var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
+
+        //var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
@@ -56,14 +56,52 @@ function mainPhaser(){
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
-        game.physics.collide(player, this.box, collideHandler, null, this);
+        //check for collision
+        var m = map.getObstacles();
+//        console.debug("x|y : " + player.sprite.body.x + " | " + player.sprite.body.y);
 
 
+        for (var i = 0; i < m.total; i++) {
+//            console.debug("x|y : " + m.getAt(i).body.x + " | " + m.getAt(i).body.y);
+            if (game.physics.collide(player, m.getAt(i)) == true) {
+                console.log("collision with object nb " + i);
+            }
+        }
+//        game.physics.collide(player, this.box, collideHandler, null, this);
+
+        //check streams
+//        var dist, velY, velX;
+//        var streams = map.getStreams();
+//        var s;
+//        console.debug(map.getStreams().length);
+//        for(var i = 0; i < streams.length; i++)
+//        {
+//            s = streams[i];
+//            dist = Phaser.physics.distanceBetween(player, s);
+//
+//            console.log("dist  = " + dist);
+//            if(Math.abs(dist) < s.radius)
+//            {
+//                console.log("coucou");
+//                //We are in the area of the stream
+//
+////                if(player.body.position.x  > )
+////                {
+//                    velY = (s.radius - dist) * Math.tan(s.getDirection());
+//                    velX = (s.radius - dist) * Math.tan(s.getDirection());
+////                }
+//
+//                player.sprite.body.velocity.x += velX;
+//                player.sprite.body.velocity.y += velY;
+//
+//
+//            }
+//        }
     }
 
-    function collideHandler() {
-        console.log("coucou");
-    }
+//    function collideHandler(i) {
+//        console.log("collision with object nb " + i);
+//    }
 
     function render (){
 

@@ -3,13 +3,14 @@
  */
 var Stream = new Class
 ({
-    initialize: function (direction, force, posX, posY, radius)
-    {
+    initialize: function (game, direction, force, posX, posY, radius, length) {
         this.direction = direction;
         this.force = force;
         this.posX = posX;
         this.posY = posY;
         this.radius = radius;
+        this.length = length;
+        this.create(game);
     },
 
     setDirection: function(direction)
@@ -52,6 +53,10 @@ var Stream = new Class
         return this.posY;
     },
 
+    getLength: function () {
+        return this.length;
+    },
+
     create: function(game){
         var graphics = game.add.graphics(this.posX,this.posY);
 
@@ -61,7 +66,27 @@ var Stream = new Class
 
         // draw a shape
         graphics.moveTo(this.posX,this.posY);
-        graphics.lineTo(250, 50);
+
+        var finalX, finalY;
+        if ((this.direction < 90) && (this.direction > 0)) {
+            finalX = this.posX + this.length * Math.cos(this.direction);
+            finalY = this.posY + this.length * Math.cos(this.direction);
+        }
+        else if ((this.direction > 45) && (this.direction < 90)) {
+            finalX = this.posX + this.length * Math.cos(180 - this.direction);
+            finalY = this.posY - this.length * Math.cos(180 - this.direction);
+        }
+        else if ((this.direction > -45) && (this.direction < 0)) {
+            finalX = this.posX - this.length * Math.cos(this.direction);
+            finalY = this.posY + this.length * Math.cos(this.direction);
+        }
+        else {
+            finalX = this.posX - this.length * Math.cos(180 - this.direction);
+            finalY = this.posY - this.length * Math.cos(180 - this.direction);
+        }
+        console.log("finalX | finalY : " + finalX + " | " + finalY);
+        graphics.lineTo(finalX, finalY);
         graphics.endFill();
     }
+
 });
