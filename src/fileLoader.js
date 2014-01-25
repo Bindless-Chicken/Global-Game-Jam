@@ -8,5 +8,7 @@ var files=[
     "createMap.js",
     "Map.js",
     "Obstacle.js",
-    "Sector.js"
+    "Sector.js",
+    "Player.js",
+    "Type.js",
 ]

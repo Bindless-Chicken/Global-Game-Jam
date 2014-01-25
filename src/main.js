@@ -7,7 +7,7 @@ loadFiles();
 
 window.onload=function(){
     mainPhaser();
-}
+};
 
 // JS file preloader
 function loadFiles(){
@@ -24,18 +24,24 @@ function mainPhaser(){
     var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
     var map;
     var floor;
+    var player,inputs;
 
     function preload() {
-
+        game.load.image('h_red','img/h_red.png');
         map = createMap();
     }
 
     function create() {
         floor = new Phaser.Rectangle(0, 550, 800, 50);
+        player = new Player('red');
+        player.setSprite(game.add.sprite(0,0,'h_red'));
+        game.camera.follow(player.sprite);
+
+        inputs = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
     }
 
     function update () {
-
+        player.move(inputs);
     }
 
     function render (){
@@ -47,3 +53,4 @@ function mainPhaser(){
         //}
     }
 }
+
