@@ -48,6 +48,7 @@ function mainPhaser(){
     }
 
     function update () {
+
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
@@ -76,18 +77,12 @@ function mainPhaser(){
         // // for(var i = 0; i < map.obstacles.lenght; ++i){
         // //     console.log(i);
         // // }   
-
+        console.log("X : "+player.sprite.x+" | Y : "+player.sprite.y);
         var m = map.getObstacles();
 
 //         console.log("size = " + m.total);
 //        console.debug(m);
 
-        for (var i = 0; i < m.total; i++) {
-            {
-//                console.log("obs = " + i);
-//                console.log(m.getAt(i));
-                game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
-            }
 
         }
     }
