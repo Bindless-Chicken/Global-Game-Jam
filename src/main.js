@@ -42,9 +42,14 @@ function mainPhaser(){
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
+        
         game.load.image('w_red','img/wave_red.png');
+        game.load.image('w_blue','img/wave_blue.png');
+        game.load.image('w_green','img/wave_green.png');
+        game.load.image('w_yellow','img/wave_yellow.png');
+        game.load.image('w_purple','img/wave_purple.png');
+
         game.load.image('obstacle','img/obstacle.png');
-        game.load.image('stream','img/stream.png');
         game.load.image('greenline', 'img/greenline.png');
         game.load.image('meteor', 'img/meteor.png');
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -55,7 +60,6 @@ function mainPhaser(){
         // map = createMap(game);
         map = createMapProcedural(game);
 
-
         player1 = new Player('red',game);
         player1.setSprite(game.add.sprite(0,0,'w_red'));
         player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
@@ -65,6 +69,7 @@ function mainPhaser(){
         player2.setSprite(game.add.sprite(0,0,'w_red'));
         player2.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player2.sonar(game);
+
 
         game.input.onDown.add(gofull, this);
 
@@ -78,7 +83,7 @@ function mainPhaser(){
 
     function update () {
         // if(!game.focus) return;
-        player1.moveK(inputsKeyboard);
+        player1.moveK(inputsKeyboard, game);
         player2.moveM(inputsMouse);
         // player1.farAway(game, player1);
 
@@ -86,6 +91,7 @@ function mainPhaser(){
         collideHandler(player1,game);
         collideHandler(player2,game);
     }
+
 
 
     function collideHandler(player, game) {
