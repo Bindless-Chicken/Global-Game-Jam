@@ -21,14 +21,29 @@ function loadFiles(){
 }
 
 function mainPhaser(){
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update });
+    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+    var map;
+    var floor;
 
     function preload() {
+
+        map = createMap();
     }
 
     function create() {
+        floor = new Phaser.Rectangle(0, 550, 800, 50);
     }
 
     function update () {
+
+    }
+
+    function render (){
+        game.debug.renderRectangle(floor,'#0ff22f');
+
+        //for(var obstacle in  map.getObstacles()){
+        //    game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
+        //    console.log(map.getObstacles()[obstacle].getRectangle());
+        //}
     }
 }
