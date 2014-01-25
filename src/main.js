@@ -38,10 +38,11 @@ function mainPhaser(){
     function preload() {
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png');
+        game.load.image('obstacle','img/obstacle.png');
     }
 
     function create() {
-        map = createMap(game);
+        map = createMapProcedural(game);
         player = new Player('red',game);
         player.setSprite(game.add.sprite(200,200,'w_red'));
 
