@@ -3,23 +3,22 @@
  */
 
 var COLORS = {
-    RED: {name: "red", value: "#FF0000", power: function wave() {
-        //to be implemented
+    RED: {name: "red", value: "#FF0000", power: {velocity: 10, period: 1}},
 
-        //Create a wave of the right type
 
-        //Move it
-    }},
-    BLUE: {name: "blue", value: "#0000FF", power: function wave() {
-        //to be implemented
-    }},
-    GREEN: {name: "green", value: "00FF00", power: function wave() {
-        //to be implemented
-    }},
-    YELLOW: {name: "yellow", value: "FFFF00", power: function wave() {
-        //to be implemented
-    }},
-    PURPLE: {name: "purple", value: "663399", power: function wave() {
-        //to be implemented
-    }}
+//        function wave() {
+//        //to be implemented
+//
+//        //Create a wave of the right type
+//
+//        //Move it
+//
+//
+//        //Recall the function at regular interval
+//        setInterval("wave()" , 1000);
+//    }},
+    BLUE: {name: "blue", value: "#0000FF", power: {velocity: 10, period: 1}},
+    GREEN: {name: "green", value: "00FF00", power: {velocity: 10, period: 1}},
+    YELLOW: {name: "yellow", value: "FFFF00", power: {velocity: 10, period: 1}},
+    PURPLE: {name: "purple", value: "663399", power: {velocity: 10, period: 1}}
 };

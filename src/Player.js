@@ -12,7 +12,8 @@ var Player = new Class
 
     },
 
-    move: function () {
+    move: function (direction) {
+
 
     }
 
