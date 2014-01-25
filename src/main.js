@@ -34,25 +34,26 @@ function mainPhaser(){
     var map;
     var camera;
     var player,inputsKeyboard, inputsMouse;
+    var stream;
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png');
         game.load.image('obstacle','img/obstacle.png');
+        game.load.image('stream','img/stream.png');
     }
 
     function create() {
-        map = createMapProcedural(game);
+        // map = createMapProcedural(game);
+        map = createMap(game);
+
+
         player = new Player('red',game);
         player.setSprite(game.add.sprite(200,200,'w_red'));
         player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
 
 
         game.camera.follow(player.sprite);
-
-        // var stream = new Stream(45, 10, 100, 500, 10);
-        // stream.create(game);
-        // var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
@@ -72,19 +73,35 @@ function mainPhaser(){
             var d = game.add.sprite(pt.x,pt.y,'w_red');
             d.scale = new Phaser.Point(2,2); 
             d.lifespan = 1000;
-          
+
         });
 
         game.physics.collide(player.sprite,map.obstacles,function(){
             player.life -= 1;
             if(player.life == 0){
-                player.sprite.reset(0,0);
+                player.sprite.x = 0;
+                player.sprite.y = 0;
                 player.life = 3;
             }
             player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
         });
+
+        map.streams.forEach(function(stream){
+            var minDist = 100;
+            var param = stream.getForce(player.sprite,game);
+            if(param.distance < minDist){
+                minDist = param.distance;
+                player.applyForce(param.force,stream.x,stream.y,game);
+            }
+        });
+
+        // for(var i in map.streams){
+        //     var force = map.streams.getAt(i).getForce(player.sprite,game);
+        //     player.applyForce(force,map.stream.x,map.stream.y,game);
+        // }
+        
     }
-  
+
 
     function collideHandler() {
         console.log("coucou");
@@ -112,6 +129,6 @@ function mainPhaser(){
 //                 game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
 //             }
 //         }
-    }
+}
 }
 

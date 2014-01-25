@@ -8,7 +8,7 @@
         this.mouseY = 0;
         this.sprite = null;
         this.type = new Type(color);
-        this.speed = 200;
+        this.speed = 150;
         this.firstDown = false;
         this.life = 3;
 
@@ -24,7 +24,6 @@
         this.sprite = sprite;
         this.sprite.body.bounce = new Phaser.Point(2,2);
     },
-
     moveK: function (inputs) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
@@ -91,7 +90,8 @@
             _.sonar(game);
         }, this.sonarSpeed + Math.random()*10);
     },
-    getSectors : function( sectors ){
+    applyForce : function (force,x,y,game) {
+        game.physics.accelerateToXY(this.sprite, x, y, -force);
     }
 });
 

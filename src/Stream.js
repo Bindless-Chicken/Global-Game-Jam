@@ -1,67 +1,30 @@
 /**
  * Created by Thomas on 1/25/14.
  */
-var Stream = new Class
-({
-    initialize: function (direction, force, posX, posY, radius)
-    {
-        this.direction = direction;
+
+var Stream = new Class({
+    initialize: function (force, x, y, radius){
         this.force = force;
-        this.posX = posX;
-        this.posY = posY;
+        this.x = x;
+        this.y = y;
         this.radius = radius;
     },
 
-    setDirection: function(direction)
-    {
-        this.direction = direction;
-    },
-
-    getDirection: function()
-    {
-        return this.direction;
-    },
-
-    setForce: function(force)
-    {
-        this.force = force;
-    },
-
-    getForce: function()
-    {
-        return this.force;
-    },
-
-    setPosX: function(posX)
-    {
-        this.posX = posX;
-    },
-
-    getPosX: function()
-    {
-        return this.posX;
-    },
-
-    setPosY: function(posY)
-    {
-        this.posY = posY;
-    },
-
-    getPosY: function()
-    {
-        return this.posY;
-    },
-
     create: function(game){
-        var graphics = game.add.graphics(this.posX,this.posY);
-
-        // set a fill and line style
-        graphics.beginFill(0xFF0000);
-        graphics.lineStyle(10, 0xFF0000, 1);
-
-        // draw a shape
-        graphics.moveTo(this.posX,this.posY);
-        graphics.lineTo(250, 50);
-        graphics.endFill();
+        var _ = this;
+        this.sprite = game.add.sprite(this.x-32,this.y-32,'stream');
+        this.sprite.getForce = function (sprite,game) {return  _.getForce(sprite,game);}
+        return this.sprite;
+    },
+    getForce: function(otherSprite,game){
+        // console.log(otherSprite.x,otherSprite.y);
+        // console.log(this);
+        var distance = game.physics.distanceToXY(otherSprite,this.x,this.y);
+        // console.log(distance);
+        // console.log(this.force);
+        if(distance > 100) return 1;
+        return {distance : distance ,
+                force    : this.force*this.force/(12*distance*distance)*100};
     }
+
 });

@@ -18,6 +18,8 @@ function createMap(game){
     map.getObstacles().add((new Obstacle(game, 600, 600, 'obstacle', COLORS.RED)).sprite);
     map.getObstacles().add((new Obstacle(game, 800, 800, 'obstacle', COLORS.RED)).sprite);
 
+    map.streams.add((new Stream(100,100,100,10)).create(game));
+    map.streams.add((new Stream(100,200,300,10)).create(game));
 
     //Define the world size
 
@@ -41,7 +43,6 @@ function createMapProcedural(game){
     for(var i=0; i<30+Math.random()*10; i++){
         map.getObstacles().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
     }
-
 
     //Define the world size
 
