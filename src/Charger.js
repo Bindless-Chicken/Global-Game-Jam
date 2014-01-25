@@ -14,7 +14,7 @@ var Charger = new Class
 
 	reachable: function(player)
 	{
-		if((Math.sqrt(abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(abs(player.sprite.y-this.sprite.y))) <= Math.sqrt(this.range))
+		if(((Math.sqrt(abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(abs(player.sprite.y-this.sprite.y)))) <= Math.sqrt(this.range))
 		{
 			attack(player_x, player_y);
 		}			
