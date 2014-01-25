@@ -21,9 +21,8 @@ function loadFiles(){
 }
 
 function mainPhaser(){
-    var game = new Phaser.Game(800, 600, Phaser.AUTO, '', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
     var map;
-    var floor;
     var player,inputs;
 
     function preload() {
@@ -32,7 +31,6 @@ function mainPhaser(){
     }
 
     function create() {
-        floor = new Phaser.Rectangle(0, 550, 800, 50);
         player = new Player('red');
         player.setSprite(game.add.sprite(0,0,'h_red'));
         game.camera.follow(player.sprite);
@@ -45,12 +43,9 @@ function mainPhaser(){
     }
 
     function render (){
-        game.debug.renderRectangle(floor,'#0ff22f');
-
-        //for(var obstacle in  map.getObstacles()){
-        //    game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
-        //    console.log(map.getObstacles()[obstacle].getRectangle());
-        //}
+        for(var obstacle in  map.getObstacles()){
+            game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
+        }
     }
 }
 
