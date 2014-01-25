@@ -4,8 +4,56 @@
     <title>Global Game Jam 2014</title>
     <script src="src/fileLoader.js"></script>
     <script src="src/main.js"></script>
-</head>
-<body>
+    <style>
+        #splashScreen{
+            background-color: black;
+            position: absolute;
+            width: 100%;
+            height: 100%;
+        }
+        #splashScreen #bandeau{
+            height:362px;
+            position: absolute;
+            background-color: #333333;
+            width: 100%;
+            top: 50%;
+            margin-top: -181px;
+            text-align: center;
+        }
+        #bandeau h1{
+            font-size: 3em;
+            font-family: "verdana";
+        }
 
+        #gambas{
+            width:256px;
+            height:256px;
+            margin-top:22px;
+        }
+
+        #fork{
+            position: absolute;
+            right: 0px;
+            top: 0px;
+            z-index: 99999;
+        }
+
+        #gameCanvas{
+            position: absolute;
+            z-index: 99990;
+            width: 100%;
+            height: 100%;
+        }
+    </style>
+</head>
+<body style="margin: 0">
+    <a href="https://github.com/Lord-Nazdar/Global-Game-Jam"><img src="img/forkme_right.png" id="fork"></a>
+    <div id="splashScreen">
+        <div id="bandeau">
+            <img src="img/gambas.png" id="gambas">
+            <h1>Shinning Gambas Software</h1>
+        </div>
+    </div>
+    <div id="gameCanvas"></div>
 </body>
 </html>

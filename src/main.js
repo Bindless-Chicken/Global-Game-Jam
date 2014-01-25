@@ -6,7 +6,7 @@
 loadFiles();
 
 window.onload=function(){
-    mainPhaser();
+    setTimeout(function(){mainPhaser()}, 3000);
 };
 
 // JS file preloader
@@ -21,7 +21,7 @@ function loadFiles(){
 }
 
 function mainPhaser(){
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
     var map;
     var camera;
     var player,inputsKeyboard, inputsMouse;
@@ -36,74 +36,50 @@ function mainPhaser(){
     }
 
     function create() {
-        player = new Player('red');
+        player = new Player('red',game);
         player.setSprite(game.add.sprite(200,200,'h_red'));
 
 
         game.camera.follow(player.sprite);
 
-
-        //var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
+//        var stream = new Stream(45, 10, 100, 500, 10);
+//        stream.create(game);
+        var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
-        player.sonar(game);
-
-
+        player.sonar(game,map.obstacles);
     }
 
     function update () {
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
-        //check for collision
-        var m = map.getObstacles();
-//        console.debug("x|y : " + player.sprite.body.x + " | " + player.sprite.body.y);
+        game.physics.collide(player, this.box, collideHandler, null, this);
 
 
-        for (var i = 0; i < m.total; i++) {
-//            console.debug("x|y : " + m.getAt(i).body.x + " | " + m.getAt(i).body.y);
-            if (game.physics.collide(player, m.getAt(i)) == true) {
-                console.log("collision with object nb " + i);
-            }
-        }
-//        game.physics.collide(player, this.box, collideHandler, null, this);
+        // check for collision over the player's sonar
+        game.physics.collide(player.sonarPts,map.obstacles,function(pt,ob){
+            pt.body.velocity = new Phaser.Point(0,0); //  we stop the point
+            pt.lifespan = pt.lifespan + Math.random()*100; // add a little delay
+        });
 
-        //check streams
-//        var dist, velY, velX;
-//        var streams = map.getStreams();
-//        var s;
-//        console.debug(map.getStreams().length);
-//        for(var i = 0; i < streams.length; i++)
-//        {
-//            s = streams[i];
-//            dist = Phaser.physics.distanceBetween(player, s);
-//
-//            console.log("dist  = " + dist);
-//            if(Math.abs(dist) < s.radius)
-//            {
-//                console.log("coucou");
-//                //We are in the area of the stream
-//
-////                if(player.body.position.x  > )
-////                {
-//                    velY = (s.radius - dist) * Math.tan(s.getDirection());
-//                    velX = (s.radius - dist) * Math.tan(s.getDirection());
-////                }
-//
-//                player.sprite.body.velocity.x += velX;
-//                player.sprite.body.velocity.y += velY;
-//
-//
-//            }
-//        }
+        game.physics.collide(player.sprite,map.obstacles,function(){});
     }
 
-//    function collideHandler(i) {
-//        console.log("collision with object nb " + i);
-//    }
+    function collideHandler() {
+        console.log("coucou");
+    }
 
     function render (){
+        // map.obstacles.forEachAlive(function(ob){
+        //     // console.log(ob);
+        //    game.debug.renderRectangle(ob,'#022ff22');
+        // },this)
+        // // console.log(map.obstacles);
+        // // for(var i = 0; i < map.obstacles.lenght; ++i){
+        // //     console.log(i);
+        // // }   
 
         var m = map.getObstacles();
 
