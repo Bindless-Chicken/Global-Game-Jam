@@ -6,7 +6,7 @@
 loadFiles();
 
 window.onload=function(){
-    mainPhaser();
+    setTimeout(function(){mainPhaser()}, 3000);
 };
 
 // JS file preloader
@@ -21,7 +21,7 @@ function loadFiles(){
 }
 
 function mainPhaser(){
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
     var map;
     var camera;
     var player,inputsKeyboard, inputsMouse;
@@ -53,7 +53,7 @@ function mainPhaser(){
     }
 
     function update () {
-        player.checkSector(map.getSectors());
+        //player.checkSector(map.getSectors());
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
