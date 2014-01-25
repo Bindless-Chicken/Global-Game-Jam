@@ -17,7 +17,23 @@ var Charger = new Class
 		if(((Math.sqrt(abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(abs(player.sprite.y-this.sprite.y)))) <= Math.sqrt(this.range))
 		{
 			attack(player_x, player_y);
-		}			
+			if((player.sprite.x > this.sprite.x) && (player.sprite.y > this.sprite.y))
+			{
+				player.getPush(player, 500, 500);
+			}
+			else if((player.sprite.x > this.sprite.x) && (player.sprite.y < this.sprite.y))
+			{
+				player.getPush(player, 500, -500);
+			}
+			else if((player.sprite.x < this.sprite.x) && (player.sprite.y > this.sprite.y))
+			{
+				player.getPush(player, -500, 500);
+			}
+			else
+			{
+				player.getPush(player, -500, -500);
+			}			
+		}
 	}
 
 })

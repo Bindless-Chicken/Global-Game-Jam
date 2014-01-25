@@ -3,14 +3,12 @@
  */
 
 
-var Type = new Class
-({
+var Type = new Class({
     initialize: function (col) {
         if (col != undefined) {
             this.color = col;
             this.power = col.power;
         }
-
         else
             this.color = COLORS.RED;
 

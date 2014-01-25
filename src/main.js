@@ -6,7 +6,7 @@
 loadFiles();
 
 window.onload=function(){
-    setTimeout(function(){mainPhaser()}, 3000);
+    setTimeout(function(){mainPhaser();}, 3000);
 };
 
 // JS file preloader
@@ -20,8 +20,9 @@ function loadFiles(){
     }
 }
 
+
 function mainPhaser(){
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(1280, 1024, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
     game.focus = false;
     game.createSprite = function(x, y, key){return this.add.sprite(x, y, String(key));};
     $(window).focus(function() {game.focus = true;}).blur(function() {game.focus = false;});
@@ -34,29 +35,37 @@ function mainPhaser(){
     var map;
     var camera;
     var player,inputsKeyboard, inputsMouse;
-    var stream;
+
+    function gofull() {
+        game.stage.scale.startFullScreen();
+    }
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png');
         game.load.image('obstacle','img/obstacle.png');
         game.load.image('stream','img/stream.png');
+        game.load.image('greenline', 'img/greenline.png');
+        game.load.image('meteor', 'img/meteor.png');
+        /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
+        game.load.spritesheet('meteor', 'img/meteor.png', 50, 50, 30);*/
     }
 
     function create() {
-        // map = createMapProcedural(game);
-        map = createMap(game);
+        // map = createMap(game);
+        map = createMapProcedural(game);
 
 
         player = new Player('red',game);
-        player.setSprite(game.add.sprite(200,200,'w_red'));
+        player.setSprite(game.add.sprite(0,0,'w_red'));
         player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
 
+        game.input.onDown.add(gofull, this);
 
         game.camera.follow(player.sprite);
 
-        inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
-        inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
+        inputsKeyboard = game.input.keyboard.createCursorKeys();
+        inputsMouse = game.input.mousePointer; 
         player.sonar(game);
     }
 
@@ -64,50 +73,56 @@ function mainPhaser(){
         // if(!game.focus) return;
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
+        // player.farAway(game, player);
 
         // check for collision over the player's sonar
-        game.physics.collide(player.sonarPts,map.obstacles,function(pt,ob){
-            pt.body.velocity = new Phaser.Point(0,0); //  we stop the point
-            pt.kill();
-            pt.lifespan = 1;//pt.lifespan*2 + Math.random()*100; // add a little delay
-            var d = game.add.sprite(pt.x,pt.y,'w_red');
-            d.scale = new Phaser.Point(2,2); 
-            d.lifespan = 1000;
+        if(player.type.color == 'red'){
+            game.physics.collide(player.sonarPts,map.obstaclesRed,function(pt,ob){
+                player.sonarCollision(pt,game);
+            });
+        }
+       
+       if(player.type.color == 'blue'){
+            game.physics.collide(player.sonarPts,map.obstaclesBlue,function(pt,ob){
+                player.sonarCollision(pt,game);
+            });
+        }
+       
+       if(player.type.color == 'green'){
+            game.physics.collide(player.sonarPts,map.obstaclesGreen,function(pt,ob){
+                player.sonarCollision(pt,game);
+            });
+        }
+       
 
+        // console.log(player.sprite,map.obstaclesRed);
+        game.physics.collide(player.sprite,map.obstaclesRed,function(pl,ob){
+            player.loseLife();
+        });
+        game.physics.collide(player.sprite,map.obstaclesBlue,function(pl,ob){
+            player.loseLife();
+        });
+        game.physics.collide(player.sprite,map.obstaclesGreen,function(pl,ob){
+            player.loseLife();
         });
 
-        game.physics.collide(player.sprite,map.obstacles,function(){
-            player.life -= 1;
-            if(player.life == 0){
-                player.sprite.x = 0;
-                player.sprite.y = 0;
-                player.life = 3;
-            }
-            player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
-        });
+        // map.streams.forEach(function(stream){
+        //     var minDist = 100;
+        //     var param = stream.getForce(player.sprite,game);
+        //     if(param.distance < minDist){
+        //         minDist = param.distance;
+        //         player.applyForce(param.force,stream.x,stream.y,game);
+        //     }
+        // });
 
-        map.streams.forEach(function(stream){
-            var minDist = 100;
-            var param = stream.getForce(player.sprite,game);
-            if(param.distance < minDist){
-                minDist = param.distance;
-                player.applyForce(param.force,stream.x,stream.y,game);
-            }
-        });
-
-        // for(var i in map.streams){
-        //     var force = map.streams.getAt(i).getForce(player.sprite,game);
-        //     player.applyForce(force,map.stream.x,map.stream.y,game);
-        // }
-        
-    }
+}
 
 
-    function collideHandler() {
-        console.log("coucou");
-    }
+function collideHandler() {
+    console.log("coucou");
+}
 
-    function render (){
+function render (){
         // map.obstacles.forEachAlive(function(ob){
         //     // console.log(ob);
         //    game.debug.renderRectangle(ob,'#022ff22');
@@ -118,17 +133,17 @@ function mainPhaser(){
         // // }   
 
         // console.log("X : "+player.sprite.x+" | Y : "+player.sprite.y);
-        var m = map.getObstacles();
+        //var m = map.getObstacles();
 
-// //         console.log("size = " + m.total);
-// //        console.debug(m);
+        // //         console.log("size = " + m.total);
+        // //        console.debug(m);
 
-//             {
-// //                console.log("obs = " + i);
-// //                console.log(m.getAt(i));
-//                 game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
-//             }
-//         }
-}
+        //             {
+        // //                console.log("obs = " + i);
+        // //                console.log(m.getAt(i));
+        //                 game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
+        //             }
+        //         }
+    }
 }
 
