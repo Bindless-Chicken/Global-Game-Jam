@@ -3,7 +3,9 @@ var Map = new Class
     initialize: function (sectors, game)
     {
         this.sectors = sectors;
-        this.obstacles = game.add.group();
+        this.obstaclesRed = game.add.group();
+        this.obstaclesBlue = game.add.group();
+        this.obstaclesGreen = game.add.group();
         this.stream = Stream;
     },
 
@@ -22,9 +24,19 @@ var Map = new Class
         this.obstacles = obstacles;
     },
 
-    getObstacles: function()
+    getObstaclesRed: function()
     {
-        return this.obstacles;
+        return this.obstaclesRed;
+    },
+
+    getObstaclesBlue: function()
+    {
+        return this.obstaclesBlue;
+    },
+
+    getObstaclesGreen: function()
+    {
+        return this.obstaclesGreen;
     }
 
 });

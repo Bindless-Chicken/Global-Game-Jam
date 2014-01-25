@@ -37,11 +37,21 @@ function createMapProcedural(game){
 
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
+    var color;
 
     for(var i=0; i<30+Math.random()*10; i++){
-        map.getObstacles().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
+        switch (Math.random()*2){
+            case 1:
+                map.getObstaclesRed().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
+                break;
+            case 2:
+                map.getObstaclesBlue().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.BLUE)).sprite);
+                break;
+            case 3:
+                map.getObstaclesGreen().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.GREEN)).sprite);
+                break;
+        }
     }
-
 
     //Define the world size
 
