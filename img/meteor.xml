@@ -1,0 +1,10 @@
+<TextureAtlas imagePath="sheet.png">
+	<SubTexture name="meteor1.png" x="0" y="119" width="7" height="7"/>
+	<SubTexture name="meteor2.png" x="64" y="24" width="13" height="13"/>
+	<SubTexture name="meteor3.png" x="55" y="105" width="19" height="19"/>
+	<SubTexture name="meteor4.png" x="64" y="0" width="22" height="22"/>
+	<SubTexture name="meteor5.png" x="55" y="64" width="39" height="39"/>
+	<SubTexture name="meteor6.png" x="0" y="64" width="53" height="53"/>
+	<SubTexture name="meteor7.png" x="0" y="0" width="62" height="62"/>
+	<SubTexture name="meteor8.png" x="0" y="0" width="62" height="62"/>
+</TextureAtlas>
