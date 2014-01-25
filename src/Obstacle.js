@@ -1,5 +1,4 @@
-var Obstacle = new Class
-({
+var Obstacle = new Class({
     initialize: function (rectangle, type)
     {
         this.rectangle = rectangle;
