@@ -58,7 +58,7 @@ var Player = new Class({
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
         }
     },
-    sonar: function(game){
+    sonar: function(game,obstacles){
         for(var i = 0; i < this.nbPoints; i ++){
             var destPt = Phaser.Point.rotate(
                 (new Phaser.Point(this.sprite.center.x
@@ -71,9 +71,16 @@ var Player = new Class({
             var pt = game.add.sprite(this.sprite.center.x,this.sprite.center.y,'w_red');
             pt.lifespan = 1550 + Math.random()*300;
             game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*10);
+            console.log(obstacles);
+            game.physics.collide(pt,obstacles,function(){
+                console.log("colliiiiide");
+            });
         }
-        var _= this;
-        setTimeout(function(){_.sonar(game);}, 900 + Math.random()*10);
+
+        var _this= this;
+        setTimeout(function(){
+            _this.sonar(game,obstacles);
+        }, 900 + Math.random()*10);
     }
 });
 

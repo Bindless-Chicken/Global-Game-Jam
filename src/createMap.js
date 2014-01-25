@@ -12,12 +12,11 @@ function createMap(game){
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
 
-    map.getObstacles().create(new Phaser.Rectangle(30,3,20,20), 0);
-    map.getObstacles().create(new Phaser.Rectangle(60,300,20,20), 1);
-    map.getObstacles().create(new Phaser.Rectangle(130,43,20,20), 2);
-    map.getObstacles().create(new Phaser.Rectangle(160,320,20,20), 3);
-    map.getObstacles().create(new Phaser.Rectangle(230,536,20,20), 4);
-    map.getObstacles().create(new Phaser.Rectangle(260,300,20,20), 5);
+    map.getObstacles().create(Math.random()*100,Math.random()*100,'h_red');
+    map.getObstacles().create(Math.random()*100,Math.random()*100,'h_red');
+    map.getObstacles().create(Math.random()*100,Math.random()*100,'h_red');
+    map.getObstacles().create(Math.random()*100,Math.random()*100,'h_red');
+    map.getObstacles().create(Math.random()*100,Math.random()*100,'h_red');
 
     console.log(map);
 

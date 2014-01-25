@@ -50,9 +50,14 @@ function mainPhaser(){
     }
 
     function render (){
-        for(var obstacle in  map.getObstacles()){
-            //game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
-        }   
+        map.obstacles.forEachAlive(function(ob){
+            // console.log(ob);
+           game.debug.renderRectangle(ob,'#022ff22');
+        },this)
+        // console.log(map.obstacles);
+        // for(var i = 0; i < map.obstacles.lenght; ++i){
+        //     console.log(i);
+        // }   
     }
 }
 
