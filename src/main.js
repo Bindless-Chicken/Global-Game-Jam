@@ -41,25 +41,40 @@ function mainPhaser(){
 
         game.camera.follow(player.sprite);
 
-        var stream = new Stream(45, 10, 100, 500, 10);
-        stream.create(game);
+//        var stream = new Stream(45, 10, 100, 500, 10);
+//        stream.create(game);
+        var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
         player.sonar(game);
+
+
     }
 
     function update () {
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
 
+        game.physics.collide(player, this.box, collideHandler, null, this);
+
 
     }
 
+    function collideHandler() {
+        console.log("coucou");
+    }
+
     function render (){
-        for(var obstacle in  map.getObstacles()){
-            //game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
-        }   
+
+//         console.log("size = " + map.getObstacles().size);
+        for (var i = 0; i < map.getObstacles().total; i++) {
+            {
+//                console.log("obs = " + map.getObstacles().total);
+//                game.debug.renderSpriteBody(map.getObstacles()[i].sprite,'#022ff22');
+            }
+
+        }
     }
 }
 
