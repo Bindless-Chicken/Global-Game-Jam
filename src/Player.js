@@ -20,17 +20,23 @@ var Player = new Class
     move: function (inputs) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
-        else if (inputs.right.isDown)
+        else
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.97;
+        
+        if (inputs.right.isDown)
             this.sprite.body.velocity.x = this.speed;
         else
-            this.sprite.body.velocity.x = (this.sprite.body.velocity.x < 0)?0:this.sprite.body.velocity.x - 5;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.97;
 
         if (inputs.up.isDown)
             this.sprite.body.velocity.y = -this.speed;
-        else if (inputs.down.isDown)
+        else
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
+        
+        if (inputs.down.isDown)
             this.sprite.body.velocity.y = this.speed;
         else
-            this.sprite.body.velocity.y = (this.sprite.body.velocity.y < 0)?0:this.sprite.body.velocity.y - 5;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
     }
 
 });
