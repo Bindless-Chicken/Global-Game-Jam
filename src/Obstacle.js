@@ -23,6 +23,6 @@ var Obstacle = new Class
 
     getType: function()
     {
-        return this.Type;
+        return this.type;
     }
 })
