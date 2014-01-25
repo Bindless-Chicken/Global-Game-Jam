@@ -13,37 +13,36 @@ var Player = new Class({
         this.life = 3;
 
         // sonar options
-        this.nbPoints = 150;
-        this.nbMaxoints = 500; // 200 + 100 to be sure tto have enough points
+        this.nbPoints = 100;
+        this.nbMaxoints = 300; // 200 + 100 to be sure tto have enough points
         this.sonarPts = game.add.group();
         this.sonarPts.createMultiple(this.nbMaxoints,'w_red');
         this.sonarSpeed = 900;
     },
     setSprite: function (sprite){
         this.sprite = sprite;
-        this.sprite.body.bounce = new Phaser.Point(2,2);
-        // this.sprite.type = this.type;
+        this.sprite.body.bounce = new Phaser.Point(0.6,0.6);
     },
     moveK: function (inputs) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
         else
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.97;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.95;
         
         if (inputs.right.isDown)
             this.sprite.body.velocity.x = this.speed;
         else
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.97;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.95;
 
         if (inputs.up.isDown)
             this.sprite.body.velocity.y = -this.speed;
         else
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.95;
         
         if (inputs.down.isDown)
             this.sprite.body.velocity.y = this.speed;
         else
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.95;
     },
     moveM: function (inputs) {
         if(inputs.isDown){
@@ -61,8 +60,8 @@ var Player = new Class({
         }
         else{
             this.firstDown = false;
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.97;
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.95;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.95;
         }
     },
     sonar: function(game){
@@ -80,7 +79,7 @@ var Player = new Class({
                     pt.reset(this.sprite.body.center.x, this.sprite.body.center.y);
                     pt.scale = new Phaser.Point(1,1);
                     pt.lifespan = 1550 + Math.random()*300;
-                    game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*2);
+                    game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*2 );//+ Math.cos(game.physics.angleBetween(this.sprite,pt))*this.sprite.body.velocity.x);
                 }
             }
         // }
@@ -90,7 +89,7 @@ var Player = new Class({
             _.sonar(game);
         }, this.sonarSpeed + Math.random()*10);
     },
-    sonarCollision : function(pt,game){
+    sonarCollision: function(pt,game){
         pt.body.velocity = new Phaser.Point(0,0); //  we stop the point
         pt.kill();
         pt.lifespan = 1;//pt.lifespan*2 + Math.random()*100; // add a little delay
@@ -98,16 +97,18 @@ var Player = new Class({
         d.scale = new Phaser.Point(2,2); 
         d.lifespan = 1000;
     },
-    loseLife : function (){
+    loseLife: function (){
         this.life -= 1;
         if(this.life === 0){
             this.sprite.x = 0;
             this.sprite.y = 0;
+            this.sprite.body.velocity.x = 0;
+            this.sprite.body.velocity.y = 0;
             this.life = 3;
         }
         this.sprite.scale = new Phaser.Point(2*this.life,2*this.life);
     },
-    applyForce : function (force,x,y,game) {
+    applyForce: function (force,x,y,game) {
         game.physics.accelerateToXY(this.sprite, x, y, -force);
         ;
     },

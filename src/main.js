@@ -34,7 +34,7 @@ function mainPhaser(){
 
     var map;
     var camera;
-    var player,inputsKeyboard, inputsMouse;
+    var player1,player2,inputsKeyboard, inputsMouse;
 
     function gofull() {
         game.stage.scale.startFullScreen();
@@ -56,26 +56,39 @@ function mainPhaser(){
         map = createMapProcedural(game);
 
 
-        player = new Player('red',game);
-        player.setSprite(game.add.sprite(0,0,'w_red'));
-        player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
+        player1 = new Player('red',game);
+        player1.setSprite(game.add.sprite(0,0,'w_red'));
+        player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
+        player1.sonar(game);
+
+        player2 = new Player('blue',game);
+        player2.setSprite(game.add.sprite(0,0,'w_red'));
+        player2.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
+        player2.sonar(game);
 
         game.input.onDown.add(gofull, this);
 
-        game.camera.follow(player.sprite);
+        game.camera.follow(player1.sprite);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys();
         inputsMouse = game.input.mousePointer; 
-        player.sonar(game);
+
+        
     }
 
     function update () {
         // if(!game.focus) return;
-        player.moveK(inputsKeyboard);
-        player.moveM(inputsMouse);
-        // player.farAway(game, player);
+        player1.moveK(inputsKeyboard);
+        player2.moveM(inputsMouse);
+        // player1.farAway(game, player1);
 
-        // check for collision over the player's sonar
+        // check for collision over the player1's sonar
+        collideHandler(player1,game);
+        collideHandler(player2,game);
+    }
+
+
+    function collideHandler(player, game) {
         if(player.type.color == 'red'){
             game.physics.collide(player.sonarPts,map.obstaclesRed,function(pt,ob){
                 player.sonarCollision(pt,game);
@@ -93,7 +106,6 @@ function mainPhaser(){
                 player.sonarCollision(pt,game);
             });
         }
-       
 
         // console.log(player.sprite,map.obstaclesRed);
         game.physics.collide(player.sprite,map.obstaclesRed,function(pl,ob){
@@ -106,23 +118,17 @@ function mainPhaser(){
             player.loseLife();
         });
 
-        // map.streams.forEach(function(stream){
-        //     var minDist = 100;
-        //     var param = stream.getForce(player.sprite,game);
-        //     if(param.distance < minDist){
-        //         minDist = param.distance;
-        //         player.applyForce(param.force,stream.x,stream.y,game);
-        //     }
-        // });
+        map.streams.forEach(function(stream){
+            var minDist = 100;
+            var param = stream.getForce(player1.sprite,game);
+            if(param.distance < minDist){
+                minDist = param.distance;
+                player1.applyForce(param.force,stream.x,stream.y,game);
+            }
+        });
+    }
 
-}
-
-
-function collideHandler() {
-    console.log("coucou");
-}
-
-function render (){
+    function render (){
         // map.obstacles.forEachAlive(function(ob){
         //     // console.log(ob);
         //    game.debug.renderRectangle(ob,'#022ff22');
