@@ -25,8 +25,6 @@ function mainPhaser(){
     var map;
     var player,inputsKeyboard, inputsMouse;
 
-    var destPoints = [];
-
     function preload() {
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png')
@@ -43,10 +41,8 @@ function mainPhaser(){
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
-        player.sonar(game);
+        player.sonar(game,map.obstacles);
     }
-
-
 
     function update () {
         player.moveK(inputsKeyboard);
