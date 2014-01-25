@@ -1,18 +1,17 @@
 var Obstacle = new Class({
-    initialize: function (rectangle, type)
-    {
-        this.rectangle = rectangle;
-        this.type = type;
+    initialize: function (game, size_x, size_y, image, color) {
+        this.sprite = new Phaser.Sprite(game, size_x, size_y, image);
+        this.sprite.body.immovable = true;
+        this.type = new Type(color);
     },
 
-    setRectangle: function(rectangle)
-    {
-        this.rectangle = rectangle;
+    setSprite: function (sprite) {
+        this.sprite = sprite;
+        this.sprite.body.immovable = true;
     },
 
-    getRectangle: function()
-    {
-        return this.rectangle;
+    getSprite: function () {
+        return this.sprite;
     },
 
     setType: function(type)
@@ -22,6 +21,6 @@ var Obstacle = new Class({
 
     getType: function()
     {
-        return this.type;
+        return this.type.color;
     }
 })

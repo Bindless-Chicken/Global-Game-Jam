@@ -2,8 +2,8 @@
  * Created by Seb on 25/01/14.
  */
 
-var Player = new Class({
-    initialize: function (color) {
+ var Player = new Class({
+    initialize: function (color,game) {
         this.mouseX = 0;
         this.mouseY = 0;
         this.sprite = null;
@@ -11,11 +11,16 @@ var Player = new Class({
         this.speed = 200;
         this.firstDown = false;
         // sonar options
-        this.nbPoints = 100;
+        this.nbPoints = 3;
+        this.nbMaxoints = 500; // 200 + 100 to be sure tto have enough points
+        this.sonarPts = game.add.group();
+        this.sonarPts.createMultiple(this.nbMaxoints,'w_red');
     },
+
     setSprite: function (sprite){
         this.sprite = sprite;
     },
+
     moveK: function (inputs) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
@@ -44,7 +49,6 @@ var Player = new Class({
                 this.mouseX = inputs.x;
                 this.firstDown = true;
             }
-
             // Right
             this.sprite.body.velocity.x-=1.25*(this.mouseX-inputs.x);
             this.sprite.body.velocity.y-=1.25*(this.mouseY-inputs.y);
@@ -58,29 +62,31 @@ var Player = new Class({
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
         }
     },
-    sonar: function(game,obstacles){
-        for(var i = 0; i < this.nbPoints; i ++){
-            var destPt = Phaser.Point.rotate(
-                (new Phaser.Point(this.sprite.center.x
-                   ,this.sprite.center.y))
-                ,this.sprite.center.x
-                ,this.sprite.center.y
-                ,360/this.nbPoints * i
-                ,true, this.nbPoints);
+    sonar: function(game){
+        // console.log(this.nbPoints);
 
-            var pt = game.add.sprite(this.sprite.center.x,this.sprite.center.y,'w_red');
-            pt.lifespan = 1550 + Math.random()*300;
-            game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*10);
-            console.log(obstacles);
-            game.physics.collide(pt,obstacles,function(){
-                console.log("colliiiiide");
-            });
+        if(this.sonarPts.countDead() < this.nbPoints){ 
+            console.log("too less deadPoints !");
+        }
+        else{
+            for(var i = 0; i < this.nbPoints ; i ++){
+                var destPt = new Phaser.Point(this.sprite.body.center.x, this.sprite.body.center.y)
+                Phaser.Point.rotate(destPt, this.sprite.body.center.x, this.sprite.body.center.y,360/this.nbPoints * i, true, 100);
+
+                var pt = this.sonarPts.getFirstDead();
+                pt.reset(this.sprite.body.center.x, this.sprite.body.center.y);
+                pt.lifespan = 1550 + Math.random()*300;
+                game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*2);
+            }
         }
 
-        var _this= this;
+        var _= this;
         setTimeout(function(){
-            _this.sonar(game,obstacles);
+            _.sonar(game);
         }, 900 + Math.random()*10);
+    },
+    getSectors : function( sectors ){
+
     }
 });
 
