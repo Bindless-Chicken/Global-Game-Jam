@@ -23,6 +23,7 @@ function loadFiles(){
 function mainPhaser(){
     var game = new Phaser.Game(800, 600, Phaser.CANVAS, '', { preload: preload, create: create, update: update, render: render });
     var map;
+    var camera;
     var player,inputsKeyboard, inputsMouse;
 
     var destPoints = [];
@@ -36,26 +37,50 @@ function mainPhaser(){
     function create() {
         player = new Player('red');
         player.setSprite(game.add.sprite(200,200,'h_red'));
+
+
         game.camera.follow(player.sprite);
 
-        var stream = new Stream(45, 10, 100, 500, 10);
-        stream.create(game);
+//        var stream = new Stream(45, 10, 100, 500, 10);
+//        stream.create(game);
+        var a = new Obstacle(game, 400, 400, "w_red", COLORS.RED);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys(); // bind the keyboard/mouse to inputs
         inputsMouse = game.input.mousePointer; // bind the keyboard/mouse to inputsb
         player.sonar(game);
+
+
     }
 
     function update () {
         player.checkSector(map.getSectors());
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
+
+        game.physics.collide(player, this.box, collideHandler, null, this);
+
+
+    }
+
+    function collideHandler() {
+        console.log("coucou");
     }
 
     function render (){
-        for(var obstacle in  map.getObstacles()){
-            //game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
-        }   
+
+        var m = map.getObstacles();
+
+//         console.log("size = " + m.total);
+//        console.debug(m);
+
+        for (var i = 0; i < m.total; i++) {
+            {
+//                console.log("obs = " + i);
+//                console.log(m.getAt(i));
+                game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
+            }
+
+        }
     }
 }
 
