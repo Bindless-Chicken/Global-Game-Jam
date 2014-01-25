@@ -20,8 +20,9 @@ function loadFiles(){
     }
 }
 
+
 function mainPhaser(){
-    var game = new Phaser.Game(800, 600, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game(1280, 1024, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
     game.focus = false;
     game.createSprite = function(x, y, key){return this.add.sprite(x, y, String(key));};
     $(window).focus(function() {game.focus = true;}).blur(function() {game.focus = false;});
@@ -34,6 +35,10 @@ function mainPhaser(){
     var map;
     var camera;
     var player,inputsKeyboard, inputsMouse;
+
+    function gofull() {
+        game.stage.scale.startFullScreen();
+    }
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
@@ -51,6 +56,7 @@ function mainPhaser(){
         player.setSprite(game.add.sprite(200,200,'w_red'));
         player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
 
+        game.input.onDown.add(gofull, this);
 
         game.camera.follow(player.sprite);
 
