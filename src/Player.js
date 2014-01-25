@@ -8,7 +8,7 @@ var Player = new Class({
         this.mouseY = 0;
         this.sprite = null;
         this.type = new Type(color);
-        this.speed = 150;
+        this.speed = 200;
         this.firstDown = false;
         this.life = 3;
 
@@ -16,15 +16,57 @@ var Player = new Class({
         this.nbPoints = 150;
         this.nbMaxoints = 500; // 200 + 100 to be sure tto have enough points
         this.sonarPts = game.add.group();
-        this.sonarPts.createMultiple(this.nbMaxoints,'w_red');
+        this.sonarPts.createMultiple(this.nbMaxoints,'w_'+color.toLowerCase());
         this.sonarSpeed = 900;
     },
+
     setSprite: function (sprite){
         this.sprite = sprite;
         this.sprite.body.bounce = new Phaser.Point(2,2);
         // this.sprite.type = this.type;
     },
-    moveK: function (inputs) {
+
+    parseColor: function (game, player, color) {
+        this.type = new  Type(color);
+        this.sonarPts.removeAll();
+        this.sonarPts.createMultiple(this.nbMaxoints,'w_'+color.toLowerCase());
+        var x = this.sprite.x;
+        var y = this.sprite.y;
+        this.sprite.destroy();
+        this.setSprite(game.add.sprite(x,y,'w_'+player.type.color.toLowerCase()));
+        this.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
+    },
+
+    setType: function(player, game) {
+        var colorArray = new Array();
+        colorArray.push("RED");
+        colorArray.push("BLUE");
+        colorArray.push("GREEN");
+        colorArray.push("YELLOW");
+        colorArray.push("PURPLE");
+        
+
+        for (var i = 0; i < 5; i++) {
+            if(colorArray[i] == player.type.color.toUpperCase())
+            {
+                 var rand = i;
+            }               
+        };
+
+        if(rand == 4)
+        {
+            rand = 0;
+        }
+        else
+        {
+            rand++;
+        }
+        console.log(rand);
+
+        this.parseColor(game, player, colorArray[rand]);       
+    },
+
+    moveK: function (inputs, game) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
         else
@@ -44,6 +86,9 @@ var Player = new Class({
             this.sprite.body.velocity.y = this.speed;
         else
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.97;
+
+        if(game.input.keyboard.justPressed(32,100))
+            this.setType(this, game);
     },
     moveM: function (inputs) {
         if(inputs.isDown){

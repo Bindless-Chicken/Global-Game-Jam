@@ -42,9 +42,14 @@ function mainPhaser(){
 
     function preload() {
         game.load.image('h_red','img/h_red.png');
+        
         game.load.image('w_red','img/wave_red.png');
+        game.load.image('w_blue','img/wave_blue.png');
+        game.load.image('w_green','img/wave_green.png');
+        game.load.image('w_yellow','img/wave_yellow.png');
+        game.load.image('w_purple','img/wave_purple.png');
+
         game.load.image('obstacle','img/obstacle.png');
-        game.load.image('stream','img/stream.png');
         game.load.image('greenline', 'img/greenline.png');
         game.load.image('meteor', 'img/meteor.png');
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -57,7 +62,7 @@ function mainPhaser(){
 
 
         player = new Player('red',game);
-        player.setSprite(game.add.sprite(0,0,'w_red'));
+        player.setSprite(game.add.sprite(200,200,'w_'+player.type.color.toLowerCase()));
         player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
 
         game.input.onDown.add(gofull, this);
@@ -71,9 +76,9 @@ function mainPhaser(){
 
     function update () {
         // if(!game.focus) return;
-        player.moveK(inputsKeyboard);
+        player.moveK(inputsKeyboard, game);
         player.moveM(inputsMouse);
-        // player.farAway(game, player);
+        player.farAway(game, player);
 
         // check for collision over the player's sonar
         if(player.type.color == 'red'){
