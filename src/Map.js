@@ -1,9 +1,9 @@
 var Map = new Class
 ({
-    initialize: function (sectors, obstacles)
+    initialize: function (sectors, game)
     {
         this.sectors = sectors;
-        this.obstacles = obstacles;
+        this.obstacles = game.add.group();
     },
 
     setSectors: function(sectors)

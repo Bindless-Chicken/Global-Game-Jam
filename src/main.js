@@ -30,7 +30,7 @@ function mainPhaser(){
     function preload() {
         game.load.image('h_red','img/h_red.png');
         game.load.image('w_red','img/wave_red.png')
-        map = createMap();
+        map = createMap(game);
     }
 
     function create() {
@@ -46,8 +46,6 @@ function mainPhaser(){
         player.sonar(game);
     }
 
-
-
     function update () {
         player.moveK(inputsKeyboard);
         player.moveM(inputsMouse);
@@ -55,7 +53,7 @@ function mainPhaser(){
 
     function render (){
         for(var obstacle in  map.getObstacles()){
-            game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
+            //game.debug.renderRectangle(map.getObstacles()[obstacle].getRectangle(),'#022ff22');
         }   
     }
 }
