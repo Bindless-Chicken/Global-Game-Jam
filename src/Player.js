@@ -2,6 +2,7 @@
  * Created by Seb on 25/01/14.
  */
 
+
 var Player = new Class
 ({
 
