@@ -63,22 +63,24 @@
         }
     },
     sonar: function(game){
-        // console.log(this.nbPoints);
 
-        if(this.sonarPts.countDead() < this.nbPoints){ 
-            console.log("too less deadPoints !");
-        }
-        else{
-            for(var i = 0; i < this.nbPoints ; i ++){
-                var destPt = new Phaser.Point(this.sprite.body.center.x, this.sprite.body.center.y)
-                Phaser.Point.rotate(destPt, this.sprite.body.center.x, this.sprite.body.center.y,360/this.nbPoints * i, true, 100);
-
-                var pt = this.sonarPts.getFirstDead();
-                pt.reset(this.sprite.body.center.x, this.sprite.body.center.y);
-                pt.lifespan = 1550 + Math.random()*300;
-                game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*2);
+        // if(!game.focus){
+            if(this.sonarPts.countDead() < this.nbPoints){ 
+                console.log("too less deadPoints !");
             }
-        }
+            else{
+                for(var i = 0; i < this.nbPoints ; i ++){
+                    var destPt = new Phaser.Point(this.sprite.body.center.x, this.sprite.body.center.y)
+                    Phaser.Point.rotate(destPt, this.sprite.body.center.x, this.sprite.body.center.y,360/this.nbPoints * i, true, 100);
+
+                    var pt = this.sonarPts.getFirstDead();
+                    pt.reset(this.sprite.body.center.x, this.sprite.body.center.y);
+                    pt.scale = new Phaser.Point(1,1);
+                    pt.lifespan = 1550 + Math.random()*300;
+                    game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*2);
+                }
+            }
+        // }
 
         var _= this;
         setTimeout(function(){

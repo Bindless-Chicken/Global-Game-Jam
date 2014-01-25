@@ -15,17 +15,14 @@ function createMap(game){
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
 
-    map.getObstacles().add(new Obstacle(game, 500, 500, 'w_red', COLORS.RED).sprite);
-    map.getObstacles().add(new Obstacle(game, 800, 800, 'w_red', COLORS.RED).sprite);
-    map.getObstacles().add(new Obstacle(game, -500, -500, 'w_red', COLORS.RED).sprite);
-
-    console.log(map);
+    map.getObstacles().add((new Obstacle(game, 500, 500, 'h_red', COLORS.RED)).sprite);
+    map.getObstacles().add((new Obstacle(game, 600, 600, 'h_red', COLORS.RED)).sprite);
+    map.getObstacles().add((new Obstacle(game, 800, 800, 'h_red', COLORS.RED)).sprite);
 
 
     //Define the world size
 
     game.world.setBounds(0, 0, 3000, 3000);
-
 
     return map;
 }
