@@ -27,7 +27,7 @@ function mainPhaser(){
     $(window).focus(function() {game.focus = true;}).blur(function() {game.focus = false;});
 
     setInterval(function () {
-        console.log(game.focus);
+        // console.log(game.focus);
     }, 1000);
 
 
@@ -45,6 +45,8 @@ function mainPhaser(){
         map = createMapProcedural(game);
         player = new Player('red',game);
         player.setSprite(game.add.sprite(200,200,'w_red'));
+        player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
+
 
         game.camera.follow(player.sprite);
 
@@ -65,12 +67,24 @@ function mainPhaser(){
         // check for collision over the player's sonar
         game.physics.collide(player.sonarPts,map.obstacles,function(pt,ob){
             pt.body.velocity = new Phaser.Point(0,0); //  we stop the point
-            pt.lifespan = pt.lifespan + Math.random()*100; // add a little delay
-            pt.scale =  new Phaser.Point(2,2); 
+            pt.kill();
+            pt.lifespan = 1;//pt.lifespan*2 + Math.random()*100; // add a little delay
+            var d = game.add.sprite(pt.x,pt.y,'w_red');
+            d.scale = new Phaser.Point(2,2); 
+            d.lifespan = 1000;
+          
         });
 
-        game.physics.collide(player.sprite,map.obstacles,function(){});
+        game.physics.collide(player.sprite,map.obstacles,function(){
+            player.life -= 1;
+            if(player.life == 0){
+                player.sprite.reset(0,0);
+                player.life = 3;
+            }
+            player.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
+        });
     }
+  
 
     function collideHandler() {
         console.log("coucou");
@@ -86,7 +100,7 @@ function mainPhaser(){
         // //     console.log(i);
         // // }   
 
-        console.log("X : "+player.sprite.x+" | Y : "+player.sprite.y);
+        // console.log("X : "+player.sprite.x+" | Y : "+player.sprite.y);
         var m = map.getObstacles();
 
 // //         console.log("size = " + m.total);

@@ -10,15 +10,19 @@
         this.type = new Type(color);
         this.speed = 200;
         this.firstDown = false;
+        this.life = 3;
+
         // sonar options
         this.nbPoints = 150;
         this.nbMaxoints = 500; // 200 + 100 to be sure tto have enough points
         this.sonarPts = game.add.group();
         this.sonarPts.createMultiple(this.nbMaxoints,'w_red');
+        this.sonarSpeed = 900;
     },
 
     setSprite: function (sprite){
         this.sprite = sprite;
+        this.sprite.body.bounce = new Phaser.Point(2,2);
     },
 
     moveK: function (inputs) {
@@ -63,10 +67,9 @@
         }
     },
     sonar: function(game){
-
         // if(!game.focus){
-            if(this.sonarPts.countDead() < this.nbPoints){ 
-                console.log("too less deadPoints !");
+            if(this.sonarPts.countDead() <= this.nbPoints){ 
+                console.log("too less deadPoints !",this.sonarPts.countDead() );
             }
             else{
                 for(var i = 0; i < this.nbPoints ; i ++){
@@ -74,6 +77,7 @@
                     Phaser.Point.rotate(destPt, this.sprite.body.center.x, this.sprite.body.center.y,360/this.nbPoints * i, true, 100);
 
                     var pt = this.sonarPts.getFirstDead();
+                    // var pt = this.sonarPts.getRandom();
                     pt.reset(this.sprite.body.center.x, this.sprite.body.center.y);
                     pt.scale = new Phaser.Point(1,1);
                     pt.lifespan = 1550 + Math.random()*300;
@@ -85,10 +89,9 @@
         var _= this;
         setTimeout(function(){
             _.sonar(game);
-        }, 900 + Math.random()*10);
+        }, this.sonarSpeed + Math.random()*10);
     },
     getSectors : function( sectors ){
-
     }
 });
 

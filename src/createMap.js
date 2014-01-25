@@ -2,7 +2,6 @@
  * Created by Thomas on 1/25/14.
  */
 
-
 function createMap(game){
     // Sectors
     var sectorEasy = new Sector(500, function () {
@@ -39,8 +38,9 @@ function createMapProcedural(game){
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
 
-    for(var i=0; i<30+Math.random()*10; i++)
+    for(var i=0; i<30+Math.random()*10; i++){
         map.getObstacles().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
+    }
 
 
     //Define the world size
