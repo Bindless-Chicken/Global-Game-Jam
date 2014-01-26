@@ -212,7 +212,6 @@ function mainPhaser() {
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
-<<<<<<< HEAD
            if(game.physics.collide(player1.sonarPts,charger[i].sprite))
             {
                 charger[i].getDmg(1);
@@ -226,9 +225,6 @@ function mainPhaser() {
             if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
             // monsters[i].reachable(player2, game);
-=======
-           // monsters[i].reachable(player2, game);
->>>>>>> bb48d5ed95e6ba420b8aefdbc6dc71a85f3b4013
         }
         // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {

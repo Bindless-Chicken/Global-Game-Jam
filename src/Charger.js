@@ -126,7 +126,6 @@ function createDefaultCharger(game, x, y) {
 
 function createProceduralEnemy(game) {
 
-<<<<<<< HEAD
     var charger = new Array();
 
     for (var i = 0; i < 20; i++) {
@@ -135,13 +134,3 @@ function createProceduralEnemy(game) {
 
     return charger;
 }
-=======
-	var charger = new Array();
-
-	for (var i = 0; i < 20; i++) {
-            charger.push(createDefaultCharger(game, Math.random()*3000-1500, Math.random()*3000-1500));
-    };
-
-    return charger;
-}
->>>>>>> bb48d5ed95e6ba420b8aefdbc6dc71a85f3b4013
