@@ -23,6 +23,8 @@ function loadFiles(){
 
 function mainPhaser(){
     var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
+    var maxColor = 2;
+
     game.focus = false;
     game.createSprite = function(x, y, key){return this.add.sprite(x, y, String(key));};
     $(window).focus(function() {game.focus = true;}).blur(function() {game.focus = false;});
@@ -84,6 +86,10 @@ function mainPhaser(){
         };
 
         // map = createMap(game);
+        map = createMapProcedural(game);
+        for (var i = 0; i < 5; i++) {
+            charger.push(createCharger(game,i));
+        };
 
         //todo Change 2 to nbPlayer when define
         map = createMapProcedural(game, 2);
@@ -112,7 +118,7 @@ function mainPhaser(){
         game.camera.follow(player1.sprite);
 
 
-        inputsKeyboard = game.input.keyboard.createCursorKeys();
+        inputsKeyboard = game.input.keyboard;
         inputsMouse = game.input.mousePointer;
     }
 
@@ -127,11 +133,13 @@ function mainPhaser(){
                 monsters[i].reachable(player1, game);
 //            monsters[i].reachable(player2, game);
         };
+
+        player1.updateSector(map, game);
         // player1.farAway(game, player1);
 
         // check for collision over the player1's sonar
         collideHandler(player1,game);
-        collideHandler(player2,game);
+        //collideHandler(player2,game);
     }
 
 
