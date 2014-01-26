@@ -58,7 +58,7 @@ function createMapProcedural(game, nbColors) {
             console.log("Zone 3");
         }
     });
-    var sectorEnd = new Sector(2000, function (player) {
+    var sectorEnd = new Sector(sectorHard.getRadius() + 2000, function (player) {
         if (player.currentZone != 4) {
             player.currentZone = 4;
             game.changeZone(3);

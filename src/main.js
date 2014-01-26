@@ -34,8 +34,8 @@ function mainPhaser() {
     $(window).focus(function () {
         game.focus = true;
     }).blur(function () {
-        game.focus = false;
-    });
+            game.focus = false;
+        });
 
     setInterval(function () {
         // console.log(game.focus);
@@ -126,11 +126,6 @@ function mainPhaser() {
         map = createMapProcedural(game, 1);
 
 //        console.debug(map);
-
-
-//        for (var i = 0; i < 5; i++) {
-//            charger.push(createCharger(game,i));
-//        };
 
         player1 = new Player(COLORS.RED, game);
         player1.setSprite(game.add.sprite(0, 0, 'w_red'));
