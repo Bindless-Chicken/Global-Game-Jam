@@ -11,7 +11,7 @@ var Charger = new Class
 
 	attack: function(player, game)
 	{
-		game.physics.moveToXY(this.sprite, player.sprite.x, player.sprite.y, 250);		
+		game.physics.moveToXY(this.sprite, player.sprite.x, player.sprite.y, 75);		
 	},
 
 	reachable: function(player, game)
