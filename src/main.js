@@ -22,7 +22,7 @@ function loadFiles(){
 
 
 function mainPhaser(){
-    var game = new Phaser.Game(1280, 1024, Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
+    var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
     game.focus = false;
     game.createSprite = function(x, y, key){return this.add.sprite(x, y, String(key));};
     $(window).focus(function() {game.focus = true;}).blur(function() {game.focus = false;});
@@ -37,6 +37,7 @@ function mainPhaser(){
     var player1,player2,inputsKeyboard, inputsMouse;
 
     function gofull() {
+
         game.stage.scale.startFullScreen();
     }
 
@@ -52,6 +53,9 @@ function mainPhaser(){
         game.load.image('obstacle','img/obstacle.png');
         game.load.image('greenline', 'img/greenline.png');
         game.load.image('meteor', 'img/meteor.png');
+
+        game.load.image('stream', 'img/stream.png');
+
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
         game.load.spritesheet('meteor', 'img/meteor.png', 50, 50, 30);*/
     }
@@ -71,13 +75,13 @@ function mainPhaser(){
         player2.sonar(game);
 
 
-        game.input.onDown.add(gofull, this);
 
         game.camera.follow(player1.sprite);
 
         inputsKeyboard = game.input.keyboard.createCursorKeys();
-        inputsMouse = game.input.mousePointer; 
+        inputsMouse = game.input.mousePointer;
 
+        game.input.onDown.add(gofull, this);
         
     }
 

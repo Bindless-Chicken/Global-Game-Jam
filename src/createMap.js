@@ -44,16 +44,18 @@ function createMapProcedural(game){
     for(var i = 0; i< 30 + Math.random()*10 ; i++){
         switch ((Math.floor(Math.random()*100))%2){
             case 0:
-                map.getObstaclesRed().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'stream', COLORS.RED)).sprite);
+                map.getObstaclesRed().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
                 break;
             case 1:
-                map.getObstaclesBlue().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'stream', COLORS.BLUE)).sprite);
+                map.getObstaclesBlue().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.BLUE)).sprite);
                 break;
             case 2:
-                map.getObstaclesGreen().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'stream', COLORS.GREEN)).sprite);
+                map.getObstaclesGreen().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.GREEN)).sprite);
                 break;
         }
     }
+    map.streams.add((new Stream(100,100,100,10)).create(game));
+    map.streams.add((new Stream(100,200,300,10)).create(game));
 
     //Define the world size
 
