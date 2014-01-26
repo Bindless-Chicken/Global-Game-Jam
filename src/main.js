@@ -130,9 +130,6 @@ function mainPhaser() {
 
         // map = createMap(game);
         map = createMapProcedural(game);
-        for (var i = 0; i < 5; i++) {
-            charger.push(createCharger(game,i));
-        };
 
         //todo Change 2 to nbPlayer when define
         map = createMapProcedural(game, maxColor);
