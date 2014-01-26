@@ -96,12 +96,6 @@ function mainPhaser(){
 
         inputsKeyboard = game.input.keyboard.createCursorKeys();
         inputsMouse = game.input.mousePointer;
-
-<<<<<<< HEAD
-=======
-        // game.input.onDown.add(gofull, this);
-        
->>>>>>> d799cdd3f7e9afa4b92ac092d93871fdcc335d81
     }
 
     function update () {
