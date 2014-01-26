@@ -225,6 +225,11 @@ function mainPhaser() {
             if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
             // monsters[i].reachable(player2, game);
+        for (var i = 0; i < monsters.length; i++) {
+            if (monsters.getAt(i).name == "charger"){
+                monsters[i].reachable(player1, game);
+                monsters[i].reachable(player2, game);
+            }
         }
         // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {
