@@ -11,7 +11,7 @@ var Charger = new Class
 
 	attack: function(player, game)
 	{
-		game.physics.moveToXY(this.sprite, player.sprite.x, player.sprite.y, 75);		
+		game.physics.moveToXY(this.sprite, player.sprite.x, player.sprite.y, 75);
 	},
 
 	reachable: function(player, game)
@@ -24,18 +24,22 @@ var Charger = new Class
 			if((player.sprite.x > this.sprite.x) && (player.sprite.y > this.sprite.y))
 			{
 				player.getPush(player, 500, 500);
+				this.sprite.angle = (90+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
 			}
 			else if((player.sprite.x > this.sprite.x) && (player.sprite.y < this.sprite.y))
 			{
 				player.getPush(player, 500, -500);
+				this.sprite.angle = (0+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
 			}
 			else if((player.sprite.x < this.sprite.x) && (player.sprite.y > this.sprite.y))
 			{
 				player.getPush(player, -500, 500);
+				this.sprite.angle = (180+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
 			}
 			else
 			{
 				player.getPush(player, -500, -500);
+				this.sprite.angle = (270+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
 			}			
 		}
 	},
