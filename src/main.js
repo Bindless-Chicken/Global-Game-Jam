@@ -67,7 +67,8 @@ function mainPhaser() {
     var map;
     var camera;
     var player1, player2, inputsKeyboard, inputsMouse, inputsPointer;
-    var charger = new Array();
+    var charger;
+    
 
 
     function gofull() {
@@ -85,7 +86,7 @@ function mainPhaser() {
 
         game.load.image('obstacle', 'img/obstacle.png');
         game.load.spritesheet('greenline', 'img/greenline.png', 10, 64, 40);
-        game.load.image('meteor', 'img/meteor.png');
+        game.load.spritesheet('meteor', 'img/meteor_sheet.png', 50, 50, 16);
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
@@ -204,9 +205,14 @@ function mainPhaser() {
         // if(!game.focus) return;
         player2.moveK(inputsKeyboard, game);
         player1.moveM(inputsPointer, inputsMouse, game);
+        var monsters = map.getMonsters();
+        
+
+        
         for (var i = 0; i < charger.length; i++) {
-            if (charger[i].dead == false)
+            if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
+<<<<<<< HEAD
            if(game.physics.collide(player1.sonarPts,charger[i].sprite))
             {
                 charger[i].getDmg(1);
@@ -220,6 +226,9 @@ function mainPhaser() {
             if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
             // monsters[i].reachable(player2, game);
+=======
+           // monsters[i].reachable(player2, game);
+>>>>>>> bb48d5ed95e6ba420b8aefdbc6dc71a85f3b4013
         }
         // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {
