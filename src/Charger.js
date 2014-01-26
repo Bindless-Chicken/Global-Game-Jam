@@ -16,10 +16,10 @@ var Charger = new Class
 
 	reachable: function(player, game)
 	{
-		console.log(((Math.sqrt(Math.abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(Math.abs(player.sprite.y-this.sprite.y))))+" vs "+ Math.sqrt(this.range));
+		// console.log(((Math.sqrt(Math.abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(Math.abs(player.sprite.y-this.sprite.y))))+" vs "+ Math.sqrt(this.range));
 		if(((Math.sqrt(Math.abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(Math.abs(player.sprite.y-this.sprite.y)))) <= Math.sqrt(this.range))
 		{
-			console.log("ATTACKED ! ");
+			// console.log("ATTACKED ! ");
 			this.attack(player, game);
 			if((player.sprite.x > this.sprite.x) && (player.sprite.y > this.sprite.y))
 			{
