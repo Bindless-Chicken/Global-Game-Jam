@@ -202,57 +202,60 @@ var Player = new Class({
         }
     },
     linePush: function(game, delay, radius){
-        var lineArray = new Array();
-
-        var y = Math.random()*3000;
-        y = y-3000;
-        var spriteLine = game.add.sprite(-3000, y, 'greenline');
-        spriteLine.animations.add('walk');
-        spriteLine.animations.play('walk', 20, true);
-        spriteLine.lifespan = delay;
-        lineArray.push(spriteLine);
+            var y = Math.random()*3000;
+            y = y-3000;
+            var degree = Math.random()*360;
+            
 
 
-        for (var i = 0; i < lineArray.length; i++) {
-           if(lineArray[i].lifespan <= 0)
-            lineArray.remove(i);
-        }
+
+            var spriteLine = game.add.sprite(-3000, y, 'greenline');
+            spriteLine.scale.setTo(300000, 1);
+            spriteLine.animations.add('spray');
+            spriteLine.animations.play('spray', 20, true);
+            spriteLine.angle = degree;
+            spriteLine.lifespan = delay;
+            
+            if(((this.sprite.y+1 > spriteLine.y)) && (this.sprite.y < spriteLine.y+64))
+            {
+                 console.log("LOOOSE");
+                this.loseLife();
+            }
+            
     },
-    farAway: function(game, player){        
-        var distance = (Math.abs(player.sprite.x)) + (Math.abs(player.sprite.y));
+    farAway: function(game){        
         var randRencontre = Math.random()*1000;
-        var randRencontre2 = Math.random()*1000;
-
-        if(distance <= 500){
+        if(this.currentZone == 1){
             //Lvl 1 event
-            if((randRencontre > 990) && (randRencontre2 > 990)){
+            if(randRencontre > 950){
                 //Push in an another direction
                 console.log("Push Line go !!!");
-                player.linePush(game, 1500, 100);
+                this.linePush(game, 1500, 100);
             }
-        }
-        else if(distance <= 1500){
-            if((randRencontre > 990) && (randRencontre2 > 990)){
-                //Pop wave going through the screen
-                console.log("Push Line lvl 2 go !!!");
-                player.linePush(game, player, 1000, 200);
+            else if(this.currentZone == 1){
+                if(randRencontre > 950){
+                    //Pop wave going through the screen
+                    console.log("Push Line lvl 2 go !!!");
+                    this.linePush(game, this, 1000, 200);
+                }
             }
-        }
-        else if(distance <= 3000) {
-            //Lvl 3 Event
-            if(randRencontre <= 750){
-                //DO nothing
+            else if(this.currentZone == 2){
+                //Lvl 3 Event
+                if(randRencontre <= 750){
+                    //DO nothing
+                }
+                else if(randRencontre > 990){
+                    //Meteor shower with one and a delay of 2.5s
+                    console.log("Meteor Shower !! Save your life !!!");
+                    this.meteorShower(game, this, 1500, 100, 1);
+                }
+                else if(randRencontre > 995){
+                    //Meteor shower with two and a delay of 1s
+                    console.log("Meteor Shower lvl2 !! Run fools !!!");
+                    this.meteorShower(game, this, 800, 100, 2);
+                }
             }
-            else if((randRencontre > 990) && (randRencontre2 > 990)){
-                //Meteor shower with one and a delay of 2.5s
-                console.log("Meteor Shower !! Save your life !!!");
-                player.meteorShower(game, player, 1500, 100, 1);
-            }
-            else if((randRencontre > 995) && (randRencontre2 > 995)){
-                //Meteor shower with two and a delay of 1s
-                console.log("Meteor Shower lvl2 !! Run fools !!!");
-                player.meteorShower(game, player, 800, 100, 2);
-            }
+
         }
     },
     updateSector: function(map, game){

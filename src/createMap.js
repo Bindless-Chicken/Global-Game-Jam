@@ -37,6 +37,7 @@
 
 function creditsDown(game, player){
     player.lock = true;
+    console.log(player);
     var length = ($(window).height()+$("#credits").height())+1000;
     console.log(length);
     $("#credits").animate({
@@ -52,11 +53,11 @@ function creditsDown(game, player){
     }, 25000, function() {
         // Animation complete.
     });
-    setInterval(changeColor(game),3000);
-}
 
-function changeColor(game, player){
-    player.setType(game);
+    //console.log(player);
+    //console.log(game);
+
+    //setTimeout(changeColor(game, player),1000);
 }
 
 function createMapProcedural(game, nbColors) {
@@ -66,6 +67,7 @@ function createMapProcedural(game, nbColors) {
             player.currentZone = 1;
             game.changeZone(0,player);
             console.log("Zone 1");
+
         }
     });
     var sectorMedium = new Sector(sectorEasy.getRadius() + 500 + Math.random() * 250, function (player) {
@@ -87,7 +89,8 @@ function createMapProcedural(game, nbColors) {
             player.currentZone = 4;
             game.changeZone(3,player);
             console.log("Zone 4");
-            changeColor(game, player);
+            console.log(player);
+            setTimeout(creditsDown(game, player),1000);
         }
     });
 
