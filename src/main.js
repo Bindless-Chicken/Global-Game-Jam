@@ -64,11 +64,13 @@ function mainPhaser(){
         player1.setSprite(game.add.sprite(0,0,'w_red'));
         player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player1.sonar(game);
+        player1.sprite.body.collideWorldBounds=true;
 
         player2 = new Player(COLORS.BLUE,game);
         player2.setSprite(game.add.sprite(0,0,'w_blue'));
         player2.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player2.sonar(game);
+        player2.sprite.body.collideWorldBounds=true;
 
 
         game.input.onDown.add(gofull, this);
