@@ -37,8 +37,8 @@ function mainPhaser(){
     var player1,player2,inputsKeyboard, inputsMouse;
     var charger = new Array();
 
-    function gofull() {
 
+    function gofull() {
         game.stage.scale.startFullScreen();
     }
 
@@ -57,6 +57,13 @@ function mainPhaser(){
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
+
+        game.load.audio('main','sound/mainLoop.m4a');
+        game.load.audio('blop1','sound/blop1.m4a');
+        game.load.audio('blop2','sound/blop2.m4a');
+        game.load.audio('blop3','sound/blop3.m4a');
+        game.load.audio('blop4','sound/blop4.m4a');
+        game.load.audio('blop5','sound/blop5.m4a');
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -64,6 +71,18 @@ function mainPhaser(){
     }
 
     function create() {
+
+        music = game.add.audio('main',1,true);
+        // music.play('',0,1,true);
+
+        blop = {
+            red : game.add.audio('blop1'),
+            blue : game.add.audio('blop2'),
+            green : game.add.audio('blop3'),
+            yellow : game.add.audio('blop4'),
+            purple : game.add.audio('blop5')
+        };
+
         // map = createMap(game);
         map = createMapProcedural(game);
         for (var i = 0; i < 5; i++) {
@@ -86,11 +105,9 @@ function mainPhaser(){
 
         game.camera.follow(player1.sprite);
 
+
         inputsKeyboard = game.input.keyboard.createCursorKeys();
         inputsMouse = game.input.mousePointer;
-
-        game.input.onDown.add(gofull, this);
-        
     }
 
     function update () {
@@ -132,12 +149,16 @@ function mainPhaser(){
         // console.log(player.sprite,map.obstaclesRed);
         game.physics.collide(player.sprite,map.obstaclesRed,function(pl,ob){
             player.loseLife();
+            blop[player.type.name].play();
+
         });
         game.physics.collide(player.sprite,map.obstaclesBlue,function(pl,ob){
             player.loseLife();
+            blop[player.type.name].play();
         });
         game.physics.collide(player.sprite,map.obstaclesGreen,function(pl,ob){
             player.loseLife();
+            blop[player.type.name].play();
         });
 
         map.streams.forEach(function(stream){
@@ -151,6 +172,7 @@ function mainPhaser(){
     }
 
     function render (){
+
         // map.obstacles.forEachAlive(function(ob){
         //     // console.log(ob);
         //    game.debug.renderRectangle(ob,'#022ff22');

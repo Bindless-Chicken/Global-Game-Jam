@@ -4,12 +4,10 @@
 
 var Player = new Class({
     initialize: function (color,game) {
-        console.log("color : " ,color);
         this.mouseX = 0;
         this.mouseY = 0;
         this.sprite = null;
         this.type = color;
-        console.log(this.type);
         this.speed = 100;
         this.firstDown = false;
         this.life = 3;
@@ -84,6 +82,9 @@ var Player = new Class({
 
         if(game.input.keyboard.justPressed(32,100))
             this.setType(game);
+
+        if(game.input.keyboard.justPressed(70,100))
+            gofull();
     },
     moveM: function (inputs) {
         if(inputs.isDown){
