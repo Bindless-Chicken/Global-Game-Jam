@@ -5,6 +5,7 @@ var Map = new Class
         this.obstaclesBlue = game.add.group();
         this.obstaclesGreen = game.add.group();
         this.streams = game.add.group();
+        this.setSectors(sectors);
     },
     setSectors: function(sectors){
         this.sectors = sectors;

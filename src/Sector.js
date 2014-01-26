@@ -19,5 +19,9 @@ var Sector = new Class
     getRadius: function()
     {
         return this.radius;
+    },
+
+    executeEvent: function(caller){
+        this.event(caller);
     }
 });

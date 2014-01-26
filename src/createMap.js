@@ -30,11 +30,23 @@ function createMap(game){
 
 function createMapProcedural(game){
     // Sectors
-    var sectorEasy = new Sector(500+Math.random()*250, function () {
+    var sectorEasy = new Sector(500+Math.random()*250, function (player) {
+        if(player.currentZone!=1){
+            player.currentZone = 1;
+            console.log("Zone 1");
+        }
     });
-    var sectorMedium = new Sector(1500+Math.random()*750, function () {
+    var sectorMedium = new Sector(1500+Math.random()*750, function (player) {
+        if(player.currentZone!=2){
+            player.currentZone = 2;
+            console.log("Zone 2");
+        }
     });
-    var sectorEnd = new Sector(3000+Math.random()*1500, function () {
+    var sectorEnd = new Sector(3000+Math.random()*1500, function (player) {
+        if(player.currentZone!=3){
+            player.currentZone = 3;
+            console.log("Zone 3");
+        }
     });
 
 
