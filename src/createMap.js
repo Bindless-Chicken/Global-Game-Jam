@@ -2,7 +2,6 @@
  * Created by Thomas on 1/25/14.
  */
 
-
 function createMap(game){
     // Sectors
     var sectorEasy = new Sector(500, function () {
@@ -19,8 +18,8 @@ function createMap(game){
     map.getObstacles().add((new Obstacle(game, 600, 600, 'obstacle', COLORS.RED)).sprite);
     map.getObstacles().add((new Obstacle(game, 800, 800, 'obstacle', COLORS.RED)).sprite);
 
-    //Create streams
-    map.getStreams().push(new Stream(game, 45, 10, 100, 150, 10, 250));
+    map.streams.add((new Stream(100,100,100,10)).create(game));
+    map.streams.add((new Stream(100,200,300,10)).create(game));
 
     //Define the world size
 
@@ -40,10 +39,23 @@ function createMapProcedural(game){
 
 
     var map = new Map([sectorEasy,sectorMedium,sectorEnd], game);
+    var color;
 
-    for(var i=0; i<30+Math.random()*10; i++)
-        map.getObstacles().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
-
+    for(var i = 0; i< 30 + Math.random()*10 ; i++){
+        switch ((Math.floor(Math.random()*100))%2){
+            case 0:
+                map.getObstaclesRed().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
+                break;
+            case 1:
+                map.getObstaclesBlue().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.BLUE)).sprite);
+                break;
+            case 2:
+                map.getObstaclesGreen().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.GREEN)).sprite);
+                break;
+        }
+    }
+    map.streams.add((new Stream(100,100,100,10)).create(game));
+    map.streams.add((new Stream(100,200,300,10)).create(game));
 
     //Define the world size
 
@@ -52,10 +64,3 @@ function createMapProcedural(game){
     return map;
 }
 
-var COLORS = {
-    RED: {name: "red", value: "#FF0000", power: {velocity: 10, period: 1}},
-    BLUE: {name: "blue", value: "#0000FF", power: {velocity: 10, period: 1}},
-    GREEN: {name: "green", value: "00FF00", power: {velocity: 10, period: 2}},
-    YELLOW: {name: "yellow", value: "FFFF00", power: {velocity: 20, period: 0.5}},
-    PURPLE: {name: "purple", value: "663399", power: {velocity: 5, period: 3}}
-};

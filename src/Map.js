@@ -1,35 +1,28 @@
 var Map = new Class
 ({
-    initialize: function (sectors, game)
-    {
-        this.sectors = sectors;
-        this.obstacles = game.add.group();
-        this.streams = new Array(Stream);
+    initialize: function (sectors, game){
+        this.obstaclesRed = game.add.group();
+        this.obstaclesBlue = game.add.group();
+        this.obstaclesGreen = game.add.group();
+        this.streams = game.add.group();
     },
-
-
-    getStreams: function () {
-        return this.streams;
-    },
-
-    setSectors: function(sectors)
-    {
+    setSectors: function(sectors){
         this.sectors = sectors;
     },
-
-    getSectors: function()
-    {
+    getSectors: function(){
         return this.sectors;
     },
-
-    setObstacles: function(obstacles)
-    {
+    setObstacles: function(obstacles){
         this.obstacles = obstacles;
     },
-
-    getObstacles: function()
-    {
-        return this.obstacles;
+    getObstaclesRed: function(){
+        return this.obstaclesRed;
+    },
+    getObstaclesBlue: function(){
+        return this.obstaclesBlue;
+    },
+    getObstaclesGreen: function(){
+        return this.obstaclesGreen;
     }
 
 });
