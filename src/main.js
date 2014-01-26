@@ -33,6 +33,7 @@ function mainPhaser(){
         // console.log(game.focus);
     }, 1000);
 
+    game.changeZone = changeZone;
 
     var map;
     var camera;
@@ -59,13 +60,25 @@ function mainPhaser(){
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
+        game.load.image('charger_dead','img/charger_dead.png');
 
-        game.load.audio('main','sound/mainLoop.m4a');
+        game.load.audio('main1','sound/main1.m4a');
+        game.load.audio('main2','sound/main2.m4a');
+        game.load.audio('main3','sound/main3.m4a');
+        game.load.audio('mainFinal','sound/mainFinal.m4a');
+
+        game.load.audio('level1','sound/level1.m4a');
+        game.load.audio('level2','sound/level2.m4a');
+        game.load.audio('level3','sound/level3.m4a');
+        game.load.audio('levelFinal','sound/finalLevel.m4a');
+
         game.load.audio('blop1','sound/blop1.m4a');
         game.load.audio('blop2','sound/blop2.m4a');
         game.load.audio('blop3','sound/blop3.m4a');
         game.load.audio('blop4','sound/blop4.m4a');
         game.load.audio('blop5','sound/blop5.m4a');
+
+        game.load.audio('ambiance','sound/ambiance.m4a');
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -74,18 +87,37 @@ function mainPhaser(){
 
     function create() {
 
-        music = game.add.audio('main',1,true);
-        // music.play('',0,1,true);
+        main = [
+            game.add.audio('main1'),
+            game.add.audio('main2'),
+            game.add.audio('main3'),
+            game.add.audio('mainFinal')
+        ];
+        // main[0].play('',0,1,true);
+
+        level = [
+            game.add.audio('level1',1,true),
+            game.add.audio('level2',1,true),
+            game.add.audio('level3',1,true),
+            game.add.audio('levelFinal',1,true)
+        ];
+
+        ambiance = game.add.audio('ambiance',1,true);
+        ambiance.play('',0,0.5,true);
 
         blop = {
-            red : game.add.audio('blop1'),
-            blue : game.add.audio('blop2'),
-            green : game.add.audio('blop3'),
-            yellow : game.add.audio('blop4'),
-            purple : game.add.audio('blop5')
+            red     : game.add.audio('blop1'),
+            blue    : game.add.audio('blop2'),
+            green   : game.add.audio('blop3'),
+            yellow  : game.add.audio('blop4'),
+            purple  : game.add.audio('blop5')
         };
 
         // map = createMap(game);
+        map = createMapProcedural(game);
+        for (var i = 0; i < 5; i++) {
+            charger.push(createCharger(game,i));
+        };
 
 
         //todo Change 2 to nbPlayer when define
@@ -103,6 +135,7 @@ function mainPhaser(){
         player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player1.sonar(game);
         player1.sprite.body.collideWorldBounds=true;
+        player1.maxColor = maxColor;
 
         player2 = new Player(COLORS.BLUE,game);
         player2.setSprite(game.add.sprite(0,0,'w_blue'));
@@ -119,10 +152,35 @@ function mainPhaser(){
         inputsMouse = game.input.mousePointer;
     }
 
+    function changeZone(newZone){
+        for (var i = 0; i < 4; i++) {
+            if(i == newZone){
+                level[i].resume();
+                main[i].play('',0,1,true);
+            }else{
+                console.log("pause : ", i);
+                main[i].pause();
+            }
+        };
+
+        if(newZone == 3){
+            ambiance.pause();
+        }else{
+            ambiance.resume();
+        }
+    }
+
     function update () {
         // if(!game.focus) return;
         player1.moveK(inputsKeyboard, game);
-        player2.moveM(inputsMouse);
+        //player2.moveM(inputsMouse);
+        for (var i = 0; i < charger.length; i++) {
+            if(charger[i].dead == false)
+                charger[i].reachable(player1, game);
+            game.physics.collide(player1.sonarPts,charger[i].sprite,charger[i].getDmg(Math.random()));
+            
+            //charger[i].reachable(player2, game);
+        };
 
         var monsters = map.getMonsters();
         for (var i = 0; i < monsters.length; i++) {
@@ -131,6 +189,16 @@ function mainPhaser(){
 //            monsters[i].reachable(player2, game);
         };
 //        console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
+        for (var i = 0; i < charger.length; i++) {
+            if(charger[i].hp <= 0 && (charger[i].dead == false))
+            {
+                charger[i].dead = true;
+                charger[i].sprite.loadTexture('charger_dead');
+                charger[i].sprite.body.velocity.x = 0;
+                charger[i].sprite.body.velocity.y = 0;                
+            }
+        };
+
         player1.updateSector(map, game);
         // player1.farAway(game, player1);
 

@@ -40,19 +40,29 @@ function createMapProcedural(game, nbColors) {
     var sectorEasy = new Sector(500+Math.random()*250, function (player) {
         if(player.currentZone!=1){
             player.currentZone = 1;
+            game.changeZone(0);
             console.log("Zone 1");
         }
     });
     var sectorMedium = new Sector(1500+Math.random()*750, function (player) {
         if(player.currentZone!=2){
             player.currentZone = 2;
+            game.changeZone(1);
             console.log("Zone 2");
         }
     });
-    var sectorEnd = new Sector(3000+Math.random()*1500, function (player) {
+    var sectorHard = new Sector(3000+Math.random()*1500, function (player) {
         if(player.currentZone!=3){
             player.currentZone = 3;
+            game.changeZone(2);
             console.log("Zone 3");
+        }
+    });
+    var sectorEnd = new Sector(2000, function (player) {
+        if(player.currentZone != 4){
+            player.currentZone = 4;
+            game.changeZone(3);
+            console.log("Zone 4");
         }
     });
 
@@ -61,10 +71,11 @@ function createMapProcedural(game, nbColors) {
     var color, sign1, sign2, angle, dist1, dist2;
     var secEasySize = sectorEasy.getRadius();
     var secMedSize = sectorMedium.getRadius();
-    var secEndSize = sectorEnd.getRadius();
+    var secEndSize = sectorHard.getRadius();
 //    console.log(secEasySize);
 //    console.log(secMedSize);
 //    console.log(secEndSize);
+
 
     for (var i = 0; i < (15 + Math.random() * 7); i++) {
         angle = Math.random() * 360;
@@ -91,6 +102,8 @@ function createMapProcedural(game, nbColors) {
                 break;
         }
     }
+    map.streams.add((new Stream(100,100,100,10)).create(game));
+    map.streams.add((new Stream(100,200,300,10)).create(game));
 
     //Loop for the medium sector
     for (var i = 0; i < (150 + Math.random() * 50); i++) {
