@@ -35,6 +35,7 @@ function mainPhaser(){
     var map;
     var camera;
     var player1,player2,inputsKeyboard, inputsMouse;
+    var charger = new Array();
 
     function gofull() {
 
@@ -55,6 +56,8 @@ function mainPhaser(){
         game.load.image('meteor', 'img/meteor.png');
 
         game.load.image('stream', 'img/stream.png');
+        game.load.image('charger','img/charger.png');
+        //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
         game.load.spritesheet('meteor', 'img/meteor.png', 50, 50, 30);*/
@@ -63,16 +66,21 @@ function mainPhaser(){
     function create() {
         // map = createMap(game);
         map = createMapProcedural(game);
+        for (var i = 0; i < 5; i++) {
+            charger.push(createCharger(game,i));
+        };
 
         player1 = new Player(COLORS.RED,game);
         player1.setSprite(game.add.sprite(0,0,'w_red'));
         player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player1.sonar(game);
+        player1.sprite.body.collideWorldBounds=true;
 
         player2 = new Player(COLORS.BLUE,game);
         player2.setSprite(game.add.sprite(0,0,'w_blue'));
         player2.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player2.sonar(game);
+        player2.sprite.body.collideWorldBounds=true;
 
 
 
@@ -89,6 +97,10 @@ function mainPhaser(){
         // if(!game.focus) return;
         player1.moveK(inputsKeyboard, game);
         player2.moveM(inputsMouse);
+        for (var i = 0; i < charger.length; i++) {
+            charger[i].reachable(player1, game);
+            charger[i].reachable(player2, game);
+        };
         // player1.farAway(game, player1);
 
         // check for collision over the player1's sonar
