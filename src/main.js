@@ -84,10 +84,16 @@ function mainPhaser(){
         };
 
         // map = createMap(game);
-        map = createMapProcedural(game);
-        for (var i = 0; i < 5; i++) {
-            charger.push(createCharger(game,i));
-        };
+
+        //todo Change 2 to nbPlayer when define
+        map = createMapProcedural(game, 2);
+
+        console.debug(map);
+
+
+//        for (var i = 0; i < 5; i++) {
+//            charger.push(createCharger(game,i));
+//        };
 
         player1 = new Player(COLORS.RED,game);
         player1.setSprite(game.add.sprite(0,0,'w_red'));
@@ -114,9 +120,12 @@ function mainPhaser(){
         // if(!game.focus) return;
         player1.moveK(inputsKeyboard, game);
         player2.moveM(inputsMouse);
-        for (var i = 0; i < charger.length; i++) {
-            charger[i].reachable(player1, game);
-            charger[i].reachable(player2, game);
+
+        var monsters = map.getMonsters();
+        for (var i = 0; i < monsters.length; i++) {
+            if (monsters.getAt(i).name == "charger")
+                monsters[i].reachable(player1, game);
+//            monsters[i].reachable(player2, game);
         };
         // player1.farAway(game, player1);
 

@@ -1,13 +1,13 @@
 var Charger = new Class
 ({
-	initialize: function (game, pos_x, pos_y, name, sprite, healthpoint, range, strengh)
-	{
+    initialize: function (game, pos_x, pos_y, name, sprite, healthpoint, range, strengh) //3 last optionnals
+    {
 		this.name = name;
-		this.sprite = game.add.sprite(pos_x,pos_y,sprite);	
-		this.hp = healthpoint;
-		this.range = range;
-		this.strength = strengh;
-	},
+		this.sprite = game.add.sprite(pos_x,pos_y,sprite);
+        this.hp = healthpoint | 50;
+        this.range = range | 250;
+        this.strength = strengh | 10;
+    },
 
 	attack: function(player, game)
 	{
@@ -107,4 +107,10 @@ var Charger = new Class
 function createCharger(game,i) {
 	var charger = new Charger(game, 100+i*50, 150+i*50, "Test", 'charger', 50, 250, 10);
 	return charger;
+}
+
+function createDefaultCharger(game, x, y) {
+    var charger = new Charger(game, x, y, "Test", 'charger');
+    return charger;
+
 }
