@@ -66,7 +66,7 @@ function mainPhaser() {
         game.load.image('w_purple', 'img/wave_purple.png');
 
         game.load.image('obstacle', 'img/obstacle.png');
-        game.load.image('greenline', 'img/greenline.png');
+        game.load.spritesheet('greenline', 'img/greenline.png', 10, 64, 40);
         game.load.image('meteor', 'img/meteor.png');
 
         game.load.image('stream', 'img/stream.png');
