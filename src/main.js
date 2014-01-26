@@ -59,11 +59,14 @@ function mainPhaser(){
         game.load.image('charger','img/charger.png');
 
         game.load.audio('main','sound/mainLoop.m4a');
+
         game.load.audio('blop1','sound/blop1.m4a');
         game.load.audio('blop2','sound/blop2.m4a');
         game.load.audio('blop3','sound/blop3.m4a');
         game.load.audio('blop4','sound/blop4.m4a');
         game.load.audio('blop5','sound/blop5.m4a');
+
+        game.load.audio('water','sound/water.m4a');
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -73,7 +76,11 @@ function mainPhaser(){
     function create() {
 
         music = game.add.audio('main',1,true);
-        // music.play('',0,1,true);
+        music.play('',0,1,true);
+
+        waterSound = game.add.audio('water',1,true);
+        waterSound.play('',0,0.5,true);
+        // waterSound.volume = 0.01;
 
         blop = {
             red : game.add.audio('blop1'),
@@ -146,7 +153,6 @@ function mainPhaser(){
             });
         }
 
-        // console.log(player.sprite,map.obstaclesRed);
         game.physics.collide(player.sprite,map.obstaclesRed,function(pl,ob){
             player.loseLife();
             blop[player.type.name].play();
