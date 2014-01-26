@@ -67,7 +67,7 @@ function mainPhaser() {
     var map;
     var camera;
     var player1, player2, inputsKeyboard, inputsMouse, inputsPointer;
-    var charger;
+    var charger = new Array();
     
 
 
@@ -150,7 +150,7 @@ function mainPhaser() {
         // map = createMap(game);
         map = createMapProcedural(game);
 
-        charger = createProceduralEnemy(game);
+        //charger = createProceduralEnemy(game);
 
         //todo Change 2 to nbPlayer when define
         map = createMapProcedural(game, maxColor);
@@ -209,7 +209,7 @@ function mainPhaser() {
         
 
         
-        for (var i = 0; i < charger.length; i++) {
+        /*for (var i = 0; i < charger.length; i++) {
             if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
            if(game.physics.collide(player1.sonarPts,charger[i].sprite))
@@ -234,7 +234,7 @@ function mainPhaser() {
                 charger[i].sprite.body.velocity.x = 0;
                 charger[i].sprite.body.velocity.y = 0;
             }
-        }
+        }*/
 
 
         player1.updateSector(map, game);

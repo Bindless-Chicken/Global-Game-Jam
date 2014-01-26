@@ -6,7 +6,6 @@ var files=[
     "class.js",
     "phaser.min.js",
     "createMap.js",
-    "Enemy.js",
     "Charger.js",
     "Spammer.js",
     "Map.js",
