@@ -209,9 +209,10 @@ function mainPhaser() {
 
         var monsters = map.getMonsters();
         for (var i = 0; i < monsters.length; i++) {
-            if (monsters.getAt(i).name == "charger")
+            if (monsters.getAt(i).name == "charger"){
                 monsters[i].reachable(player1, game);
-           // monsters[i].reachable(player2, game);
+                monsters[i].reachable(player2, game);
+            }
         }
        // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {
