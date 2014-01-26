@@ -161,13 +161,13 @@ function createMapProcedural(game, nbColors) {
                     'obstacle', COLORS.RED)).sprite);
                 break;
             case 1:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesBlue().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.BLUE)).sprite);
                 break;
             case 2:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesGreen().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.GREEN)).sprite);
@@ -204,13 +204,13 @@ function createMapProcedural(game, nbColors) {
                     'obstacle', COLORS.RED)).sprite);
                 break;
             case 1:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesBlue().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.BLUE)).sprite);
                 break;
             case 2:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesGreen().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.GREEN)).sprite);
