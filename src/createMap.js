@@ -146,7 +146,7 @@ function createMapProcedural(game, nbColors) {
     }
 
     //Loop for the medium sector
-    for (var i = 0; i < (350 + Math.random() * 50); i++) {
+    for (var i = 0; i < (125 + Math.random() * 50); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
@@ -188,7 +188,7 @@ function createMapProcedural(game, nbColors) {
     }
 
     //Loop for the last sector
-    for (var i = 0; i < 600 + (Math.random() * 70); i++) {
+    for (var i = 0; i < 300 + (Math.random() * 70); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
