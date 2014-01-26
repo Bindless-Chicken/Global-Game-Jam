@@ -270,6 +270,19 @@ var Player = new Class({
                 console.log("Meteor Shower lvl2 !! Run fools !!!");
                 this.meteorShower(game, this, 1500, 100, 1);
             }*/
+        }else if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[3].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[3].getRadius()){
+            map.getSectors()[3].executeEvent(this);
+            var random = Math.random()*100;
+            /*if(random<=5){
+                //Meteor shower with one and a delay of 2.5s
+                console.log("Meteor Shower !! Save your life !!!");
+                this.meteorShower(game, this, 800, 100, 2);
+            }
+            else if(random<=10){
+                //Meteor shower with two and a delay of 1s
+                console.log("Meteor Shower lvl2 !! Run fools !!!");
+                this.meteorShower(game, this, 1500, 100, 1);
+            }*/
         }
         else{
             console.log("End");

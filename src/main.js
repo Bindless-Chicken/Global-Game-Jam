@@ -61,6 +61,7 @@ function mainPhaser(){
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
+        game.load.image('charger_dead','img/charger_dead.png');
 
         game.load.audio('main1','sound/main1.m4a');
         game.load.audio('main2','sound/main2.m4a');
@@ -78,7 +79,7 @@ function mainPhaser(){
         game.load.audio('blop4','sound/blop4.m4a');
         game.load.audio('blop5','sound/blop5.m4a');
 
-        game.load.audio('water','sound/water.m4a');
+        game.load.audio('ambiance','sound/ambiance.m4a');
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -93,7 +94,7 @@ function mainPhaser(){
             game.add.audio('main3'),
             game.add.audio('mainFinal')
         ];
-        main[0].play('',0,1,true);
+        // main[0].play('',0,1,true);
 
         level = [
             game.add.audio('level1',1,true),
@@ -102,8 +103,8 @@ function mainPhaser(){
             game.add.audio('levelFinal',1,true)
         ];
 
-        waterSound = game.add.audio('water',1,true);
-        waterSound.play('',0,0.5,true);
+        ambiance = game.add.audio('ambiance',1,true);
+        ambiance.play('',0,0.5,true);
 
         blop = {
             red     : game.add.audio('blop1'),
@@ -142,8 +143,21 @@ function mainPhaser(){
     }
 
     function changeZone(newZone){
-        level[newZone].play();
-        main[newZone].play('',0,1,true);
+        for (var i = 0; i < 4; i++) {
+            if(i == newZone){
+                level[i].resume();
+                main[i].play('',0,1,true);
+            }else{
+                console.log("pause : ", i);
+                main[i].pause();
+            }
+        };
+
+        if(newZone == 3){
+            ambiance.pause();
+        }else{
+            ambiance.resume();
+        }
     }
 
     function update () {
@@ -151,8 +165,21 @@ function mainPhaser(){
         player1.moveK(inputsKeyboard, game);
         //player2.moveM(inputsMouse);
         for (var i = 0; i < charger.length; i++) {
-            charger[i].reachable(player1, game);
+            if(charger[i].dead == false)
+                charger[i].reachable(player1, game);
+            game.physics.collide(player1.sonarPts,charger[i].sprite,charger[i].getDmg(Math.random()));
+            
             //charger[i].reachable(player2, game);
+        };
+
+        for (var i = 0; i < charger.length; i++) {
+            if(charger[i].hp <= 0 && (charger[i].dead == false))
+            {
+                charger[i].dead = true;
+                charger[i].sprite.loadTexture('charger_dead');
+                charger[i].sprite.body.velocity.x = 0;
+                charger[i].sprite.body.velocity.y = 0;                
+            }
         };
 
         player1.updateSector(map, game);
@@ -162,8 +189,6 @@ function mainPhaser(){
         collideHandler(player1,game);
         //collideHandler(player2,game);
     }
-
-
 
     function collideHandler(player, game) {
         if(player.type.name == 'red'){
