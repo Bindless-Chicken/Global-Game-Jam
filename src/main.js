@@ -118,7 +118,6 @@ function mainPhaser(){
         map = createMapProcedural(game);
         for (var i = 0; i < 5; i++) {
             charger.push(createCharger(game,i));
-            console.log(charger[i].hp);
         };
 
         player1 = new Player(COLORS.RED,game);
@@ -155,12 +154,13 @@ function mainPhaser(){
         for (var i = 0; i < charger.length; i++) {
             if(charger[i].dead == false)
                 charger[i].reachable(player1, game);
-            game.physics.collide(player1.sonarPts,charger[i].sprite,charger[i].getDmg(1));
+            game.physics.collide(player1.sonarPts,charger[i].sprite,charger[i].getDmg(Math.random()));
+            
             //charger[i].reachable(player2, game);
         };
 
         for (var i = 0; i < charger.length; i++) {
-            if(charger[i].isDead() && (charger[i].dead == false))
+            if(charger[i].hp <= 0 && (charger[i].dead == false))
             {
                 charger[i].dead = true;
                 charger[i].sprite.loadTexture('charger_dead');

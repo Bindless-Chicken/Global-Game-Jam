@@ -25,22 +25,26 @@ var Charger = new Class
 			if((player.sprite.x > this.sprite.x) && (player.sprite.y > this.sprite.y))
 			{
 				player.getPush(player, 500, 500);
-				this.sprite.angle = (90+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
+				//this.sprite.angle = Math.atan2(Math.abs(player.sprite.y - this.sprite.y), Math.abs(player.sprite.x - this.sprite.x));
+				this.sprite.angle = 90;
 			}
 			else if((player.sprite.x > this.sprite.x) && (player.sprite.y < this.sprite.y))
 			{
 				player.getPush(player, 500, -500);
-				this.sprite.angle = (0+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
+				//this.sprite.angle = Math.atan2(Math.abs(player.sprite.y - this.sprite.y), Math.abs(player.sprite.x - this.sprite.x));
+				this.sprite.angle = 0;
 			}
 			else if((player.sprite.x < this.sprite.x) && (player.sprite.y > this.sprite.y))
 			{
 				player.getPush(player, -500, 500);
-				this.sprite.angle = (180+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
+				this.sprite.angle = 180;
+				/*this.sprite.angle = Math.atan2(Math.abs(player.sprite.y - this.sprite.y), Math.abs(player.sprite.x - this.sprite.x));*/
 			}
 			else
 			{
 				player.getPush(player, -500, -500);
-				this.sprite.angle = (270+(Math.cos((player.sprite.x - this.sprite.x)/(player.sprite.y - this.sprite.y))));
+				this.sprite.angle = 270;/*
+				this.sprite.angle = Math.atan2(Math.abs(player.sprite.y - this.sprite.y), Math.abs(player.sprite.x - this.sprite.x));*/
 			}			
 		}
 	},
@@ -110,6 +114,6 @@ var Charger = new Class
 
 
 function createCharger(game,i) {
-	var charger = new Charger(game, 100+i*50, 150+i*50, "Test", 'charger', 2000, 250, 10);
+	var charger = new Charger(game, 100+i*50, 150+i*50, "Test", 'charger', 500, 450, 10);
 	return charger;
 }
