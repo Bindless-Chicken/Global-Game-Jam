@@ -40,41 +40,43 @@ function createMapProcedural(game, nbColors) {
     var sectorEasy = new Sector(500 + Math.random() * 250, function (player) {
         if (player.currentZone != 1) {
             player.currentZone = 1;
-            game.changeZone(0);
+            game.changeZone(0,player);
             console.log("Zone 1");
         }
     });
-    var sectorMedium = new Sector(1500 + Math.random() * 750, function (player) {
+    var sectorMedium = new Sector(sectorEasy.getRadius() + 500 + Math.random() * 250, function (player) {
         if (player.currentZone != 2) {
             player.currentZone = 2;
-            game.changeZone(1);
+            game.changeZone(1,player);
             console.log("Zone 2");
         }
     });
-    var sectorHard = new Sector(3000 + Math.random() * 1500, function (player) {
+    var sectorHard = new Sector(sectorMedium.getRadius() + 500 + Math.random() * 250, function (player) {
         if (player.currentZone != 3) {
             player.currentZone = 3;
-            game.changeZone(2);
+            game.changeZone(2,player);
             console.log("Zone 3");
         }
     });
-    var sectorEnd = new Sector(sectorHard.getRadius() + 2000, function (player) {
+    var sectorEnd = new Sector(sectorHard.getRadius() + 500 + Math.random() * 250, function (player) {
         if (player.currentZone != 4) {
             player.currentZone = 4;
-            game.changeZone(3);
+            game.changeZone(3,player);
             console.log("Zone 4");
         }
     });
 
 
-    var map = new Map([sectorEasy, sectorMedium, sectorEnd], game);
+    var map = new Map([sectorEasy, sectorMedium, sectorHard, sectorEnd], game);
     var color, sign1, sign2, angle, dist1, dist2;
     var secEasySize = sectorEasy.getRadius();
     var secMedSize = sectorMedium.getRadius();
-    var secEndSize = sectorHard.getRadius();
-//    console.log(secEasySize);
-//    console.log(secMedSize);
-//    console.log(secEndSize);
+    var secHardSize = sectorHard.getRadius();
+    var secEndSize = sectorEnd.getRadius();
+    // console.log(secEasySize);
+    // console.log(secMedSize);
+    // console.log(secHardSize);
+    // console.log(secEndSize);
 
 
     for (var i = 0; i < (15 + Math.random() * 7); i++) {
@@ -133,13 +135,13 @@ function createMapProcedural(game, nbColors) {
         }
     }
 
-    //Loop for the last sector
+    //Loop for the hard sector
     for (var i = 0; i < 350 + (Math.random() * 70); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
         angle = Math.random() * 360;
-        dist1 = sign1 * (secMedSize + Math.random() * (secEndSize - secMedSize));
+        dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secMedSize));
         dist2 = sign2 * dist1;
 
         switch ((Math.floor(Math.random() * 100)) % (nbColors)) {
@@ -170,7 +172,7 @@ function createMapProcedural(game, nbColors) {
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
         angle = Math.random() * 360;
-        dist1 = sign1 * (secMedSize + Math.random() * (secEndSize - secEasySize));
+        dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secEasySize));
         dist2 = dist1 * sign2;
 
         map.getStreams().add((new Stream(Math.random() * 75 + 50,
@@ -188,7 +190,7 @@ function createMapProcedural(game, nbColors) {
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
         angle = Math.random() * 360;
-        dist1 = sign1 * (secMedSize + Math.random() * (secEndSize - secMedSize));
+        dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secMedSize));
         dist2 = dist1 * sign2;
 
         switch ((Math.floor(Math.random() * 100)) % (nbColors)) {
@@ -214,16 +216,7 @@ function createMapProcedural(game, nbColors) {
                 break;
         }
     }
-//    console.log("monsters");
-//    console.debug(map);
-
-    //Set a specific color for the endGame zone
-
-
-    //Define the world size
-
-    // todo To check
-    game.world.setBounds(-secEndSize / 2, -secEndSize / 2, secEndSize * 2, secEndSize * 2);
+    game.world.setBounds(-secEndSize, -secEndSize, secEndSize * 2, secEndSize * 2);
 
     return map;
 }

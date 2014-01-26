@@ -133,9 +133,9 @@ function mainPhaser() {
         };
 
         //todo Change 2 to nbPlayer when define
-        map = createMapProcedural(game, 1);
+        // map = createMapProcedural(game, 1);
 
-//        console.debug(map);
+        // console.debug(map);
 
         player1 = new Player(COLORS.RED, game);
         player1.setSprite(game.add.sprite(0, 0, 'w_red'));
@@ -158,7 +158,7 @@ function mainPhaser() {
         inputsMouse = game.input.mousePointer;
     }
 
-    function changeZone(newZone) {
+    function changeZone(newZone,player) {
         for (var i = 0; i < 4; i++) {
             if(i == newZone){
                 level[i].play();
@@ -167,10 +167,14 @@ function mainPhaser() {
                 main[i].pause();
             }
         }
-        ;
 
         if (newZone == 3) {
             ambiance.pause();
+            setTimeout(function () {
+                if(player.currentZone == 4){
+                    endOfGame();
+                }
+            },2000);
         } else {
             ambiance.resume();
         }
@@ -190,16 +194,14 @@ function mainPhaser() {
 
             //charger[i].reachable(player2, game);
         }
-        ;
 
         var monsters = map.getMonsters();
         for (var i = 0; i < monsters.length; i++) {
             if (monsters.getAt(i).name == "charger")
                 monsters[i].reachable(player1, game);
-//            monsters[i].reachable(player2, game);
+           // monsters[i].reachable(player2, game);
         }
-        ;
-//        console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
+       // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].hp <= 0 && (charger[i].dead == false)) {
                 charger[i].dead = true;
@@ -208,18 +210,16 @@ function mainPhaser() {
                 charger[i].sprite.body.velocity.y = 0;
             }
         }
-        ;
 
         player1.updateSector(map, game);
         // player1.farAway(game, player1);
 
         // check for collision over the player1's sonar
-        collideHandler(player1, game);
+        collideHandler(player1);
         //collideHandler(player2,game);
     }
 
-
-    function collideHandler(player, game) {
+    function collideHandler(player) {
         if (player.type.name == 'red') {
             game.physics.collide(player.sonarPts, map.obstaclesRed, function (pt, ob) {
                 player.sonarCollision(pt, game);
@@ -286,6 +286,11 @@ function mainPhaser() {
         //                 game.debug.renderSpriteBody(m.getAt(i), '#022ff22');
         //             }
         //         }
+    }
+
+    function endOfGame () {
+        // put end here
+        alert("end");
     }
 }
 

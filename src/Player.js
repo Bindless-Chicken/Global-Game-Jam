@@ -21,7 +21,6 @@ var Player = new Class({
         this.sonarPts.createMultiple(this.nbMaxoints,'w_'+color.name);
         this.sonarSpeed = this.type.power.speed;
         this.sonarPeriod = this.type.power.period;
-
     },
     setSprite: function (sprite){
         this.sprite = sprite;
@@ -240,7 +239,6 @@ var Player = new Class({
             }
         }
     },
-
     updateSector: function(map, game){
         var distance = game.physics.distanceToXY(this.sprite, 0,0);
         if(distance < map.getSectors()[0].getRadius()){
