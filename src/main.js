@@ -44,6 +44,7 @@ function mainPhaser() {
     }, 1000);
 
     game.changeZone = changeZone;
+    game.soundRadar = function () {radarSound.play();}
 
     var map;
     var camera;
@@ -69,26 +70,28 @@ function mainPhaser() {
         game.load.image('meteor', 'img/meteor.png');
 
         game.load.image('stream', 'img/stream.png');
-        game.load.image('charger', 'img/charger.png');
-        game.load.image('charger_dead', 'img/charger_dead.png');
+        game.load.image('charger','img/charger.png');
+        game.load.image('charger_dead','img/charger_dead.png');
 
-        game.load.audio('main1', 'sound/main1.m4a');
-        game.load.audio('main2', 'sound/main2.m4a');
-        game.load.audio('main3', 'sound/main3.m4a');
-        game.load.audio('mainFinal', 'sound/mainFinal.m4a');
+        game.load.audio('main1','sound/main1.m4a');
+        game.load.audio('main2','sound/main2.m4a');
+        game.load.audio('main3','sound/main3.m4a');
+        game.load.audio('mainFinal','sound/mainFinal.m4a');
 
-        game.load.audio('level1', 'sound/level1.m4a');
-        game.load.audio('level2', 'sound/level2.m4a');
-        game.load.audio('level3', 'sound/level3.m4a');
-        game.load.audio('levelFinal', 'sound/finalLevel.m4a');
+        game.load.audio('level1','sound/level1.m4a');
+        game.load.audio('level2','sound/level2.m4a');
+        game.load.audio('level3','sound/level3.m4a');
+        game.load.audio('levelFinal','sound/finalLevel.m4a');
 
-        game.load.audio('blop1', 'sound/blop1.m4a');
-        game.load.audio('blop2', 'sound/blop2.m4a');
-        game.load.audio('blop3', 'sound/blop3.m4a');
-        game.load.audio('blop4', 'sound/blop4.m4a');
-        game.load.audio('blop5', 'sound/blop5.m4a');
+        game.load.audio('blop1','sound/blop1.m4a');
+        game.load.audio('blop2','sound/blop2.m4a');
+        game.load.audio('blop3','sound/blop3.m4a');
+        game.load.audio('blop4','sound/blop4.m4a');
+        game.load.audio('blop5','sound/blop5.m4a');
 
-        game.load.audio('ambiance', 'sound/ambiance.m4a');
+        game.load.audio('ambiance','sound/ambiance.m4a');
+        game.load.audio('radar','sound/radar_t.m4a');
+
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -123,6 +126,13 @@ function mainPhaser() {
             purple: game.add.audio('blop5')
         };
 
+        radarSound = game.add.audio('radar');
+
+        // map = createMap(game);
+        map = createMapProcedural(game);
+        for (var i = 0; i < 5; i++) {
+            charger.push(createCharger(game,i));
+        };
 
         //todo Change 2 to nbPlayer when define
         map = createMapProcedural(game, maxColor);
@@ -153,11 +163,10 @@ function mainPhaser() {
 
     function changeZone(newZone) {
         for (var i = 0; i < 4; i++) {
-            if (i == newZone) {
-                level[i].resume();
-                main[i].play('', 0, 1, true);
-            } else {
-                console.log("pause : ", i);
+            if(i == newZone){
+                level[i].play();
+                main[i].play('',0,1,true);
+            }else{
                 main[i].pause();
             }
         }
@@ -177,7 +186,10 @@ function mainPhaser() {
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].dead == false)
                 charger[i].reachable(player1, game);
-            game.physics.collide(player1.sonarPts, charger[i].sprite, charger[i].getDmg(Math.random()));
+           if(game.physics.collide(player1.sonarPts,charger[i].sprite))
+            {
+                charger[i].getDmg(1);
+            }
 
             charger[i].reachable(player2, game);
         }

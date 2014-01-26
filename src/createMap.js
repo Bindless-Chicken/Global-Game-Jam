@@ -184,6 +184,7 @@ function createMapProcedural(game, nbColors) {
 
     //Loop for the last sector
     for (var i = 0; i < 600 + (Math.random() * 70); i++) {
+
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
@@ -226,7 +227,7 @@ function createMapProcedural(game, nbColors) {
     }
 
     //Add streams (only for sector 2-3)
-    for (var i = 0; i < (5 + Math.random() * 2); i++) {
+    for (var i = 0; i < (20 + Math.random() * 10); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
@@ -243,7 +244,7 @@ function createMapProcedural(game, nbColors) {
 //    console.log(map.getStreams());
 
     //Add monsters (only for sector 3)
-    for (var i = 0; i < (3 + Math.random() * 1); i++) {
+    for (var i = 0; i < (20 + Math.random() * 5); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;

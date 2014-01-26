@@ -26,7 +26,7 @@ var Player = new Class({
     },
     setSprite: function (sprite){
         this.sprite = sprite;
-        this.sprite.body.bounce = new Phaser.Point(0.6,0.6);
+        this.sprite.body.bounce = new Phaser.Point(1,1);
     },
     parseColor: function (game, color) {
         this.type = color;
@@ -150,6 +150,7 @@ var Player = new Class({
                     pt.lifespan = 1550 + Math.random()*300;
                     game.physics.moveToXY(pt, destPt.x, destPt.y, this.sonarSpeed + Math.random()*2 );//+ Math.cos(game.physics.angleBetween(this.sprite,pt))*this.sprite.body.velocity.x);
                 }
+                game.soundRadar();
             }
         // }
 
@@ -257,7 +258,8 @@ var Player = new Class({
     },
 
     updateSector: function(map, game){
-        if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[0].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[0].getRadius()){
+        var distance = game.physics.distanceToXY(this.sprite, 0,0);
+        if(distance < map.getSectors()[0].getRadius()){
             map.getSectors()[0].executeEvent(this);
             /*if(Math.random()*10<=1){
                 //Push in an another direction
@@ -265,7 +267,7 @@ var Player = new Class({
                 this.linePush(game, 1500, 100);
             }*/
         }
-        else if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[1].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[1].getRadius()){
+        else if(distance < map.getSectors()[1].getRadius()){
             map.getSectors()[1].executeEvent(this);
             /*if(Math.random()*10<=1){
                 //Push in an another direction
@@ -273,7 +275,7 @@ var Player = new Class({
                 this.linePush(game, 100, 200);
             }*/
         }
-        else if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[2].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[2].getRadius()){
+        else if(distance < map.getSectors()[2].getRadius()){
             map.getSectors()[2].executeEvent(this);
             var random = Math.random()*100;
             /*if(random<=5){
@@ -286,7 +288,7 @@ var Player = new Class({
                 console.log("Meteor Shower lvl2 !! Run fools !!!");
                 this.meteorShower(game, this, 1500, 100, 1);
             }*/
-        }else if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[3].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[3].getRadius()){
+        }else if(distance < map.getSectors()[3].getRadius()){
             map.getSectors()[3].executeEvent(this);
             var random = Math.random()*100;
             /*if(random<=5){
