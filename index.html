@@ -7,6 +7,10 @@
     <script src="src/main.js"></script>
     <link href='http://fonts.googleapis.com/css?family=Audiowide' rel='stylesheet' type='text/css'>
     <style>
+        body{
+            margin:0px;
+            overflow: hidden;;
+        }
         #splashScreen{
             background-color: black;
             position: absolute;
@@ -52,7 +56,33 @@
             text-align: center;
             margin: auto;
         }
+
+        #credits{
+            width: 100%;
+            position: absolute;
+            text-align: center;
+            top:-1000px;
+            color:white;
+            z-index: 99999;
+            font-family: 'Audiowide', "verdana", sans-serif;
+        }
+        #thx{
+            width: 100%;
+            position: absolute;
+            text-align: center;
+            top:-900px;
+            color:white;
+            z-index: 99999;
+            font-family: 'Audiowide', "verdana", sans-serif;
+        }
     </style>
+    <script type="text/javascript" language="javascript">
+        $(function() {
+            $(this).bind("contextmenu", function(e) {
+                e.preventDefault();
+            });
+        });
+    </script>
 </head>
 <body style="margin: 0">
     <a href="https://github.com/Lord-Nazdar/Global-Game-Jam"><img src="img/forkme_right.png" id="fork"></a>
@@ -63,5 +93,26 @@
         </div>       
     </div>
     <div id="gameCanvas"></div>
+    <h1 id="thx">Thanks for playing</h1>
+    <div id="credits">
+        <h3>Game Design</h3>
+        <h3>Development</h3>
+        <h3>Graphic Design</h3>
+        <h2>Thomas "Lord Nazdar" Poulet</h2>
+        <br>
+        <h3>Development</h3>
+        <h3>Game Design</h3>
+        <h2>Sébastien "Rodyll" Morinière</h2>
+        <br>
+        <h3>Development</h3>
+        <h3>Sound Design</h3>
+        <h2>Victor "Padawan" Haffreingue</h2>
+        <br>
+        <h3>Development</h3>
+        <h3>Game Design</h3>
+        <h2>David "Dalzark" Auriac</h2>
+        <br>
+        <h1>Team</h1>
+    </div>
 </body>
 </html>
