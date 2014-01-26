@@ -1,14 +1,20 @@
 var Spammer = new Class
 ({
-	initialize: function(game, pos_x, pos_y, name, sprite, colorSpam) {
-		this.name = name;
-		this.sprite = game.add.sprite(pos_x,pos_y,sprite);		
-		this.hp = healthPoint;
-		this.type = new Type(colorSpam);
-	},
+    initialize: function (game, pos_x, pos_y, name, sprite, colorSpam, healthPoint) {
+        this.name = name;
+		this.sprite = game.add.sprite(pos_x,pos_y,sprite);
+        this.hp = healthPoint | 50;
+        if (colorSpam == COLORS.RED)
+            this.type = COLORS.RED;
+        else if (colorSpam == COLORS.BLUE)
+            this.type = COLORS.BLUE;
+        else if (colorSpam == COLORS.GREEN)
+            this.type = COLORS.GREEN;
 
-	Spam: function() {
-		for(var i = 0; i < this.nbPoints; i ++){
+    },
+
+    spam: function () {
+        for(var i = 0; i < this.nbPoints; i ++){
             var destPt = Phaser.Point.rotate(
                 (new Phaser.Point(this.sprite.body.center.x, this.sprite.body.center.y)), this.sprite.body.center.x, this.sprite.body.center.y,360/this.nbPoints * i,true, this.nbPoints);
 
@@ -86,10 +92,13 @@ var Spammer = new Class
 
 })
 
-
-
-
-function createSpammer(game) {
-	var charger = new Charger(game, 100, 150, "Test", 'charger', 100, 10);
-	return charger;
+function createDefaultSpammer(game, x, y, color) {
+    var spammer = new Spammer(game, x, y, "Test", 'spammer', color);
+    return spammer;
 }
+
+
+//function createSpammer(game) {
+//	var charger = new Charger(game, 100, 150, "Test", 'charger');
+//	return charger;
+//}

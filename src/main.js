@@ -5,29 +5,37 @@
 // Initialization functions
 loadFiles();
 
-window.onload=function(){
-    setTimeout(function(){mainPhaser();}, 3000);
+window.onload = function () {
+    setTimeout(function () {
+        mainPhaser();
+    }, 3000);
 };
 
 // JS file preloader
-function loadFiles(){
+function loadFiles() {
     var head = document.getElementsByTagName("head")[0];
-    for( var i=0; i<files.length; i++ ){
+    for (var i = 0; i < files.length; i++) {
         var js = document.createElement("script");
         js.type = "text/javascript";
-        js.src = "src/"+files[i];
+        js.src = "src/" + files[i];
         head.appendChild(js);
     }
 }
 
 
-function mainPhaser(){
+function mainPhaser() {
     var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
     var maxColor = 2;
 
     game.focus = false;
-    game.createSprite = function(x, y, key){return this.add.sprite(x, y, String(key));};
-    $(window).focus(function() {game.focus = true;}).blur(function() {game.focus = false;});
+    game.createSprite = function (x, y, key) {
+        return this.add.sprite(x, y, String(key));
+    };
+    $(window).focus(function () {
+        game.focus = true;
+    }).blur(function () {
+            game.focus = false;
+        });
 
     setInterval(function () {
         // console.log(game.focus);
@@ -36,10 +44,9 @@ function mainPhaser(){
     game.changeZone = changeZone;
     game.soundRadar = function () {radarSound.play();}
 
-
     var map;
     var camera;
-    var player1,player2,inputsKeyboard, inputsMouse;
+    var player1, player2, inputsKeyboard, inputsMouse;
     var charger = new Array();
 
 
@@ -48,15 +55,15 @@ function mainPhaser(){
     }
 
     function preload() {
-        game.load.image('h_red','img/h_red.png');
-        
-        game.load.image('w_red','img/wave_red.png');
-        game.load.image('w_blue','img/wave_blue.png');
-        game.load.image('w_green','img/wave_green.png');
-        game.load.image('w_yellow','img/wave_yellow.png');
-        game.load.image('w_purple','img/wave_purple.png');
+        game.load.image('h_red', 'img/h_red.png');
 
-        game.load.image('obstacle','img/obstacle.png');
+        game.load.image('w_red', 'img/wave_red.png');
+        game.load.image('w_blue', 'img/wave_blue.png');
+        game.load.image('w_green', 'img/wave_green.png');
+        game.load.image('w_yellow', 'img/wave_yellow.png');
+        game.load.image('w_purple', 'img/wave_purple.png');
+
+        game.load.image('obstacle', 'img/obstacle.png');
         game.load.image('greenline', 'img/greenline.png');
         game.load.image('meteor', 'img/meteor.png');
 
@@ -82,10 +89,11 @@ function mainPhaser(){
 
         game.load.audio('ambiance','sound/ambiance.m4a');
         game.load.audio('radar','sound/radar_t.m4a');
+
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
-        game.load.spritesheet('meteor', 'img/meteor.png', 50, 50, 30);*/
+         game.load.spritesheet('meteor', 'img/meteor.png', 50, 50, 30);*/
     }
 
     function create() {
@@ -99,21 +107,21 @@ function mainPhaser(){
         // main[0].play('',0,1,true);
 
         level = [
-            game.add.audio('level1',1,true),
-            game.add.audio('level2',1,true),
-            game.add.audio('level3',1,true),
-            game.add.audio('levelFinal',1,true)
+            game.add.audio('level1', 1, true),
+            game.add.audio('level2', 1, true),
+            game.add.audio('level3', 1, true),
+            game.add.audio('levelFinal', 1, true)
         ];
 
-        ambiance = game.add.audio('ambiance',1,true);
-        ambiance.play('',0,0.5,true);
+        ambiance = game.add.audio('ambiance', 1, true);
+        ambiance.play('', 0, 0.5, true);
 
         blop = {
-            red     : game.add.audio('blop1'),
-            blue    : game.add.audio('blop2'),
-            green   : game.add.audio('blop3'),
-            yellow  : game.add.audio('blop4'),
-            purple  : game.add.audio('blop5')
+            red: game.add.audio('blop1'),
+            blue: game.add.audio('blop2'),
+            green: game.add.audio('blop3'),
+            yellow: game.add.audio('blop4'),
+            purple: game.add.audio('blop5')
         };
 
         radarSound = game.add.audio('radar');
@@ -124,19 +132,23 @@ function mainPhaser(){
             charger.push(createCharger(game,i));
         };
 
-        player1 = new Player(COLORS.RED,game);
-        player1.setSprite(game.add.sprite(0,0,'w_red'));
-        player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
+        //todo Change 2 to nbPlayer when define
+        map = createMapProcedural(game, 1);
+
+//        console.debug(map);
+
+        player1 = new Player(COLORS.RED, game);
+        player1.setSprite(game.add.sprite(0, 0, 'w_red'));
+        player1.sprite.scale = new Phaser.Point(2 * player1.life, 2 * player1.life);
         player1.sonar(game);
-        player1.sprite.body.collideWorldBounds=true;
+        player1.sprite.body.collideWorldBounds = true;
         player1.maxColor = maxColor;
 
-        /*player2 = new Player(COLORS.BLUE,game);
-        player2.setSprite(game.add.sprite(0,0,'w_blue'));
-        player2.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
+        player2 = new Player(COLORS.BLUE, game);
+        player2.setSprite(game.add.sprite(0, 0, 'w_blue'));
+        player2.sprite.scale = new Phaser.Point(2 * player1.life, 2 * player1.life);
         player2.sonar(game);
-        player2.sprite.body.collideWorldBounds=true;*/
-
+        player2.sprite.body.collideWorldBounds = true;
 
 
         game.camera.follow(player1.sprite);
@@ -146,7 +158,7 @@ function mainPhaser(){
         inputsMouse = game.input.mousePointer;
     }
 
-    function changeZone(newZone){
+    function changeZone(newZone) {
         for (var i = 0; i < 4; i++) {
             if(i == newZone){
                 level[i].play();
@@ -154,89 +166,104 @@ function mainPhaser(){
             }else{
                 main[i].pause();
             }
-        };
+        }
+        ;
 
-        if(newZone == 3){
+        if (newZone == 3) {
             ambiance.pause();
-        }else{
+        } else {
             ambiance.resume();
         }
     }
 
-    function update () {
+    function update() {
         // if(!game.focus) return;
         player1.moveK(inputsKeyboard, game);
         //player2.moveM(inputsMouse);
         for (var i = 0; i < charger.length; i++) {
-            if(charger[i].dead == false)
+            if (charger[i].dead == false)
                 charger[i].reachable(player1, game);
-            game.physics.collide(player1.sonarPts,charger[i].sprite,charger[i].getDmg(Math.random()));
-            
-            //charger[i].reachable(player2, game);
-        };
-
-        for (var i = 0; i < charger.length; i++) {
-            if(charger[i].hp <= 0 && (charger[i].dead == false))
+           if(game.physics.collide(player1.sonarPts,charger[i].sprite))
             {
+                charger[i].getDmg(1);
+            }
+
+            //charger[i].reachable(player2, game);
+        }
+        ;
+
+        var monsters = map.getMonsters();
+        for (var i = 0; i < monsters.length; i++) {
+            if (monsters.getAt(i).name == "charger")
+                monsters[i].reachable(player1, game);
+//            monsters[i].reachable(player2, game);
+        }
+        ;
+//        console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
+        for (var i = 0; i < charger.length; i++) {
+            if (charger[i].hp <= 0 && (charger[i].dead == false)) {
                 charger[i].dead = true;
                 charger[i].sprite.loadTexture('charger_dead');
                 charger[i].sprite.body.velocity.x = 0;
-                charger[i].sprite.body.velocity.y = 0;                
+                charger[i].sprite.body.velocity.y = 0;
             }
-        };
+        }
+        ;
 
         player1.updateSector(map, game);
         // player1.farAway(game, player1);
 
         // check for collision over the player1's sonar
-        collideHandler(player1,game);
+        collideHandler(player1, game);
         //collideHandler(player2,game);
     }
 
+
     function collideHandler(player, game) {
-        if(player.type.name == 'red'){
-            game.physics.collide(player.sonarPts,map.obstaclesRed,function(pt,ob){
-                player.sonarCollision(pt,game);
-            });
-        }
-       
-       if(player.type.name == 'blue'){
-            game.physics.collide(player.sonarPts,map.obstaclesBlue,function(pt,ob){
-                player.sonarCollision(pt,game);
-            });
-        }
-       
-       if(player.type.name == 'green'){
-            game.physics.collide(player.sonarPts,map.obstaclesGreen,function(pt,ob){
-                player.sonarCollision(pt,game);
+        if (player.type.name == 'red') {
+            game.physics.collide(player.sonarPts, map.obstaclesRed, function (pt, ob) {
+                player.sonarCollision(pt, game);
             });
         }
 
-        game.physics.collide(player.sprite,map.obstaclesRed,function(pl,ob){
+        if (player.type.name == 'blue') {
+            game.physics.collide(player.sonarPts, map.obstaclesBlue, function (pt, ob) {
+                player.sonarCollision(pt, game);
+            });
+        }
+
+        if (player.type.name == 'green') {
+            game.physics.collide(player.sonarPts, map.obstaclesGreen, function (pt, ob) {
+                player.sonarCollision(pt, game);
+            });
+        }
+
+        // console.log(player.sprite,map.obstaclesRed);
+        game.physics.collide(player.sprite, map.obstaclesRed, function (pl, ob) {
             player.loseLife();
             blop[player.type.name].play();
 
         });
-        game.physics.collide(player.sprite,map.obstaclesBlue,function(pl,ob){
+        game.physics.collide(player.sprite, map.obstaclesBlue, function (pl, ob) {
             player.loseLife();
             blop[player.type.name].play();
         });
-        game.physics.collide(player.sprite,map.obstaclesGreen,function(pl,ob){
+        game.physics.collide(player.sprite, map.obstaclesGreen, function (pl, ob) {
             player.loseLife();
             blop[player.type.name].play();
         });
 
-        map.streams.forEach(function(stream){
+        map.streams.forEach(function (stream) {
             var minDist = 100;
-            var param = stream.getForce(player1.sprite,game);
-            if(param.distance < minDist){
+            var param = stream.getForce(player1.sprite, game);
+            if (param.distance < minDist) {
                 minDist = param.distance;
-                player1.applyForce(param.force,stream.x,stream.y,game);
+                player1.applyForce(param.force, stream.x, stream.y, game);
             }
         });
     }
 
-    function render (){
+    function render() {
 
         // map.obstacles.forEachAlive(function(ob){
         //     // console.log(ob);
