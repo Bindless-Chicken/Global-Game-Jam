@@ -37,6 +37,7 @@ function mainPhaser(){
     var player1,player2,inputsKeyboard, inputsMouse;
     var charger = new Array();
 
+
     function gofull() {
 
         game.stage.scale.startFullScreen();
@@ -86,11 +87,10 @@ function mainPhaser(){
 
         game.camera.follow(player1.sprite);
 
+
         inputsKeyboard = game.input.keyboard.createCursorKeys();
         inputsMouse = game.input.mousePointer;
 
-        game.input.onDown.add(gofull, this);
-        
     }
 
     function update () {
@@ -151,6 +151,7 @@ function mainPhaser(){
     }
 
     function render (){
+
         // map.obstacles.forEachAlive(function(ob){
         //     // console.log(ob);
         //    game.debug.renderRectangle(ob,'#022ff22');
