@@ -39,7 +39,6 @@ function mainPhaser(){
 
 
     function gofull() {
-
         game.stage.scale.startFullScreen();
     }
 
@@ -58,6 +57,8 @@ function mainPhaser(){
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
+
+        game.load.audio('main','sound/mainLoop.m4a');
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -65,6 +66,11 @@ function mainPhaser(){
     }
 
     function create() {
+
+        music = game.add.audio('main',1,true);
+        music.play('',0,1,true);
+
+
         // map = createMap(game);
         map = createMapProcedural(game);
         for (var i = 0; i < 5; i++) {
@@ -91,6 +97,11 @@ function mainPhaser(){
         inputsKeyboard = game.input.keyboard.createCursorKeys();
         inputsMouse = game.input.mousePointer;
 
+<<<<<<< HEAD
+=======
+        // game.input.onDown.add(gofull, this);
+        
+>>>>>>> d799cdd3f7e9afa4b92ac092d93871fdcc335d81
     }
 
     function update () {
