@@ -33,6 +33,8 @@ function mainPhaser(){
         // console.log(game.focus);
     }, 1000);
 
+    game.changeZone = changeZone;
+
 
     var map;
     var camera;
@@ -60,7 +62,15 @@ function mainPhaser(){
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
 
-        game.load.audio('main','sound/mainLoop.m4a');
+        game.load.audio('main1','sound/main1.m4a');
+        game.load.audio('main2','sound/main2.m4a');
+        game.load.audio('main3','sound/main3.m4a');
+        game.load.audio('mainFinal','sound/mainFinal.m4a');
+
+        game.load.audio('level1','sound/level1.m4a');
+        game.load.audio('level2','sound/level2.m4a');
+        game.load.audio('level3','sound/level3.m4a');
+        game.load.audio('levelFinal','sound/finalLevel.m4a');
 
         game.load.audio('blop1','sound/blop1.m4a');
         game.load.audio('blop2','sound/blop2.m4a');
@@ -77,19 +87,30 @@ function mainPhaser(){
 
     function create() {
 
-        music = game.add.audio('main',1,true);
-        music.play('',0,1,true);
+        main = [
+            game.add.audio('main1'),
+            game.add.audio('main2'),
+            game.add.audio('main3'),
+            game.add.audio('mainFinal')
+        ];
+        main[0].play('',0,1,true);
+
+        level = [
+            game.add.audio('level1',1,true),
+            game.add.audio('level2',1,true),
+            game.add.audio('level3',1,true),
+            game.add.audio('levelFinal',1,true)
+        ];
 
         waterSound = game.add.audio('water',1,true);
         waterSound.play('',0,0.5,true);
-        // waterSound.volume = 0.01;
 
         blop = {
-            red : game.add.audio('blop1'),
-            blue : game.add.audio('blop2'),
-            green : game.add.audio('blop3'),
-            yellow : game.add.audio('blop4'),
-            purple : game.add.audio('blop5')
+            red     : game.add.audio('blop1'),
+            blue    : game.add.audio('blop2'),
+            green   : game.add.audio('blop3'),
+            yellow  : game.add.audio('blop4'),
+            purple  : game.add.audio('blop5')
         };
 
         // map = createMap(game);
@@ -118,6 +139,11 @@ function mainPhaser(){
 
         inputsKeyboard = game.input.keyboard;
         inputsMouse = game.input.mousePointer;
+    }
+
+    function changeZone(newZone){
+        level[newZone].play();
+        main[newZone].play('',0,1,true);
     }
 
     function update () {
