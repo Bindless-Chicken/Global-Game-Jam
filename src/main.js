@@ -86,15 +86,12 @@ function mainPhaser(){
         };
 
         // map = createMap(game);
-        map = createMapProcedural(game);
-        for (var i = 0; i < 5; i++) {
-            charger.push(createCharger(game,i));
-        };
+
 
         //todo Change 2 to nbPlayer when define
-        map = createMapProcedural(game, 2);
+        map = createMapProcedural(game, 1);
 
-        console.debug(map);
+//        console.debug(map);
 
 
 //        for (var i = 0; i < 5; i++) {
@@ -133,7 +130,7 @@ function mainPhaser(){
                 monsters[i].reachable(player1, game);
 //            monsters[i].reachable(player2, game);
         };
-
+//        console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         player1.updateSector(map, game);
         // player1.farAway(game, player1);
 

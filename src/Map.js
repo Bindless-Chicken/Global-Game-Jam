@@ -6,6 +6,7 @@ var Map = new Class
         this.obstaclesGreen = game.add.group();
         this.streams = game.add.group();
         this.monsters = game.add.group();
+        this.setSectors(sectors);
     },
 
     getStreams: function () {
