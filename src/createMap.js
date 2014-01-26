@@ -241,9 +241,7 @@ function createMapProcedural(game, nbColors) {
         angle = Math.random() * 360;
         dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secMedSize));
         dist2 = dist1 * sign2;
-        map.getMonsters().add(createDefaultCharger(game,
-            Math.cos(angle) * dist1,
-            Math.sin(angle) * dist2).sprite);
+        map.getMonsters().create(createDefaultCharger(game, Math.cos(angle) * dist1, Math.sin(angle) * dist2).sprite);
     }
 
     //Add Spammer

@@ -185,16 +185,15 @@ var Player = new Class({
         this.sprite.body.velocity.x = value_x;
         this.sprite.body.velocity.y = value_y;
     },
-    meteorShower: function(game, player, delay, radius, number){
+     meteorShower: function(game, player, delay, radius){
         var meteorArray = new Array();
         for (var i = 0; i < number; i++) {
             var spriteMeteor = game.add.sprite(300, 200, 'meteor');
             spriteMeteor.animations.add('walk');
-            spriteMeteor.animations.play('walk', 20, true);
+            spriteMeteor.animations.play('walk', 16, true);
             spriteMeteor.lifespan = delay;
             meteorArray.push(spriteMeteor);
         }
-
 
         for (var i = 0; i < meteorArray.length; i++) {
             if(meteorArray[i].lifespan <= 0)

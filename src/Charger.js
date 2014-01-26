@@ -20,7 +20,7 @@ var Charger = new Class
 		// console.log(((Math.sqrt(Math.abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(Math.abs(player.sprite.y-this.sprite.y))))+" vs "+ Math.sqrt(this.range));
 		if(((Math.sqrt(Math.abs(player.sprite.x-this.sprite.x))) + (Math.sqrt(Math.abs(player.sprite.y-this.sprite.y)))) <= Math.sqrt(this.range))
 		{
-			// console.log("ATTACKED ! ");
+			//console.log("ATTACKED ! ");
 			this.attack(player, game);
 			if((player.sprite.x > this.sprite.x) && (player.sprite.y > this.sprite.y))
 			{
@@ -122,4 +122,15 @@ function createDefaultCharger(game, x, y) {
     var charger = new Charger(game, x, y, "charger", 'charger');
     return charger;
 
+}
+
+function createProceduralEnemy(game) {
+
+	var charger = new Array();
+
+	for (var i = 0; i < 20; i++) {
+            charger.push(createDefaultCharger(game, Math.random()*3000-1500, Math.random()*3000-1500));
+    };
+
+    return charger;
 }
