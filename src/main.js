@@ -7,8 +7,9 @@ loadFiles();
 
 window.onload = function () {
     setTimeout(function () {
-        mainPhaser();
+        menuPhaser();
     }, 3000);
+
 };
 
 // JS file preloader
@@ -22,10 +23,29 @@ function loadFiles() {
     }
 }
 
+function menuPhaser(){
+    var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
+    function preload() {
+        game.load.image('menu',"img/first.png");
+       
+    }
+
+    function create() {
+
+        menu = game.add.sprite(0,0,'menu');
+    
+    }
+
+    function update() {
+    }
+
+    function render() {}
+}
+
 
 function mainPhaser() {
     var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
-    var maxColor = 2;
+    var maxColor = 4;
 
     game.focus = false;
     game.createSprite = function (x, y, key) {
@@ -46,7 +66,7 @@ function mainPhaser() {
 
     var map;
     var camera;
-    var player1, player2, inputsKeyboard, inputsMouse;
+    var player1, player2, inputsKeyboard, inputsMouse, inputsPointer;
     var charger = new Array();
 
 
@@ -133,7 +153,7 @@ function mainPhaser() {
         };
 
         //todo Change 2 to nbPlayer when define
-        // map = createMapProcedural(game, 1);
+        map = createMapProcedural(game, maxColor);
 
         // console.debug(map);
 
@@ -155,7 +175,8 @@ function mainPhaser() {
 
 
         inputsKeyboard = game.input.keyboard;
-        inputsMouse = game.input.mousePointer;
+        inputsPointer = game.input.mousePointer;
+        inputsMouse = game.input.mouse;
     }
 
     function changeZone(newZone,player) {
@@ -168,22 +189,16 @@ function mainPhaser() {
             }
         }
 
-        if (newZone == 3) {
+        if (newZone == 3)
             ambiance.pause();
-            setTimeout(function () {
-                if(player.currentZone == 4){
-                    endOfGame();
-                }
-            },2000);
-        } else {
+        else
             ambiance.resume();
-        }
     }
 
     function update() {
         // if(!game.focus) return;
-        player1.moveK(inputsKeyboard, game);
-        //player2.moveM(inputsMouse);
+        player2.moveK(inputsKeyboard, game);
+        player1.moveM(inputsPointer, inputsMouse, game);
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].dead == false)
                 charger[i].reachable(player1, game);
@@ -192,7 +207,7 @@ function mainPhaser() {
                 charger[i].getDmg(1);
             }
 
-            //charger[i].reachable(player2, game);
+            charger[i].reachable(player2, game);
         }
 
         var monsters = map.getMonsters();
@@ -215,8 +230,8 @@ function mainPhaser() {
         // player1.farAway(game, player1);
 
         // check for collision over the player1's sonar
-        collideHandler(player1);
-        //collideHandler(player2,game);
+        collideHandler(player1, game);
+        collideHandler(player2,game);
     }
 
     function collideHandler(player) {
@@ -238,6 +253,18 @@ function mainPhaser() {
             });
         }
 
+        if (player.type.name == 'yellow') {
+            game.physics.collide(player.sonarPts, map.obstaclesYellow, function (pt, ob) {
+                player.sonarCollision(pt, game);
+            });
+        }
+
+        if (player.type.name == 'purple') {
+            game.physics.collide(player.sonarPts, map.obstaclesPurple, function (pt, ob) {
+                player.sonarCollision(pt, game);
+            });
+        }
+
         // console.log(player.sprite,map.obstaclesRed);
         game.physics.collide(player.sprite, map.obstaclesRed, function (pl, ob) {
             player.loseLife();
@@ -249,6 +276,14 @@ function mainPhaser() {
             blop[player.type.name].play();
         });
         game.physics.collide(player.sprite, map.obstaclesGreen, function (pl, ob) {
+            player.loseLife();
+            blop[player.type.name].play();
+        });
+        game.physics.collide(player.sprite, map.obstaclesYellow, function (pl, ob) {
+            player.loseLife();
+            blop[player.type.name].play();
+        });
+        game.physics.collide(player.sprite, map.obstaclesPurple, function (pl, ob) {
             player.loseLife();
             blop[player.type.name].play();
         });
@@ -287,10 +322,4 @@ function mainPhaser() {
         //             }
         //         }
     }
-
-    function endOfGame () {
-        // put end here
-        alert("end");
-    }
 }
-

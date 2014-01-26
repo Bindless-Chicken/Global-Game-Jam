@@ -35,6 +35,30 @@
 //    return map;
 //}
 
+function creditsDown(game, player){
+    player.lock = true;
+    var length = ($(window).height()+$("#credits").height())+1000;
+    console.log(length);
+    $("#credits").animate({
+        top: "+="+length
+    }, 25000, function() {
+        // Animation complete.
+    });
+
+    var length = ($(window).height()/2)+800;
+    console.log(length);
+    $("#thx").animate({
+        top: "+="+length
+    }, 25000, function() {
+        // Animation complete.
+    });
+    setInterval(changeColor(game),3000);
+}
+
+function changeColor(game, player){
+    player.setType(game);
+}
+
 function createMapProcedural(game, nbColors) {
     // Sectors
     var sectorEasy = new Sector(500 + Math.random() * 250, function (player) {
@@ -63,6 +87,7 @@ function createMapProcedural(game, nbColors) {
             player.currentZone = 4;
             game.changeZone(3,player);
             console.log("Zone 4");
+            changeColor(game, player);
         }
     });
 
@@ -79,7 +104,7 @@ function createMapProcedural(game, nbColors) {
     // console.log(secEndSize);
 
 
-    for (var i = 0; i < (15 + Math.random() * 7); i++) {
+    for (var i = 0; i < (20 + Math.random() * 17); i++) {
         angle = Math.random() * 360;
         dist1 = secEasySize + Math.random() * secEasySize * 2;
         dist2 = sign2 * dist1;
@@ -102,11 +127,23 @@ function createMapProcedural(game, nbColors) {
                     secEasySize + Math.random() * secEasySize * 2,
                     'obstacle', COLORS.GREEN)).sprite);
                 break;
+            case 3:
+                map.getObstaclesYellow().add((new Obstacle(game, -
+                    secEasySize + Math.random() * secEasySize * 2, -
+                    secEasySize + Math.random() * secEasySize * 2,
+                    'obstacle', COLORS.BLUE)).sprite);
+                break;
+            case 4:
+                map.getObstaclesPurple().add((new Obstacle(game, -
+                    secEasySize + Math.random() * secEasySize * 2, -
+                    secEasySize + Math.random() * secEasySize * 2,
+                    'obstacle', COLORS.GREEN)).sprite);
+                break;
         }
     }
 
     //Loop for the medium sector
-    for (var i = 0; i < (150 + Math.random() * 50); i++) {
+    for (var i = 0; i < (350 + Math.random() * 50); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
@@ -132,11 +169,23 @@ function createMapProcedural(game, nbColors) {
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.GREEN)).sprite);
                 break;
+            case 3:
+                map.getObstaclesYellow().add((new Obstacle(game, -
+                    Math.cos(angle) * dist1,
+                    Math.sin(angle) * dist2,
+                    'obstacle', COLORS.BLUE)).sprite);
+                break;
+            case 4:
+                map.getObstaclesPurple().add((new Obstacle(game, -
+                    Math.cos(angle) * dist1,
+                    Math.sin(angle) * dist2,
+                    'obstacle', COLORS.GREEN)).sprite);
+                break;
         }
     }
 
-    //Loop for the hard sector
-    for (var i = 0; i < 350 + (Math.random() * 70); i++) {
+    //Loop for the last sector
+    for (var i = 0; i < 600 + (Math.random() * 70); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 
@@ -163,6 +212,18 @@ function createMapProcedural(game, nbColors) {
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.GREEN)).sprite);
                 break;
+            case 3:
+                map.getObstaclesYellow().add((new Obstacle(game, -
+                    Math.cos(angle) * dist1,
+                    Math.sin(angle) * dist2,
+                    'obstacle', COLORS.BLUE)).sprite);
+                break;
+            case 4:
+                map.getObstaclesPurple().add((new Obstacle(game, -
+                    Math.cos(angle) * dist1,
+                    Math.sin(angle) * dist2,
+                    'obstacle', COLORS.GREEN)).sprite);
+                break;
         }
     }
 
@@ -180,9 +241,7 @@ function createMapProcedural(game, nbColors) {
             Math.sin(angle) * dist2,
             Math.random() * 15 + 5)).create(game));
     }
-//    console.log("streams");
-//    console.log(map.getStreams());
-
+ 
     //Add monsters (only for sector 3)
     for (var i = 0; i < (20 + Math.random() * 5); i++) {
 

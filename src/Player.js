@@ -13,6 +13,7 @@ var Player = new Class({
         this.life = 3;
         this.currentZone = 0;
         this.spaceDown = false;
+        this.lock = false;
 
         // sonar options
         this.nbPoints = 150;
@@ -34,6 +35,8 @@ var Player = new Class({
         this.sonarPts.forEach(function(pt){
             pt.loadTexture('w_'+_.type.name);
         });
+        this.sonarSpeed = this.type.power.speed;
+        this.sonarPeriod = this.type.power.period;
         // var x = this.sprite.x;
         // var y = this.sprite.y;
         // this.sprite.destroy();
@@ -67,53 +70,66 @@ var Player = new Class({
         }
     },
     moveK: function (inputs, game) {
-        if (inputs.isDown(Phaser.Keyboard.LEFT))
-            this.sprite.body.velocity.x = -this.speed;
-        else
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
-        
-        if (inputs.isDown(Phaser.Keyboard.RIGHT))
-            this.sprite.body.velocity.x = this.speed;
-        else
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
+        if(!this.lock){
+            if (inputs.isDown(Phaser.Keyboard.LEFT))
+                this.sprite.body.velocity.x = -this.speed;
+            else
+                this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
 
-        if (inputs.isDown(Phaser.Keyboard.UP))
-            this.sprite.body.velocity.y = -this.speed;
-        else
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
-        
-        if (inputs.isDown(Phaser.Keyboard.DOWN))
-            this.sprite.body.velocity.y = this.speed;
-        else
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
+            if (inputs.isDown(Phaser.Keyboard.RIGHT))
+                this.sprite.body.velocity.x = this.speed;
+            else
+                this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
 
-        if(inputs.isDown(Phaser.Keyboard.SPACEBAR) && !this.spaceDown){
-            this.spaceDown = true;
-            this.setType(game);
-        }
+            if (inputs.isDown(Phaser.Keyboard.UP))
+                this.sprite.body.velocity.y = -this.speed;
+            else
+                this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
 
-        if(!inputs.isDown(Phaser.Keyboard.SPACEBAR)){
-            this.spaceDown = false;
+            if (inputs.isDown(Phaser.Keyboard.DOWN))
+                this.sprite.body.velocity.y = this.speed;
+            else
+                this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
+
+            if(inputs.isDown(Phaser.Keyboard.SPACEBAR) && !this.spaceDown){
+                this.spaceDown = true;
+                this.setType(game);
+            }
+
+            if(!inputs.isDown(Phaser.Keyboard.SPACEBAR)){
+                this.spaceDown = false;
+            }
         }
     },
-    moveM: function (inputs) {
-        if(inputs.isDown){
-            if(!this.firstDown){
+    moveM: function (inputs, mouse, game) {
+        if(!this.lock){
+            if(inputs.isDown && mouse.button == 1){
+                if(!this.firstDown){
+                    this.mouseY = inputs.y;
+                    this.mouseX = inputs.x;
+                    this.firstDown = true;
+                }
+                // Right
+                this.sprite.body.velocity.x-=1.25*(this.mouseX-inputs.x);
+                this.sprite.body.velocity.y-=1.25*(this.mouseY-inputs.y);
+
                 this.mouseY = inputs.y;
                 this.mouseX = inputs.x;
-                this.firstDown = true;
             }
-            // Right
-            this.sprite.body.velocity.x-=1.25*(this.mouseX-inputs.x);
-            this.sprite.body.velocity.y-=1.25*(this.mouseY-inputs.y);
+            else{
+                this.firstDown = false;
+                this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
+                this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
+            }
 
-            this.mouseY = inputs.y;
-            this.mouseX = inputs.x;
-        }
-        else{
-            this.firstDown = false;
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
+            if(inputs.isDown && mouse.button == 3 && !this.spaceDown){
+                this.spaceDown = true;
+                this.setType(game);
+            }
+
+            if(!(inputs.isDown && mouse.button == 3)){
+                this.spaceDown = false;
+            }
         }
     },
     sonar: function(game){
