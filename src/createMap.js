@@ -134,13 +134,13 @@ function createMapProcedural(game, nbColors) {
                 map.getObstaclesYellow().add((new Obstacle(game, -
                     secEasySize + Math.random() * secEasySize * 2, -
                     secEasySize + Math.random() * secEasySize * 2,
-                    'obstacle', COLORS.BLUE)).sprite);
+                    'obstacle', COLORS.YELLOW)).sprite);
                 break;
             case 4:
                 map.getObstaclesPurple().add((new Obstacle(game, -
                     secEasySize + Math.random() * secEasySize * 2, -
                     secEasySize + Math.random() * secEasySize * 2,
-                    'obstacle', COLORS.GREEN)).sprite);
+                    'obstacle', COLORS.PURPLE)).sprite);
                 break;
         }
     }
@@ -161,13 +161,13 @@ function createMapProcedural(game, nbColors) {
                     'obstacle', COLORS.RED)).sprite);
                 break;
             case 1:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesBlue().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.BLUE)).sprite);
                 break;
             case 2:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesGreen().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.GREEN)).sprite);
@@ -176,13 +176,13 @@ function createMapProcedural(game, nbColors) {
                 map.getObstaclesYellow().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.BLUE)).sprite);
+                    'obstacle', COLORS.YELLOW)).sprite);
                 break;
             case 4:
                 map.getObstaclesPurple().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.GREEN)).sprite);
+                    'obstacle', COLORS.PURPLE)).sprite);
                 break;
         }
     }
@@ -204,13 +204,13 @@ function createMapProcedural(game, nbColors) {
                     'obstacle', COLORS.RED)).sprite);
                 break;
             case 1:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesBlue().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.BLUE)).sprite);
                 break;
             case 2:
-                map.getObstaclesRed().add((new Obstacle(game,
+                map.getObstaclesGreen().add((new Obstacle(game,
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
                     'obstacle', COLORS.GREEN)).sprite);
@@ -219,13 +219,13 @@ function createMapProcedural(game, nbColors) {
                 map.getObstaclesYellow().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.BLUE)).sprite);
+                    'obstacle', COLORS.YELLOW)).sprite);
                 break;
             case 4:
                 map.getObstaclesPurple().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.GREEN)).sprite);
+                    'obstacle', COLORS.PURPLE)).sprite);
                 break;
         }
     }
@@ -233,7 +233,7 @@ function createMapProcedural(game, nbColors) {
     //Add monsters (only for sector 3)
 
     //Add charger
-    for (var i = 0; i < (12 + Math.random() * 8); i++) {
+    /*for (var i = 0; i < (5 + Math.random() * 8); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
@@ -244,10 +244,10 @@ function createMapProcedural(game, nbColors) {
         map.getMonsters().add(createDefaultCharger(game,
             Math.cos(angle) * dist1,
             Math.sin(angle) * dist2).sprite);
-    }
+    }*/
 
     //Add Spammer
-    for (var i = 0; i < (8 + Math.random() * 5); i++) {
+    /*for (var i = 0; i < (3 + Math.random() * 5); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
@@ -279,10 +279,10 @@ function createMapProcedural(game, nbColors) {
                     COLORS.GREEN).sprite);
                 break;
         }
-    }
+    }*/
 
     //Add streams (only for sector 2-3)
-    for (var i = 0; i < (20 + Math.random() * 10); i++) {
+    for (var i = 0; i < (10 + Math.random() * 10); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 

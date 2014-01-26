@@ -45,7 +45,7 @@ function menuPhaser(){
 
 function mainPhaser() {
     var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
-    var maxColor = 4;
+    var maxColor = 5;
 
     game.focus = false;
     game.createSprite = function (x, y, key) {
@@ -68,6 +68,7 @@ function mainPhaser() {
     var camera;
     var player1, player2, inputsKeyboard, inputsMouse, inputsPointer;
     var charger = new Array();
+    
 
 
     function gofull() {
@@ -85,7 +86,7 @@ function mainPhaser() {
 
         game.load.image('obstacle', 'img/obstacle.png');
         game.load.spritesheet('greenline', 'img/greenline.png', 10, 64, 40);
-        game.load.image('meteor', 'img/meteor.png');
+        game.load.spritesheet('meteor', 'img/meteor_sheet.png', 50, 50, 16);
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
@@ -149,6 +150,8 @@ function mainPhaser() {
         // map = createMap(game);
         map = createMapProcedural(game);
 
+        //charger = createProceduralEnemy(game);
+
         //todo Change 2 to nbPlayer when define
         map = createMapProcedural(game, maxColor);
 
@@ -175,29 +178,39 @@ function mainPhaser() {
         inputsPointer = game.input.mousePointer;
         inputsMouse = game.input.mouse;
     }
+    var locker = false
 
     function changeZone(newZone,player) {
-        for (var i = 0; i < 4; i++) {
-            if(i == newZone){
-                level[i].play();
-                main[i].play('',0,1,true);
-            }else{
-                main[i].pause();
+        if(!locker){
+            for (var i = 0; i < 4; i++) {
+                if(i == newZone){
+                    level[i].play();
+                    main[i].play('',0,1,true);
+                }else{
+                    main[i].pause();
+                }
             }
-        }
 
-        if (newZone == 3)
-            ambiance.pause();
-        else
-            ambiance.resume();
+            if (newZone == 3)
+                ambiance.pause();
+            else
+                ambiance.resume();
+        }
+        if(newZone == 3){
+            locker = true;
+        }
     }
 
     function update() {
         // if(!game.focus) return;
         player2.moveK(inputsKeyboard, game);
         player1.moveM(inputsPointer, inputsMouse, game);
-        for (var i = 0; i < charger.length; i++) {
-            if (charger[i].dead == false)
+        var monsters = map.getMonsters();
+        
+
+        
+        /*for (var i = 0; i < charger.length; i++) {
+            if (charger[i].name == "charger")
                 charger[i].reachable(player1, game);
            if(game.physics.collide(player1.sonarPts,charger[i].sprite))
             {
@@ -208,13 +221,17 @@ function mainPhaser() {
         }
 
         var monsters = map.getMonsters();
+        for (var i = 0; i < charger.length; i++) {
+            if (charger[i].name == "charger")
+                charger[i].reachable(player1, game);
+            // monsters[i].reachable(player2, game);
         for (var i = 0; i < monsters.length; i++) {
             if (monsters.getAt(i).name == "charger"){
                 monsters[i].reachable(player1, game);
                 monsters[i].reachable(player2, game);
             }
         }
-       // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
+        // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].hp <= 0 && (charger[i].dead == false)) {
                 charger[i].dead = true;
@@ -222,7 +239,8 @@ function mainPhaser() {
                 charger[i].sprite.body.velocity.x = 0;
                 charger[i].sprite.body.velocity.y = 0;
             }
-        }
+        }*/
+
 
         player1.updateSector(map, game);
         // player1.farAway(game, player1);
