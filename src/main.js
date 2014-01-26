@@ -34,6 +34,7 @@ function mainPhaser(){
     }, 1000);
 
     game.changeZone = changeZone;
+    game.soundRadar = function () {radarSound.play();}
 
 
     var map;
@@ -80,6 +81,7 @@ function mainPhaser(){
         game.load.audio('blop5','sound/blop5.m4a');
 
         game.load.audio('ambiance','sound/ambiance.m4a');
+        game.load.audio('radar','sound/radar_t.m4a');
         //game.load.image('spammer','img/spammer.png');
 
         /*game.load.spritesheet('greenline', 'img/greenline.png', 100, 64, 30);
@@ -114,6 +116,8 @@ function mainPhaser(){
             purple  : game.add.audio('blop5')
         };
 
+        radarSound = game.add.audio('radar');
+
         // map = createMap(game);
         map = createMapProcedural(game);
         for (var i = 0; i < 5; i++) {
@@ -145,10 +149,9 @@ function mainPhaser(){
     function changeZone(newZone){
         for (var i = 0; i < 4; i++) {
             if(i == newZone){
-                level[i].resume();
+                level[i].play();
                 main[i].play('',0,1,true);
             }else{
-                console.log("pause : ", i);
                 main[i].pause();
             }
         };
