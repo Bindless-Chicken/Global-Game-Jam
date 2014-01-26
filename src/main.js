@@ -174,7 +174,10 @@ function mainPhaser() {
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].dead == false)
                 charger[i].reachable(player1, game);
-            game.physics.collide(player1.sonarPts, charger[i].sprite, charger[i].getDmg(Math.random()));
+           if(game.physics.collide(player1.sonarPts,charger[i].sprite))
+            {
+                charger[i].getDmg(1);
+            }
 
             //charger[i].reachable(player2, game);
         }
