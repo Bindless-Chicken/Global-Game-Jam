@@ -230,23 +230,10 @@ function createMapProcedural(game, nbColors) {
         }
     }
 
-    //Add streams (only for sector 2-3)
-    for (var i = 0; i < (20 + Math.random() * 10); i++) {
-        sign1 = Math.random() < 0.5 ? -1 : 1;
-        sign2 = Math.random() < 0.5 ? -1 : 1;
-
-        angle = Math.random() * 360;
-        dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secEasySize));
-        dist2 = dist1 * sign2;
-
-        map.getStreams().add((new Stream(Math.random() * 75 + 50,
-            Math.cos(angle) * dist1,
-            Math.sin(angle) * dist2,
-            Math.random() * 15 + 5)).create(game));
-    }
- 
     //Add monsters (only for sector 3)
-    for (var i = 0; i < (20 + Math.random() * 5); i++) {
+
+    //Add charger
+    for (var i = 0; i < (12 + Math.random() * 8); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
@@ -254,6 +241,21 @@ function createMapProcedural(game, nbColors) {
         angle = Math.random() * 360;
         dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secMedSize));
         dist2 = dist1 * sign2;
+        map.getMonsters().add(createDefaultCharger(game,
+            Math.cos(angle) * dist1,
+            Math.sin(angle) * dist2).sprite);
+    }
+
+    //Add Spammer
+    for (var i = 0; i < (8 + Math.random() * 5); i++) {
+
+        sign1 = Math.random() < 0.5 ? -1 : 1;
+        sign2 = Math.random() < 0.5 ? -1 : 1;
+
+        angle = Math.random() * 360;
+        dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secMedSize));
+        dist2 = dist1 * sign2;
+
 
         switch ((Math.floor(Math.random() * 100)) % (nbColors)) {
             case 0:
@@ -278,6 +280,22 @@ function createMapProcedural(game, nbColors) {
                 break;
         }
     }
+
+    //Add streams (only for sector 2-3)
+    for (var i = 0; i < (20 + Math.random() * 10); i++) {
+        sign1 = Math.random() < 0.5 ? -1 : 1;
+        sign2 = Math.random() < 0.5 ? -1 : 1;
+
+        angle = Math.random() * 360;
+        dist1 = sign1 * (secMedSize + Math.random() * (secHardSize - secEasySize));
+        dist2 = dist1 * sign2;
+
+        map.getStreams().add((new Stream(Math.random() * 75 + 50,
+            Math.cos(angle) * dist1,
+            Math.sin(angle) * dist2,
+            Math.random() * 15 + 5)).create(game));
+    }
+
     game.world.setBounds(-secEndSize, -secEndSize, secEndSize * 2, secEndSize * 2);
 
     return map;

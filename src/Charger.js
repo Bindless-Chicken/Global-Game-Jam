@@ -114,12 +114,12 @@ var Charger = new Class
 
 
 function createCharger(game,i) {
-	var charger = new Charger(game, 100+i*50, 150+i*50, "Test", 'charger', 50, 250, 10);
-	return charger;
+    var charger = new Charger(game, 100 + i * 50, 150 + i * 50, "charger", 'charger', 50, 250, 10);
+    return charger;
 }
 
 function createDefaultCharger(game, x, y) {
-    var charger = new Charger(game, x, y, "Test", 'charger');
+    var charger = new Charger(game, x, y, "charger", 'charger');
     return charger;
 
 }
