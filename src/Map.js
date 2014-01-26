@@ -5,8 +5,17 @@ var Map = new Class
         this.obstaclesBlue = game.add.group();
         this.obstaclesGreen = game.add.group();
         this.streams = game.add.group();
+        this.monsters = game.add.group();
         this.setSectors(sectors);
     },
+
+    getStreams: function () {
+        return this.streams;
+    },
+    getMonsters: function () {
+        return this.monsters;
+    },
+
     setSectors: function(sectors){
         this.sectors = sectors;
     },
