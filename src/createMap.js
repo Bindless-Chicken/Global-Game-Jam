@@ -233,7 +233,7 @@ function createMapProcedural(game, nbColors) {
     //Add monsters (only for sector 3)
 
     //Add charger
-    for (var i = 0; i < (12 + Math.random() * 8); i++) {
+    for (var i = 0; i < (5 + Math.random() * 8); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
@@ -247,7 +247,7 @@ function createMapProcedural(game, nbColors) {
     }
 
     //Add Spammer
-    for (var i = 0; i < (8 + Math.random() * 5); i++) {
+    for (var i = 0; i < (3 + Math.random() * 5); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
@@ -282,7 +282,7 @@ function createMapProcedural(game, nbColors) {
     }
 
     //Add streams (only for sector 2-3)
-    for (var i = 0; i < (20 + Math.random() * 10); i++) {
+    for (var i = 0; i < (10 + Math.random() * 10); i++) {
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
 

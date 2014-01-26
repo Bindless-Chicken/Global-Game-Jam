@@ -45,7 +45,7 @@ function menuPhaser(){
 
 function mainPhaser() {
     var game = new Phaser.Game($(window).width(), $(window).height(), Phaser.CANVAS, 'gameCanvas', { preload: preload, create: create, update: update, render: render });
-    var maxColor = 4;
+    var maxColor = 5;
 
     game.focus = false;
     game.createSprite = function (x, y, key) {
@@ -175,21 +175,27 @@ function mainPhaser() {
         inputsPointer = game.input.mousePointer;
         inputsMouse = game.input.mouse;
     }
+    var locker = false
 
     function changeZone(newZone,player) {
-        for (var i = 0; i < 4; i++) {
-            if(i == newZone){
-                level[i].play();
-                main[i].play('',0,1,true);
-            }else{
-                main[i].pause();
+        if(!locker){
+            for (var i = 0; i < 4; i++) {
+                if(i == newZone){
+                    level[i].play();
+                    main[i].play('',0,1,true);
+                }else{
+                    main[i].pause();
+                }
             }
-        }
 
-        if (newZone == 3)
-            ambiance.pause();
-        else
-            ambiance.resume();
+            if (newZone == 3)
+                ambiance.pause();
+            else
+                ambiance.resume();
+        }
+        if(newZone == 3){
+            locker = true;
+        }
     }
 
     function update() {
