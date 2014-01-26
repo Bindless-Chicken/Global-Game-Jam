@@ -4,90 +4,86 @@
 
 var Player = new Class({
     initialize: function (color,game) {
+        console.log("color : " ,color);
         this.mouseX = 0;
         this.mouseY = 0;
         this.sprite = null;
-        this.type = new Type(color);
-        this.speed = 200;
+        this.type = color;
+        console.log(this.type);
+        this.speed = 100;
         this.firstDown = false;
         this.life = 3;
 
         // sonar options
-        this.nbPoints = 100;
-        this.nbMaxoints = 300; // 200 + 100 to be sure tto have enough points
+        this.nbPoints = 150;
+        this.nbMaxoints = 400;
         this.sonarPts = game.add.group();
-        this.sonarPts.createMultiple(this.nbMaxoints,'w_'+color.toLowerCase());
-        this.sonarSpeed = 900;
-    },
+        this.sonarPts.createMultiple(this.nbMaxoints,'w_'+color.name);
+        this.sonarSpeed = this.type.power.speed;
+        this.sonarPeriod = this.type.power.period;
 
+    },
     setSprite: function (sprite){
         this.sprite = sprite;
         this.sprite.body.bounce = new Phaser.Point(0.6,0.6);
     },
-
-    parseColor: function (game, player, color) {
-        this.type = new  Type(color);
-        this.sonarPts.removeAll();
-        this.sonarPts.createMultiple(this.nbMaxoints,'w_'+color.toLowerCase());
-        var x = this.sprite.x;
-        var y = this.sprite.y;
-        this.sprite.destroy();
-        this.setSprite(game.add.sprite(x,y,'w_'+player.type.color.toLowerCase()));
-        this.sprite.scale = new Phaser.Point(2*player.life,2*player.life);
+    parseColor: function (game, color) {
+        this.type = color;
+        // this.sonarPts.removeAll();
+        // this.sonarPts.createMultiple(this.nbMaxoints,'w_'+this.type.name);
+        var _ = this;
+        this.sonarPts.forEach(function(pt){
+            pt.loadTexture('w_'+_.type.name);
+        });
+        // var x = this.sprite.x;
+        // var y = this.sprite.y;
+        // this.sprite.destroy();
+        this.sprite.loadTexture('w_'+this.type.name);
+        // this.setSprite(game.add.sprite(this.sprite.x,this.sprite.y,'w_'+this.type.name));
+        this.sprite.scale = new Phaser.Point(2*this.life,2*this.life);
     },
-
-    setType: function(player, game) {
-        var colorArray = new Array();
-        colorArray.push("RED");
-        colorArray.push("BLUE");
-        colorArray.push("GREEN");
-        colorArray.push("YELLOW");
-        colorArray.push("PURPLE");
-        
-
-        for (var i = 0; i < 5; i++) {
-            if(colorArray[i] == player.type.color.toUpperCase())
-            {
-                 var rand = i;
-            }               
-        };
-
-        if(rand == 4)
-        {
-            rand = 0;
+    setType: function(game) {
+        switch(this.type){
+            case COLORS.RED:
+                this.parseColor(game, COLORS.BLUE); 
+            break;
+            case COLORS.BLUE:
+                this.parseColor(game, COLORS.GREEN); 
+            break;
+            case COLORS.GREEN:
+                this.parseColor(game, COLORS.YELLOW); 
+            break; 
+            case COLORS.YELLOW:
+                this.parseColor(game, COLORS.PURPLE); 
+            break; 
+            case COLORS.PURPLE:
+                this.parseColor(game, COLORS.RED); 
+            break;
         }
-        else
-        {
-            rand++;
-        }
-        console.log(rand);
-
-        this.parseColor(game, player, colorArray[rand]);       
     },
-
     moveK: function (inputs, game) {
         if (inputs.left.isDown)
             this.sprite.body.velocity.x = -this.speed;
         else
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.95;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
         
         if (inputs.right.isDown)
             this.sprite.body.velocity.x = this.speed;
         else
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.95;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
 
         if (inputs.up.isDown)
             this.sprite.body.velocity.y = -this.speed;
         else
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.95;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
         
         if (inputs.down.isDown)
             this.sprite.body.velocity.y = this.speed;
         else
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.95;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
 
         if(game.input.keyboard.justPressed(32,100))
-            this.setType(this, game);
+            this.setType(game);
     },
     moveM: function (inputs) {
         if(inputs.isDown){
@@ -105,14 +101,14 @@ var Player = new Class({
         }
         else{
             this.firstDown = false;
-            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.95;
-            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.95;
+            this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
+            this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
         }
     },
     sonar: function(game){
         // if(!game.focus){
             if(this.sonarPts.countDead() <= this.nbPoints){ 
-                console.log("too less deadPoints !",this.sonarPts.countDead() );
+                // console.log("too less deadPoints !",this.sonarPts.countDead() );
             }
             else{
                 for(var i = 0; i < this.nbPoints ; i ++){
@@ -124,7 +120,7 @@ var Player = new Class({
                     pt.reset(this.sprite.body.center.x, this.sprite.body.center.y);
                     pt.scale = new Phaser.Point(1,1);
                     pt.lifespan = 1550 + Math.random()*300;
-                    game.physics.moveToXY(pt, destPt.x, destPt.y, 90 + Math.random()*2 );//+ Math.cos(game.physics.angleBetween(this.sprite,pt))*this.sprite.body.velocity.x);
+                    game.physics.moveToXY(pt, destPt.x, destPt.y, this.sonarSpeed + Math.random()*2 );//+ Math.cos(game.physics.angleBetween(this.sprite,pt))*this.sprite.body.velocity.x);
                 }
             }
         // }
@@ -138,7 +134,7 @@ var Player = new Class({
         pt.body.velocity = new Phaser.Point(0,0); //  we stop the point
         pt.kill();
         pt.lifespan = 1;//pt.lifespan*2 + Math.random()*100; // add a little delay
-        var d = game.add.sprite(pt.x,pt.y,'w_red');
+        var d = game.add.sprite(pt.x,pt.y,'w_'+this.type.name);
         d.scale = new Phaser.Point(2,2); 
         d.lifespan = 1000;
     },
@@ -162,22 +158,20 @@ var Player = new Class({
         this.sprite.body.velocity.y = value_y;
     },
     meteorShower: function(game, player, delay, radius, number){
-       var meteorArray = new Array();
-       for (var i = 0; i < number; i++) {
-        var spriteMeteor = game.add.sprite(300, 200, 'meteor');
-        spriteMeteor.animations.add('walk');
-        spriteMeteor.animations.play('walk', 20, true);
-        spriteMeteor.lifespan = delay;
-        meteorArray.push(spriteMeteor);
-    };
+        var meteorArray = new Array();
+        for (var i = 0; i < number; i++) {
+            var spriteMeteor = game.add.sprite(300, 200, 'meteor');
+            spriteMeteor.animations.add('walk');
+            spriteMeteor.animations.play('walk', 20, true);
+            spriteMeteor.lifespan = delay;
+            meteorArray.push(spriteMeteor);
+        }
 
 
-    for (var i = 0; i < meteorArray.length; i++) {
-       if(meteorArray[i].lifespan <= 0)
-       {
-        meteorArray.remove(i);
-    }
-};
+        for (var i = 0; i < meteorArray.length; i++) {
+            if(meteorArray[i].lifespan <= 0)
+                meteorArray.remove(i);
+        }
     },
     linePush: function(game, delay, radius){
         var lineArray = new Array();

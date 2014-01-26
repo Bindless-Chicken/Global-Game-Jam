@@ -33,7 +33,7 @@ function createMapProcedural(game){
     var sectorEasy = new Sector(500+Math.random()*250, function () {
     });
     var sectorMedium = new Sector(1500+Math.random()*750, function () {
-    }); a
+    });
     var sectorEnd = new Sector(3000+Math.random()*1500, function () {
     });
 
@@ -42,15 +42,15 @@ function createMapProcedural(game){
     var color;
 
     for(var i = 0; i< 30 + Math.random()*10 ; i++){
-        switch ((Math.floor(Math.random()*100))%3){
+        switch ((Math.floor(Math.random()*100))%2){
+            case 0:
+                map.getObstaclesRed().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'stream', COLORS.RED)).sprite);
+                break;
             case 1:
-                map.getObstaclesRed().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.RED)).sprite);
+                map.getObstaclesBlue().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'stream', COLORS.BLUE)).sprite);
                 break;
             case 2:
-                map.getObstaclesBlue().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.BLUE)).sprite);
-                break;
-            case 3:
-                map.getObstaclesGreen().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'obstacle', COLORS.GREEN)).sprite);
+                map.getObstaclesGreen().add((new Obstacle(game, -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2,  -sectorEasy.getRadius()+Math.random()*sectorEasy.getRadius()*2, 'stream', COLORS.GREEN)).sprite);
                 break;
         }
     }
@@ -62,10 +62,3 @@ function createMapProcedural(game){
     return map;
 }
 
-var COLORS = {
-    RED: {name: "red", value: "#FF0000", power: {velocity: 10, period: 1}},
-    BLUE: {name: "blue", value: "#0000FF", power: {velocity: 10, period: 1}},
-    GREEN: {name: "green", value: "00FF00", power: {velocity: 10, period: 2}},
-    YELLOW: {name: "yellow", value: "FFFF00", power: {velocity: 20, period: 0.5}},
-    PURPLE: {name: "purple", value: "663399", power: {velocity: 5, period: 3}}
-};

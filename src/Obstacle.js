@@ -3,7 +3,7 @@ var Obstacle = new Class({
         this.sprite = new Phaser.Sprite(game, size_x, size_y, image);
         this.sprite.body.immovable = true;
         this.sprite.type = color;
-        this.type = new Type(color);
+        this.type = color;
     },
 
     setSprite: function (sprite) {

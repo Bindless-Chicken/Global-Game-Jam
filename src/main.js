@@ -60,13 +60,13 @@ function mainPhaser(){
         // map = createMap(game);
         map = createMapProcedural(game);
 
-        player1 = new Player('red',game);
+        player1 = new Player(COLORS.RED,game);
         player1.setSprite(game.add.sprite(0,0,'w_red'));
         player1.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player1.sonar(game);
 
-        player2 = new Player('blue',game);
-        player2.setSprite(game.add.sprite(0,0,'w_red'));
+        player2 = new Player(COLORS.BLUE,game);
+        player2.setSprite(game.add.sprite(0,0,'w_blue'));
         player2.sprite.scale = new Phaser.Point(2*player1.life,2*player1.life);
         player2.sonar(game);
 
@@ -95,19 +95,19 @@ function mainPhaser(){
 
 
     function collideHandler(player, game) {
-        if(player.type.color == 'red'){
+        if(player.type.name == 'red'){
             game.physics.collide(player.sonarPts,map.obstaclesRed,function(pt,ob){
                 player.sonarCollision(pt,game);
             });
         }
        
-       if(player.type.color == 'blue'){
+       if(player.type.name == 'blue'){
             game.physics.collide(player.sonarPts,map.obstaclesBlue,function(pt,ob){
                 player.sonarCollision(pt,game);
             });
         }
        
-       if(player.type.color == 'green'){
+       if(player.type.name == 'green'){
             game.physics.collide(player.sonarPts,map.obstaclesGreen,function(pt,ob){
                 player.sonarCollision(pt,game);
             });
