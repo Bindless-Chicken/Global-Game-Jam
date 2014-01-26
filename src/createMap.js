@@ -134,13 +134,13 @@ function createMapProcedural(game, nbColors) {
                 map.getObstaclesYellow().add((new Obstacle(game, -
                     secEasySize + Math.random() * secEasySize * 2, -
                     secEasySize + Math.random() * secEasySize * 2,
-                    'obstacle', COLORS.BLUE)).sprite);
+                    'obstacle', COLORS.YELLOW)).sprite);
                 break;
             case 4:
                 map.getObstaclesPurple().add((new Obstacle(game, -
                     secEasySize + Math.random() * secEasySize * 2, -
                     secEasySize + Math.random() * secEasySize * 2,
-                    'obstacle', COLORS.GREEN)).sprite);
+                    'obstacle', COLORS.PURPLE)).sprite);
                 break;
         }
     }
@@ -176,13 +176,13 @@ function createMapProcedural(game, nbColors) {
                 map.getObstaclesYellow().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.BLUE)).sprite);
+                    'obstacle', COLORS.YELLOW)).sprite);
                 break;
             case 4:
                 map.getObstaclesPurple().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.GREEN)).sprite);
+                    'obstacle', COLORS.PURPLE)).sprite);
                 break;
         }
     }
@@ -219,13 +219,13 @@ function createMapProcedural(game, nbColors) {
                 map.getObstaclesYellow().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.BLUE)).sprite);
+                    'obstacle', COLORS.YELLOW)).sprite);
                 break;
             case 4:
                 map.getObstaclesPurple().add((new Obstacle(game, -
                     Math.cos(angle) * dist1,
                     Math.sin(angle) * dist2,
-                    'obstacle', COLORS.GREEN)).sprite);
+                    'obstacle', COLORS.PURPLE)).sprite);
                 break;
         }
     }
