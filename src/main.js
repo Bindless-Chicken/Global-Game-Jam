@@ -7,7 +7,7 @@ loadFiles();
 
 window.onload = function () {
     setTimeout(function () {
-        menuPhaser();
+        menuPhaser();   
     }, 3000);
 
 };
