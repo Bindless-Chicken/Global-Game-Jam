@@ -149,6 +149,8 @@ function mainPhaser() {
         // map = createMap(game);
         map = createMapProcedural(game);
 
+        charger = createProceduralEnemy(game);
+
         //todo Change 2 to nbPlayer when define
         map = createMapProcedural(game, maxColor);
 
@@ -214,12 +216,12 @@ function mainPhaser() {
         }
 
         var monsters = map.getMonsters();
-        for (var i = 0; i < monsters.length; i++) {
-            if (monsters.getAt(i).name == "charger")
-                monsters[i].reachable(player1, game);
-           // monsters[i].reachable(player2, game);
+        for (var i = 0; i < charger.length; i++) {
+            if (charger[i].name == "charger")
+                charger[i].reachable(player1, game);
+            // monsters[i].reachable(player2, game);
         }
-       // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
+        // console.log("position : " + player1.sprite.body.x + " | " + player1.sprite.body.y);
         for (var i = 0; i < charger.length; i++) {
             if (charger[i].hp <= 0 && (charger[i].dead == false)) {
                 charger[i].dead = true;
@@ -228,6 +230,7 @@ function mainPhaser() {
                 charger[i].sprite.body.velocity.y = 0;
             }
         }
+
 
         player1.updateSector(map, game);
         // player1.farAway(game, player1);

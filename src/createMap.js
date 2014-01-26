@@ -233,7 +233,7 @@ function createMapProcedural(game, nbColors) {
     //Add monsters (only for sector 3)
 
     //Add charger
-    for (var i = 0; i < (5 + Math.random() * 8); i++) {
+    /*for (var i = 0; i < (5 + Math.random() * 8); i++) {
 
         sign1 = Math.random() < 0.5 ? -1 : 1;
         sign2 = Math.random() < 0.5 ? -1 : 1;
@@ -244,7 +244,7 @@ function createMapProcedural(game, nbColors) {
         map.getMonsters().add(createDefaultCharger(game,
             Math.cos(angle) * dist1,
             Math.sin(angle) * dist2).sprite);
-    }
+    }*/
 
     //Add Spammer
     for (var i = 0; i < (3 + Math.random() * 5); i++) {
