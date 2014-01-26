@@ -61,6 +61,7 @@ function mainPhaser(){
 
         game.load.image('stream', 'img/stream.png');
         game.load.image('charger','img/charger.png');
+        game.load.image('charger_dead','img/charger_dead.png');
 
         game.load.audio('main1','sound/main1.m4a');
         game.load.audio('main2','sound/main2.m4a');
@@ -117,6 +118,7 @@ function mainPhaser(){
         map = createMapProcedural(game);
         for (var i = 0; i < 5; i++) {
             charger.push(createCharger(game,i));
+            console.log(charger[i].hp);
         };
 
         player1 = new Player(COLORS.RED,game);
@@ -151,8 +153,20 @@ function mainPhaser(){
         player1.moveK(inputsKeyboard, game);
         //player2.moveM(inputsMouse);
         for (var i = 0; i < charger.length; i++) {
-            charger[i].reachable(player1, game);
+            if(charger[i].dead == false)
+                charger[i].reachable(player1, game);
+            game.physics.collide(player1.sonarPts,charger[i].sprite,charger[i].getDmg(1));
             //charger[i].reachable(player2, game);
+        };
+
+        for (var i = 0; i < charger.length; i++) {
+            if(charger[i].isDead() && (charger[i].dead == false))
+            {
+                charger[i].dead = true;
+                charger[i].sprite.loadTexture('charger_dead');
+                charger[i].sprite.body.velocity.x = 0;
+                charger[i].sprite.body.velocity.y = 0;                
+            }
         };
 
         player1.updateSector(map, game);

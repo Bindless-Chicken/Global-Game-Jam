@@ -7,6 +7,7 @@ var Charger = new Class
 		this.hp = healthpoint;
 		this.range = range;
 		this.strength = strengh;
+		this.dead = false;
 	},
 
 	attack: function(player, game)
@@ -45,7 +46,7 @@ var Charger = new Class
 	},
 
 	isDead: function() {
-		if(this.gethp() <= 0)
+		if(this.getHp() <= 0)
 			return true;
 		else
 			return false;
@@ -109,6 +110,6 @@ var Charger = new Class
 
 
 function createCharger(game,i) {
-	var charger = new Charger(game, 100+i*50, 150+i*50, "Test", 'charger', 50, 250, 10);
+	var charger = new Charger(game, 100+i*50, 150+i*50, "Test", 'charger', 2000, 250, 10);
 	return charger;
 }
