@@ -11,6 +11,8 @@ var Player = new Class({
         this.speed = 100;
         this.firstDown = false;
         this.life = 3;
+        this.currentZone = 0;
+        this.spaceDown = false;
 
         // sonar options
         this.nbPoints = 150;
@@ -46,13 +48,19 @@ var Player = new Class({
                 this.parseColor(game, COLORS.BLUE); 
             break;
             case COLORS.BLUE:
-                this.parseColor(game, COLORS.GREEN); 
-            break;
+                this.parseColor(game, COLORS.GREEN);
+                if(this.maxColor==2)
+                    this.parseColor(game, COLORS.RED);
+                break;
             case COLORS.GREEN:
-                this.parseColor(game, COLORS.YELLOW); 
+                this.parseColor(game, COLORS.YELLOW);
+                if(this.maxColor==3)
+                    this.parseColor(game, COLORS.RED);
             break; 
             case COLORS.YELLOW:
-                this.parseColor(game, COLORS.PURPLE); 
+                this.parseColor(game, COLORS.PURPLE);
+                if(this.maxColor==4)
+                    this.parseColor(game, COLORS.RED);
             break; 
             case COLORS.PURPLE:
                 this.parseColor(game, COLORS.RED); 
@@ -60,31 +68,34 @@ var Player = new Class({
         }
     },
     moveK: function (inputs, game) {
-        if (inputs.left.isDown)
+        if (inputs.isDown(Phaser.Keyboard.LEFT))
             this.sprite.body.velocity.x = -this.speed;
         else
             this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
         
-        if (inputs.right.isDown)
+        if (inputs.isDown(Phaser.Keyboard.RIGHT))
             this.sprite.body.velocity.x = this.speed;
         else
             this.sprite.body.velocity.x = this.sprite.body.velocity.x*0.90;
 
-        if (inputs.up.isDown)
+        if (inputs.isDown(Phaser.Keyboard.UP))
             this.sprite.body.velocity.y = -this.speed;
         else
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
         
-        if (inputs.down.isDown)
+        if (inputs.isDown(Phaser.Keyboard.DOWN))
             this.sprite.body.velocity.y = this.speed;
         else
             this.sprite.body.velocity.y = this.sprite.body.velocity.y*0.90;
 
-        if(game.input.keyboard.justPressed(32,100))
+        if(inputs.isDown(Phaser.Keyboard.SPACEBAR) && !this.spaceDown){
+            this.spaceDown = true;
             this.setType(game);
+        }
 
-        if(game.input.keyboard.justPressed(70,100))
-            gofull();
+        if(!inputs.isDown(Phaser.Keyboard.SPACEBAR)){
+            this.spaceDown = false;
+        }
     },
     moveM: function (inputs) {
         if(inputs.isDown){
@@ -227,7 +238,46 @@ var Player = new Class({
                 player.meteorShower(game, player, 800, 100, 2);
             }
         }
+    },
+
+    updateSector: function(map, game){
+        if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[0].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[0].getRadius()){
+            map.getSectors()[0].executeEvent(this);
+            /*if(Math.random()*10<=1){
+                //Push in an another direction
+                console.log("Push Line go !!!");
+                this.linePush(game, 1500, 100);
+            }*/
+        }
+        else if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[1].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[1].getRadius()){
+            map.getSectors()[1].executeEvent(this);
+            /*if(Math.random()*10<=1){
+                //Push in an another direction
+                console.log("Push Line go !!!");
+                this.linePush(game, 100, 200);
+            }*/
+        }
+        else if(distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)<map.getSectors()[2].getRadius()&&distanceTo(this.sprite.body.x, this.sprite.body.x, 0, 0)>-map.getSectors()[2].getRadius()){
+            map.getSectors()[2].executeEvent(this);
+            var random = Math.random()*100;
+            /*if(random<=5){
+                //Meteor shower with one and a delay of 2.5s
+                console.log("Meteor Shower !! Save your life !!!");
+                this.meteorShower(game, this, 800, 100, 2);
+            }
+            else if(random<=10){
+                //Meteor shower with two and a delay of 1s
+                console.log("Meteor Shower lvl2 !! Run fools !!!");
+                this.meteorShower(game, this, 1500, 100, 1);
+            }*/
+        }
+        else{
+            console.log("End");
+        }
     }
 });
 
 
+function distanceTo( aX, aY, bX, bY){
+    return Math.sqrt(Math.pow(aX-bX,2)+Math.pow(aY-bY,2));
+}
